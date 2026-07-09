@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# バックアップ
+*.bak
+
+# 環境変数
+.env
+.env.*

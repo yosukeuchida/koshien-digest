@@ -1,0 +1,812 @@
+<title>今日の一戦 — 夏の神奈川 観戦ガイド</title>
+<style>
+:root{
+  --bg:#F3F5EF; --surface:#FFFFFF; --ink:#1B2420; --muted:#5F6E64;
+  --line:#D8DED4; --green:#1E4D3B; --green-ink:#1E4D3B; --crimson:#A5162C;
+  --chip-bg:#E9EDE4; --score-bg:#1E4D3B; --score-ink:#F3F5EF;
+  --mk:rgba(228,190,70,.5); --gold:#B8934A;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0E1512; --surface:#182019; --ink:#E7ECE4; --muted:#9AA89D;
+    --line:#2A362D; --green:#2E5F4B; --green-ink:#8CC7AC; --crimson:#E5566B;
+    --chip-bg:#212B23; --score-bg:#101B15; --score-ink:#D7E2D6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1512; --surface:#182019; --ink:#E7ECE4; --muted:#9AA89D;
+  --line:#2A362D; --green:#2E5F4B; --green-ink:#8CC7AC; --crimson:#E5566B;
+  --chip-bg:#212B23; --score-bg:#101B15; --score-ink:#D7E2D6;
+  --mk:rgba(196,150,42,.38); --gold:#C9A45C;
+}
+:root[data-theme="light"]{
+  --bg:#F3F5EF; --surface:#FFFFFF; --ink:#1B2420; --muted:#5F6E64;
+  --line:#D8DED4; --green:#1E4D3B; --green-ink:#1E4D3B; --crimson:#A5162C;
+  --chip-bg:#E9EDE4; --score-bg:#1E4D3B; --score-ink:#F3F5EF;
+  --mk:rgba(228,190,70,.5); --gold:#B8934A;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic Medium","Yu Gothic",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.85; font-feature-settings:"palt";
+}
+.serif{font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif}
+a{color:inherit}
+.wrap{max-width:860px; margin:0 auto; padding:0 20px}
+
+/* ---- header ---- */
+header.site{
+  border-bottom:3px double var(--line); background:var(--surface);
+}
+header.site .wrap{padding-top:26px; padding-bottom:18px}
+.site-tag{
+  font-size:11.5px; letter-spacing:.22em; color:var(--crimson); font-weight:600;
+}
+h1.site-title{
+  margin:2px 0 4px; font-size:30px; letter-spacing:.06em; font-weight:600; line-height:1.3;
+}
+.site-sub{font-size:13px; color:var(--muted); margin:0}
+
+/* ---- date nav ---- */
+.datenav{display:flex; gap:8px; margin:22px 0 6px; flex-wrap:wrap}
+.datenav button{
+  font:inherit; font-size:14px; padding:7px 18px; cursor:pointer;
+  border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:3px;
+}
+.datenav button[aria-selected="true"]{
+  background:var(--green); color:#F3F5EF; border-color:var(--green); font-weight:600;
+}
+.day-note{font-size:12.5px; color:var(--muted); margin:0 0 14px}
+
+/* ---- venue groups ---- */
+.venue{margin:26px 0}
+.venue h2{
+  font-size:13px; font-weight:600; letter-spacing:.14em; color:var(--muted);
+  margin:0 0 8px; padding-bottom:5px; border-bottom:1px solid var(--line);
+}
+.game-row{
+  display:flex; align-items:center; gap:14px; padding:10px 4px;
+  border-bottom:1px dotted var(--line); font-variant-numeric:tabular-nums;
+}
+.game-row .t{font-size:13px; color:var(--muted); width:46px; flex-shrink:0}
+.game-row .card{flex:1; font-size:15px}
+.game-row .score{
+  font-size:14px; font-weight:600; letter-spacing:.04em; color:var(--green-ink); white-space:nowrap;
+}
+.game-row .win{font-weight:700}
+.badge-r1{
+  font-size:10.5px; color:var(--muted); border:1px solid var(--line);
+  padding:1px 6px; border-radius:2px; margin-left:8px; white-space:nowrap;
+}
+
+/* ---- 7/10 match cards ---- */
+.match-card{
+  display:block; text-decoration:none; background:var(--surface);
+  border:1px solid var(--line); border-radius:4px; padding:16px 18px 14px; margin:10px 0;
+  transition:border-color .15s;
+}
+.match-card:hover{border-color:var(--green)}
+.match-card .meta{
+  display:flex; gap:12px; align-items:center; font-size:12px; color:var(--muted);
+  font-variant-numeric:tabular-nums; margin-bottom:6px;
+}
+.pick{
+  color:var(--crimson); font-weight:700; font-size:11.5px; letter-spacing:.1em;
+}
+.match-card h3{
+  margin:0 0 6px; font-size:19px; font-weight:600; letter-spacing:.03em; line-height:1.5;
+}
+.match-card h3 .vs{font-size:13px; color:var(--muted); margin:0 8px}
+.match-card .hook{font-size:13.5px; color:var(--muted); margin:0; line-height:1.7}
+.match-card .more{
+  font-size:12.5px; color:var(--green-ink); font-weight:600; margin-top:8px; display:inline-block;
+}
+
+/* ---- detail page ---- */
+.detail-head{
+  color:var(--score-ink);
+  background:
+    radial-gradient(110% 85% at 50% -12%, rgba(255,255,255,.08), transparent 55%),
+    repeating-linear-gradient(115deg, transparent 0 30px, rgba(255,255,255,.02) 30px 60px),
+    var(--score-bg);
+}
+.detail-head .wrap{padding-top:30px; padding-bottom:48px}
+.detail-head .crumb{font-size:12.5px; margin-bottom:20px}
+.detail-head .crumb a{color:inherit; opacity:.75; text-decoration:none}
+.detail-head .crumb a:hover{opacity:1}
+.detail-head .round{font-size:12px; letter-spacing:.2em; opacity:.8; margin-bottom:18px; text-align:center}
+.matchup{
+  display:flex; align-items:center; justify-content:center; gap:clamp(14px,4vw,40px);
+  margin-bottom:18px;
+}
+.matchup .side{display:flex; flex-direction:column; align-items:center; gap:10px; flex:1; max-width:240px}
+.mono{
+  width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:28px; font-weight:600; color:#F6F4EC; letter-spacing:0;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.35), 0 2px 8px rgba(0,0,0,.25);
+}
+.matchup .mono{width:76px; height:76px; font-size:34px}
+.matchup .tname{
+  font-size:clamp(16px,3.4vw,22px); font-weight:600; letter-spacing:.04em; text-align:center; line-height:1.35;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+.matchup .vs-mark{
+  width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:14px; letter-spacing:0; flex-shrink:0; border:1px solid rgba(255,255,255,.35);
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif; opacity:.9;
+}
+.seed-badge{
+  font-size:10.5px; font-weight:700; letter-spacing:.1em; padding:2.5px 12px; border-radius:20px;
+  white-space:nowrap;
+}
+.seed-badge.s1{background:var(--gold); color:#FFF}
+.seed-badge.s2{background:#8C97A3; color:#FFF}
+.seed-badge.s3{background:#A0714B; color:#FFF}
+.seed-badge.ns{border:1px solid rgba(255,255,255,.4); color:rgba(255,255,255,.82)}
+.detail-head .info{
+  display:flex; gap:18px; flex-wrap:wrap; justify-content:center; font-size:13.5px; opacity:.9;
+  font-variant-numeric:tabular-nums;
+}
+.detail-head .pick-badge{
+  color:#F3F5EF; background:var(--crimson); font-size:11px; font-weight:700;
+  letter-spacing:.1em; padding:2px 10px; border-radius:3px;
+}
+
+/* ---- lead hook card (straddles the hero/paper boundary, poster-style) ---- */
+.lead-hook{
+  max-width:720px; margin:-26px auto 0; padding:0 20px; position:relative; z-index:2;
+}
+.lead-hook .inner{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:22px 26px 20px; position:relative; overflow:hidden;
+  box-shadow:0 8px 24px rgba(10,25,18,.14);
+}
+.lead-hook .inner::before{
+  content:"「"; position:absolute; top:-18px; left:8px; font-size:88px; line-height:1;
+  color:var(--crimson); opacity:.1; font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  pointer-events:none;
+}
+.lead-hook .eyebrow{
+  font-size:11px; font-weight:700; letter-spacing:.22em; color:var(--crimson); margin:0 0 8px;
+}
+.lead-hook p:not(.eyebrow){
+  margin:0; font-size:17.5px; line-height:1.95; font-weight:600;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+
+/* ---- profile cards ---- */
+.profile-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:0 0 14px}
+@media (max-width:600px){ .profile-grid{grid-template-columns:1fr} }
+.profile-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:18px 20px;
+}
+.profile-card .p-head{
+  display:flex; align-items:center; gap:12px; margin-bottom:12px;
+  padding-bottom:12px; border-bottom:1px solid var(--line);
+}
+.profile-card .mono{width:44px; height:44px; font-size:20px; flex-shrink:0}
+.profile-card .p-name{
+  font-size:17px; font-weight:700; letter-spacing:.03em;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+.profile-card p{font-size:14px; margin:0 0 10px; line-height:1.8}
+.profile-card p:last-child{margin-bottom:0}
+.profile-card ul{font-size:13.5px; margin:0 0 10px; padding-left:18px}
+
+/* ---- player cards ---- */
+.player-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:0 0 14px}
+@media (max-width:600px){ .player-grid{grid-template-columns:1fr} }
+.player-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:16px 18px;
+}
+.player-card .pl-name{
+  font-size:16px; font-weight:700; margin:0 0 4px; letter-spacing:.02em;
+  display:flex; align-items:center;
+}
+.player-card .pl-name .dot{
+  width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px; flex-shrink:0;
+}
+.player-card .pl-meta{display:flex; gap:6px; flex-wrap:wrap; margin:0 0 10px}
+.player-card .pl-meta span{
+  font-size:11px; font-weight:600; color:var(--muted); background:var(--chip-bg);
+  border-radius:3px; padding:2px 8px; letter-spacing:.04em;
+}
+.player-card ul{margin:0; padding-left:16px; font-size:13px; line-height:1.75; color:var(--ink)}
+.player-card li{margin:3px 0}
+
+/* ---- story lead paragraph ---- */
+.lead-para{
+  font-size:16.5px; line-height:2.0;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+
+/* ---- comments (口コミ) ---- */
+.comment-form{
+  background:var(--surface); border:1px solid var(--line); border-radius:6px;
+  padding:16px 18px; margin:0 0 16px;
+}
+.comment-form .team-pick{display:flex; gap:8px; flex-wrap:wrap; margin:0 0 10px}
+.comment-form .team-pick label{cursor:pointer}
+.comment-form .team-pick input{display:none}
+.comment-form .team-pick span{
+  display:inline-block; font-size:12px; font-weight:600; padding:4px 14px;
+  border:1px solid var(--line); border-radius:20px; color:var(--muted);
+  transition:all .12s;
+}
+.comment-form .team-pick input:checked + span{
+  background:var(--tc, var(--green)); color:#F6F4EC; border-color:transparent;
+}
+.comment-form textarea{
+  width:100%; font:inherit; font-size:14px; color:var(--ink); background:var(--bg);
+  border:1px solid var(--line); border-radius:4px; padding:10px 12px; resize:vertical;
+  min-height:64px; margin:0 0 10px;
+}
+.comment-form textarea:focus{outline:2px solid var(--green); outline-offset:-1px}
+.comment-form .c-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.comment-form input[type="text"]{
+  font:inherit; font-size:13.5px; color:var(--ink); background:var(--bg);
+  border:1px solid var(--line); border-radius:4px; padding:7px 12px; width:180px;
+}
+.comment-form input[type="text"]:focus{outline:2px solid var(--green); outline-offset:-1px}
+.comment-form button{
+  font:inherit; font-size:14px; font-weight:700; cursor:pointer;
+  background:var(--green); color:#F3F5EF; border:none; border-radius:4px; padding:8px 26px;
+}
+.comment-form button:hover{opacity:.9}
+.comment-form .c-note{font-size:11.5px; color:var(--muted); margin:8px 0 0}
+.comment-item{
+  background:var(--surface); border:1px solid var(--line); border-radius:6px;
+  padding:12px 16px; margin:0 0 10px;
+}
+.comment-item .c-head{
+  display:flex; gap:10px; align-items:center; font-size:12px; color:var(--muted); margin:0 0 4px;
+  font-variant-numeric:tabular-nums;
+}
+.comment-item .c-head .c-name{font-weight:700; color:var(--ink); font-size:13px}
+.comment-item .c-head .c-team{
+  display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600;
+}
+.comment-item .c-head .c-team i{width:8px; height:8px; border-radius:50%; display:inline-block}
+.comment-item .c-head .c-del{
+  margin-left:auto; cursor:pointer; border:none; background:none; color:var(--muted);
+  font-size:14px; padding:2px 6px; line-height:1;
+}
+.comment-item .c-head .c-del:hover{color:var(--crimson)}
+.comment-item .c-text{margin:0; font-size:14px; line-height:1.8; white-space:pre-wrap; word-break:break-word}
+.c-empty{font-size:13px; color:var(--muted); padding:4px 2px 0}
+
+/* ---- collapsible sources ---- */
+details.sources-details{margin:0 0 14px}
+details.sources-details summary{
+  cursor:pointer; font-size:13px; color:var(--muted); font-weight:600;
+  padding:8px 0; user-select:none;
+}
+details.sources-details summary:hover{color:var(--green-ink)}
+
+/* ---- section header icons ---- */
+article.report h2{display:flex; align-items:center; gap:9px}
+article.report h2 svg{width:17px; height:17px; flex-shrink:0; stroke:var(--green-ink); fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+
+/* ---- story marker highlight ---- */
+article.report .mk{
+  font-weight:700;
+  background:linear-gradient(transparent 58%, var(--mk) 58%);
+  padding:0 1px;
+}
+
+/* ---- table zebra ---- */
+article.report tr:nth-child(even) td{background:var(--chip-bg)}
+
+/* ---- calendar card: team monograms + featured cards ---- */
+.mc-teams{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:0 0 7px}
+.mc-teams .mm{
+  width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+  font-size:12.5px; color:#F6F4EC; flex-shrink:0;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);
+}
+.mc-teams .mc-name{font-size:19px; font-weight:600; letter-spacing:.03em; line-height:1.4}
+.mc-teams .mc-vs{font-size:12px; color:var(--muted); margin:0 2px}
+.match-card.pick-card{border-color:var(--crimson); border-width:1.5px}
+.match-card.pick-card:hover{box-shadow:0 3px 14px rgba(165,22,44,.14)}
+article.report{max-width:720px; margin:0 auto; padding:10px 20px 60px}
+article.report h2{
+  font-size:16px; font-weight:600; letter-spacing:.1em; color:var(--green-ink);
+  margin:44px 0 12px; padding:0 0 6px; border-bottom:2px solid var(--green);
+}
+article.report h3{
+  font-size:15.5px; font-weight:700; margin:26px 0 6px; letter-spacing:.04em;
+}
+article.report p{margin:0 0 14px}
+article.report ul{margin:0 0 14px; padding-left:22px}
+article.report li{margin:4px 0}
+article.report a{color:var(--green-ink); text-decoration-color:var(--line)}
+article.report .sources{font-size:12.5px; color:var(--muted); line-height:1.9}
+article.report .sources a{color:var(--muted)}
+.broadcast-box{
+  background:var(--chip-bg); border:1px solid var(--line); border-radius:4px;
+  padding:14px 18px; margin:0 0 14px;
+}
+.broadcast-box p{margin:0 0 6px; font-size:12px; letter-spacing:.06em; color:var(--muted); font-weight:600}
+.broadcast-box p:first-child{margin-top:0}
+.broadcast-box ul{margin:0 0 14px; padding-left:0; list-style:none}
+.broadcast-box ul:last-child{margin-bottom:0}
+.broadcast-box li{display:flex; align-items:center; gap:8px; padding:4px 0; font-size:14px}
+.broadcast-box a{font-weight:600}
+.tag{
+  display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em;
+  color:var(--score-ink); background:var(--green); border-radius:3px; padding:2px 7px;
+  line-height:1.5; white-space:nowrap;
+}
+.video-embed{margin:0 0 20px}
+.video-frame{position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:4px; background:var(--chip-bg)}
+.video-frame iframe{position:absolute; top:0; left:0; width:100%; height:100%; border:0}
+.video-caption{margin:8px 0 0; font-size:13px; color:var(--muted); line-height:1.7}
+.video-caption strong{color:var(--ink)}
+.video-link-card{
+  border:1px solid var(--line); border-radius:4px; padding:12px 16px; margin:0 0 14px;
+}
+.video-link-card a{font-weight:600}
+.video-link-card p{margin:6px 0 0; font-size:13px; color:var(--muted)}
+.tablewrap{overflow-x:auto; margin:0 0 14px}
+article.report table{
+  border-collapse:collapse; font-size:13.5px; font-variant-numeric:tabular-nums;
+  min-width:480px; width:100%;
+}
+article.report th{
+  text-align:left; font-weight:600; color:var(--muted); font-size:12.5px;
+  padding:6px 10px; border-bottom:2px solid var(--green); white-space:nowrap;
+}
+article.report td{padding:7px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+.backlink{
+  display:inline-block; margin:34px 0 0; font-size:13.5px; text-decoration:none;
+  color:var(--green-ink); font-weight:600; border:1px solid var(--line);
+  padding:8px 16px; border-radius:3px;
+}
+.backlink:hover{border-color:var(--green)}
+
+/* ---- footer ---- */
+footer.site{
+  border-top:3px double var(--line); margin-top:50px; padding:22px 0 40px;
+  font-size:12px; color:var(--muted);
+}
+footer.site p{margin:4px 0}
+@media (max-width:560px){
+  h1.site-title{font-size:24px}
+  .detail-head h1{font-size:24px}
+  .game-row{flex-wrap:wrap}
+}
+</style>
+
+<div id="app"></div>
+
+<!-- ============ DATA ============ -->
+<script>
+// 日程データ(結果日 kind:"results" と 予定日 kind:"cards" の配列)。出典: kanagawa-baseball.com
+const DAYS = /*__DAYS__*/;
+// カレンダー面の1行フック(各試合レポートから抽出)
+const HOOKS = /*__HOOKS__*/;
+// 編集部注目マーク
+const PICKS = /*__PICKS__*/;
+
+function dayOf(key){ return DAYS.find(d => d.key === key); }
+function defaultDayKey(){
+  const cards = DAYS.filter(d => d.kind === "cards");
+  return (cards.length ? cards[cards.length - 1] : DAYS[DAYS.length - 1]).key;
+}
+function findGame(id){
+  for(const d of DAYS){
+    if(d.kind !== "cards") continue;
+    const g = d.games.find(x => x.id === id);
+    if(g) return { g, day: d };
+  }
+  return null;
+}
+</script>
+
+<!-- ============ REPORTS(markdown) ============ -->
+<!--__REPORTS__-->
+
+<!-- ============ APP ============ -->
+<script>
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function inline(s){
+  s = esc(s);
+  s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s = s.replace(/`([^`]+)`/g, '<span class="tag">$1</span>');
+  return s;
+}
+function youtubeEmbedId(url){
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+function mdToHtml(md){
+  const lines = md.split("\n");
+  let html = "", list = false, table = null, inSources = false, inBroadcast = false, inVideos = false;
+  const closeList = ()=>{ if(list){ html+="</ul>"; list=false; } };
+  const closeTable = ()=>{
+    if(table){
+      let t = '<div class="tablewrap"><table>';
+      table.forEach((cells,i)=>{
+        const tag = i===0 ? "th" : "td";
+        t += "<tr>" + cells.map(c=>`<${tag}>${inline(c)}</${tag}>`).join("") + "</tr>";
+      });
+      html += t + "</table></div>";
+      table = null;
+    }
+  };
+  for(const raw of lines){
+    const line = raw.trimEnd();
+    if(!line.trim()){ closeList(); closeTable(); continue; }
+    if(line.startsWith("|")){
+      closeList();
+      if(/^\|[\s:-]+\|/.test(line.replace(/-/g,"-"))&&/^[\s|:-]+$/.test(line)) continue; // separator row
+      const cells = line.replace(/^\||\|$/g,"").split("|").map(c=>c.trim());
+      if(!table) table = [];
+      table.push(cells);
+      continue;
+    }
+    closeTable();
+    if(line.startsWith("# ")){ closeList(); continue; } // redundant H1 title, if the writer added one — page header already shows it
+    if(line.startsWith("### ")){ closeList(); html+=`<h3>${inline(line.slice(4))}</h3>`; continue; }
+    if(line.startsWith("## ")){
+      closeList();
+      if(inBroadcast){ html += "</div>"; inBroadcast = false; }
+      const t = line.slice(3);
+      inSources = (t === "出典");
+      inBroadcast = (t === "放送・配信情報");
+      inVideos = (t === "関連動画");
+      html += h2t(t);
+      if(inSources) html += '<div class="sources">';
+      if(inBroadcast) html += '<div class="broadcast-box">';
+      continue;
+    }
+    if(line.startsWith("- ")){
+      const item = line.slice(2);
+      if(inVideos){
+        // "[title](url) — note" or "[title](url)" — embed if it's a single YouTube video, else a link card
+        const m = item.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)\s*(?:—\s*(.*))?$/);
+        if(m){
+          const [, title, url, note] = m;
+          const vid = youtubeEmbedId(url);
+          if(vid){
+            html += `<div class="video-embed"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${vid}" title="${inline(title)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="video-caption"><strong>${inline(title)}</strong>${note ? " — " + inline(note) : ""}</p></div>`;
+          } else {
+            html += `<div class="video-link-card"><a href="${url}" target="_blank" rel="noopener">${inline(title)}</a>${note ? `<p>${inline(note)}</p>` : ""}</div>`;
+          }
+          continue;
+        }
+      }
+      if(!list){ html+="<ul>"; list=true; }
+      html+=`<li>${inline(item)}</li>`; continue;
+    }
+    closeList();
+    html+=`<p>${inline(line)}</p>`;
+  }
+  closeList(); closeTable();
+  if(inSources) html += "</div>";
+  if(inBroadcast) html += "</div>";
+  return html;
+}
+
+function headerHtml(){
+  return `<header class="site"><div class="wrap">
+    <div class="site-tag">高校野球 神奈川大会 2026 夏</div>
+    <h1 class="site-title serif"><a href="#/" style="text-decoration:none">今日の一戦</a></h1>
+    <p class="site-sub">第108回全国高等学校野球選手権 神奈川大会 — 全試合日程と、それぞれの物語</p>
+  </div></header>`;
+}
+function footerHtml(){
+  return `<footer class="site"><div class="wrap">
+    <p>日程・結果の出典: 神奈川高校野球ステーション(kanagawa-baseball.com)。各試合の背景情報の出典は試合ページ末尾に記載。</p>
+    <p>本ページは検証用パイロットです。試合開始時刻・会場は変更される場合があります。</p>
+  </div></footer>`;
+}
+
+function calendarHtml(dayKey){
+  const day = dayOf(dayKey) || dayOf(defaultDayKey());
+  let h = headerHtml() + '<main class="wrap">';
+  h += `<nav class="datenav" aria-label="日付">` +
+    DAYS.map(d => `<button aria-selected="${d.key===day.key}" onclick="location.hash='#/day/${d.key}'">${esc(d.label)}</button>`).join("") +
+    `</nav>`;
+  if(day.note) h += `<p class="day-note">${esc(day.note)}</p>`;
+  if(day.kind === "results"){
+    for(const venue of day.venues){
+      h += `<section class="venue"><h2>${esc(venue.v)}</h2>`;
+      for(const g of venue.games){
+        const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes("x");
+        h += `<div class="game-row">
+          <span class="t">${g.t}</span>
+          <span class="card"><span class="${aWin?'win':''}">${esc(g.a)}</span>
+            <span style="color:var(--muted)"> — </span>
+            <span class="${!aWin?'win':''}">${esc(g.b)}</span>
+            ${g.r1?'<span class="badge-r1">1回戦</span>':''}</span>
+          <span class="score">${g.sa} — ${g.sb}</span>
+        </div>`;
+      }
+      h += `</section>`;
+    }
+  } else {
+    let currentVenue = "";
+    for(const g of day.games){
+      if(g.v !== currentVenue){
+        if(currentVenue) h += `</section>`;
+        currentVenue = g.v;
+        h += `<section class="venue"><h2>${esc(g.v)}</h2>`;
+      }
+      const hook = HOOKS[g.id] || "";
+      const hasReport = !!document.getElementById("report-"+g.id);
+      h += `<a class="match-card${PICKS[g.id]?' pick-card':''}" href="#/match/${g.id}">
+        <div class="meta"><span>${g.t}</span><span>${esc(day.round||"")}</span>${PICKS[g.id]?'<span class="pick">★ 注目</span>':''}</div>
+        <div class="mc-teams">
+          <span class="mm" style="background:${teamColor(g.a)}">${esc([...g.a][0])}</span><span class="mc-name">${esc(g.a)}</span>
+          <span class="mc-vs">対</span>
+          <span class="mm" style="background:${teamColor(g.b, g.a)}">${esc([...g.b][0])}</span><span class="mc-name">${esc(g.b)}</span>
+        </div>
+        ${hook?`<p class="hook">${esc(hook)}</p>`:""}
+        <span class="more">${hasReport?"背景・見どころを読む →":"レポート準備中"}</span>
+      </a>`;
+    }
+    if(currentVenue) h += `</section>`;
+  }
+  h += "</main>" + footerHtml();
+  return h;
+}
+
+// Monogram colors: muted traditional Japanese tones (伝統色), deep enough for white type.
+// Deterministic pick by school-name hash so a team keeps its color everywhere it appears.
+// 8 tones spread across hue space (藍・海老茶・松葉・桔梗・柿・青碧・鶯・蘇芳) so any
+// two teams' monograms read as clearly different colors even at small sizes.
+const MONO_COLORS = ["#2B4B6F","#7A3B32","#48683F","#5B549A","#B4652F","#1F6E68","#757A38","#96374F"];
+function teamColorIdx(name){
+  let h = 0;
+  for(const ch of name) h = (h * 31 + ch.codePointAt(0)) >>> 0;
+  return h % MONO_COLORS.length;
+}
+function teamColor(name, avoidName){
+  let idx = teamColorIdx(name);
+  // Same-match collision: two schools can hash to the same tone — shift the
+  // second one so the matchup always reads as two distinct sides.
+  if(avoidName && idx === teamColorIdx(avoidName)) idx = (idx + 3) % MONO_COLORS.length;
+  return MONO_COLORS[idx];
+}
+function monoHtml(name, avoidName){
+  return `<span class="mono" style="background:${teamColor(name, avoidName)}">${esc([...name][0])}</span>`;
+}
+
+// Seed assignments are fixed tournament facts (spring-2026 results), exact names only —
+// 日大 (g2) is NOT 日大藤沢, so no fuzzy matching.
+const SEEDS = {
+  1: ["横浜","横浜創学館","桐光学園","慶応"],
+  2: ["桐蔭学園","相洋","日大藤沢","立花学園"],
+  3: ["鎌倉学園","川和","横浜隼人","横浜清陵","三浦学苑","神奈川工業","橘","藤沢翔陵"],
+};
+function seedBadgeHtml(name){
+  for(const k of [1,2,3]) if(SEEDS[k].includes(name)) return `<span class="seed-badge s${k}">第${k}シード</span>`;
+  return `<span class="seed-badge ns">ノーシード</span>`;
+}
+
+// Minimal line icons per section title, stroke inherits --green-ink via CSS.
+const SECTION_ICONS = {
+  "放送・配信情報": '<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 3l4 4 4-4"/></svg>',
+  "両校プロフィール": '<svg viewBox="0 0 24 24"><path d="M6 3v18"/><path d="M6 4h13l-3 4 3 4H6"/></svg>',
+  "過去の対戦成績": '<svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5V9H8"/><path d="M12 8v4.5l3 2.5"/></svg>',
+  "今大会の状況": '<svg viewBox="0 0 24 24"><path d="M8 3h8v5a4 4 0 0 1-8 0V3z"/><path d="M8 5H5a3 3 0 0 0 3 3.5"/><path d="M16 5h3a3 3 0 0 1-3 3.5"/><path d="M12 12v4"/><path d="M9 20h6"/><path d="M10 16h4v4h-4z"/></svg>',
+  "注目選手": '<svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/></svg>',
+  "関連動画": '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 9.5l5 2.5-5 2.5z"/></svg>',
+  "ストーリー・見どころ": '<svg viewBox="0 0 24 24"><path d="M11 4l1.5 4.2L16.7 10l-4.2 1.5L11 15.7 9.5 11.5 5.3 10l4.2-1.8z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>',
+  "出典": '<svg viewBox="0 0 24 24"><path d="M9.5 14.5l5-5"/><path d="M10.5 7l1.5-1.5a4 4 0 0 1 5.6 5.6L16 12.7"/><path d="M13.5 17l-1.5 1.5a4 4 0 0 1-5.6-5.6L8 11.3"/></svg>',
+  "みんなの声": '<svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H4l2.3-2.9A8 8 0 1 1 21 12z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h4.5"/></svg>',
+};
+function h2t(title){
+  return `<h2>${SECTION_ICONS[title]||""}<span>${inline(title)}</span></h2>`;
+}
+
+function sectionsOf(md){
+  return md.split(/(?=^## )/m).map(raw => {
+    const m = raw.match(/^## ([^\n]+)\n?/);
+    return { title: m ? m[1].trim() : null, body: m ? raw.slice(m[0].length) : raw, raw };
+  });
+}
+
+// Pull the player's CURRENT grade out of profile bullets ("2年生右腕", "3年生。…").
+// Guards against the traps seen in real data: past references (中学3年時 / 在学時は2年生),
+// roster counts (部員34名(1年生14名…)), and speculation (順当なら今年3年生).
+function gradeOf(bullets){
+  for(const b of bullets){
+    for(const seg of b.split(/[。]/)){
+      if(/部員|[0-9０-９]+名|在学時|当時|時代|中学|昨|順当なら|と思われる|とみられる|計算になる|にあたる/.test(seg)) continue;
+      // A grade mentioned alongside a PAST year ("2025年夏2回戦で1年生ながら…") is that
+      // season's grade, not the current one — skip. 2026 is this tournament's year.
+      const y = seg.match(/(?:19|20)\d{2}/);
+      if(y && parseInt(y[0], 10) < 2026) continue;
+      const m = seg.match(/(?:高校)?([1-3１-３])年生/);
+      if(m) return "１２３".includes(m[1]) ? "123"["１２３".indexOf(m[1])] + "年" : m[1] + "年";
+    }
+  }
+  return null;
+}
+
+// 注目選手: "### 名前(チーム・ポジション)" blocks -> card grid
+function renderPlayers(sec){
+  const blocks = sec.body.split(/(?=^### )/m).filter(b => b.startsWith("### "));
+  if(!blocks.length) return h2t("注目選手") + mdToHtml(sec.body);
+  const cards = blocks.map(b => {
+    const head = b.match(/^### ([^\n]+)/)[1];
+    const hm = head.match(/^(.+?)[(（]([^)）]*)[)）]\s*$/);
+    const name = hm ? hm[1].trim() : head.trim();
+    const meta = hm ? hm[2].split(/[・/／]/).map(s=>s.trim()).filter(Boolean) : [];
+    const bullets = [...b.matchAll(/^- ([^\n]+)$/gm)].map(m=>m[1]);
+    // Name-only entries (no profile bullets at all) carry nothing a reader can use —
+    // skip the card. School-name-only headings ("### 浅野") fall out the same way.
+    if(!bullets.length) return "";
+    const grade = gradeOf(bullets);
+    if(grade && !meta.some(t=>/[1-3１-３]年/.test(t))) meta.push(grade);
+    const dot = meta.length ? `<i class="dot" style="background:${teamColor(meta[0])}"></i>` : "";
+    return `<div class="player-card">
+      <p class="pl-name">${dot}${inline(name)}</p>
+      ${meta.length?`<div class="pl-meta">${meta.map(t=>`<span>${esc(t)}</span>`).join("")}</div>`:""}
+      <ul>${bullets.map(t=>`<li>${inline(t)}</li>`).join("")}</ul>
+    </div>`;
+  }).filter(Boolean).join("");
+  if(!cards) return ""; // every entry was name-only — hide the whole section
+  return h2t("注目選手") + `<div class="player-grid">${cards}</div>`;
+}
+
+// 両校プロフィール: two "### 校名" blocks -> side-by-side cards with monograms
+function renderProfiles(sec){
+  const blocks = sec.body.split(/(?=^### )/m).filter(b => b.startsWith("### "));
+  if(blocks.length < 2) return h2t("両校プロフィール") + mdToHtml(sec.body);
+  const firstName = blocks[0].match(/^### ([^\n]+)/)[1].trim();
+  const cards = blocks.map((b, i) => {
+    const name = b.match(/^### ([^\n]+)/)[1].trim();
+    const rest = b.replace(/^### [^\n]+\n?/, "");
+    return `<div class="profile-card">
+      <div class="p-head">${monoHtml(name, i > 0 ? firstName : null)}<span class="p-name">${esc(name)}</span></div>
+      ${mdToHtml(rest)}
+    </div>`;
+  }).join("");
+  return h2t("両校プロフィール") + `<div class="profile-grid">${cards}</div>`;
+}
+
+function renderSources(sec){
+  const n = (sec.body.match(/^- /gm) || (sec.body.match(/^https?:/gm)) || []).length;
+  return h2t("出典") + `<details class="sources-details"><summary>出典一覧を開く(${n}件)</summary><div class="sources">${mdToHtml(sec.body)}</div></details>`;
+}
+
+function renderStory(sec){
+  let first = true;
+  const parts = sec.body.split(/\n\n+/).map(p => {
+    const h = mdToHtml(p);
+    if(first && h.startsWith("<p>")){ first = false; return h.replace("<p>", '<p class="lead-para">'); }
+    return h;
+  });
+  return h2t("ストーリー・見どころ") + parts.join("").replaceAll("<strong>", '<strong class="mk">');
+}
+
+function renderReport(md){
+  return sectionsOf(md).map(sec => {
+    if(sec.title === "注目選手") return renderPlayers(sec);
+    if(sec.title === "両校プロフィール") return renderProfiles(sec);
+    if(sec.title === "出典") return renderSources(sec);
+    if(sec.title === "ストーリー・見どころ") return renderStory(sec);
+    return mdToHtml(sec.raw);
+  }).join("");
+}
+
+// ---- 口コミ (registration-free, stored in THIS browser's localStorage only) ----
+const COMMENTS_KEY = "koshien-comments-v1";
+function loadComments(){
+  try { return JSON.parse(localStorage.getItem(COMMENTS_KEY)) || {}; } catch(e){ return {}; }
+}
+let COMMENTS = loadComments();
+function saveComments(){
+  try { localStorage.setItem(COMMENTS_KEY, JSON.stringify(COMMENTS)); } catch(e){ /* private mode etc. — keep in-memory */ }
+}
+function fmtTs(ts){
+  const d = new Date(ts);
+  return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,"0")}`;
+}
+function commentListHtml(g){
+  const list = (COMMENTS[g.id] || []).slice().sort((a,b)=>b.ts-a.ts);
+  if(!list.length) return `<div id="c-list"><p class="c-empty">まだ声はありません。最初のひと言をどうぞ。</p></div>`;
+  const items = list.map(c => {
+    const teamTag = c.team
+      ? `<span class="c-team"><i style="background:${teamColor(c.team, c.team===g.b?g.a:null)}"></i>${esc(c.team)}を応援</span>`
+      : "";
+    return `<div class="comment-item">
+      <div class="c-head">
+        <span class="c-name">${esc(c.n || "匿名")}</span>${teamTag}<span>${fmtTs(c.ts)}</span>
+        <button class="c-del" title="削除" onclick="delComment('${g.id}',${c.ts})">✕</button>
+      </div>
+      <p class="c-text">${esc(c.t)}</p>
+    </div>`;
+  }).join("");
+  return `<div id="c-list">${items}</div>`;
+}
+function commentsHtml(g){
+  return `<section class="comments-sec">
+    ${h2t("みんなの声")}
+    <div class="comment-form">
+      <div class="team-pick">
+        <label><input type="radio" name="c-team" value="${esc(g.a)}"><span style="--tc:${teamColor(g.a)}">${esc(g.a)}を応援</span></label>
+        <label><input type="radio" name="c-team" value="${esc(g.b)}"><span style="--tc:${teamColor(g.b, g.a)}">${esc(g.b)}を応援</span></label>
+        <label><input type="radio" name="c-team" value="" checked><span>観るだけ</span></label>
+      </div>
+      <textarea id="c-text" maxlength="300" placeholder="この試合への一言をどうぞ(応援・予想・現地情報など)"></textarea>
+      <div class="c-row">
+        <input type="text" id="c-name" maxlength="20" placeholder="ニックネーム(任意)">
+        <button onclick="postComment('${g.id}')">投稿する</button>
+      </div>
+      <p class="c-note">登録不要でそのまま投稿できます。コメントはこのブラウザ内にのみ保存されます(お試し版)。</p>
+    </div>
+    ${commentListHtml(g)}
+  </section>`;
+}
+function postComment(gameId){
+  const hit = findGame(gameId);
+  if(!hit) return;
+  const text = (document.getElementById("c-text").value || "").trim();
+  if(!text) return;
+  const name = (document.getElementById("c-name").value || "").trim();
+  const teamInput = document.querySelector('input[name="c-team"]:checked');
+  const entry = { t: text.slice(0,300), n: name.slice(0,20), team: teamInput ? teamInput.value : "", ts: Date.now() };
+  (COMMENTS[gameId] = COMMENTS[gameId] || []).push(entry);
+  saveComments();
+  document.getElementById("c-text").value = "";
+  document.getElementById("c-list").outerHTML = commentListHtml(hit.g);
+}
+function delComment(gameId, ts){
+  const hit = findGame(gameId);
+  if(!hit) return;
+  COMMENTS[gameId] = (COMMENTS[gameId] || []).filter(c => c.ts !== ts);
+  saveComments();
+  document.getElementById("c-list").outerHTML = commentListHtml(hit.g);
+}
+
+function matchHtml(id){
+  const hit = findGame(id);
+  if(!hit) return calendarHtml(defaultDayKey());
+  const { g, day } = hit;
+  const el = document.getElementById("report-"+id);
+  const body = el ? renderReport(el.textContent.trim())
+    : "<p>この試合のレポートは準備中です。</p>";
+  const hook = HOOKS[id];
+  return `<div class="detail-head"><div class="wrap">
+      <div class="crumb"><a href="#/day/${day.key}">← ${esc(day.label)}の全試合へ</a></div>
+      <div class="round serif">第108回選手権 神奈川大会 ${esc(day.roundLabel || day.round || "")}</div>
+      <div class="matchup">
+        <div class="side">${monoHtml(g.a)}<span class="tname">${esc(g.a)}</span>${seedBadgeHtml(g.a)}</div>
+        <span class="vs-mark">対</span>
+        <div class="side">${monoHtml(g.b, g.a)}<span class="tname">${esc(g.b)}</span>${seedBadgeHtml(g.b)}</div>
+      </div>
+      <div class="info"><span>${esc(day.label)} ${g.t} 開始</span><span>${esc(g.v)}</span>${PICKS[id]?'<span class="pick-badge">★ 注目</span>':""}</div>
+    </div></div>
+    ${hook?`<div class="lead-hook"><div class="inner"><p class="eyebrow">見どころ</p><p>${esc(hook)}</p></div></div>`:""}
+    <article class="report">${body}
+      ${commentsHtml(g)}
+      <a class="backlink" href="#/day/${day.key}">← ${esc(day.label)}の全試合一覧へ戻る</a>
+    </article>` + footerHtml();
+}
+
+function render(){
+  const hash = location.hash || `#/day/${defaultDayKey()}`;
+  const app = document.getElementById("app");
+  let m;
+  if((m = hash.match(/^#\/match\/(g\d+)/))){
+    app.innerHTML = matchHtml(m[1]);
+  } else if((m = hash.match(/^#\/day\/(\d{4})/)) && dayOf(m[1])){
+    app.innerHTML = calendarHtml(m[1]);
+  } else {
+    app.innerHTML = calendarHtml(defaultDayKey());
+  }
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", render);
+render();
+</script>

@@ -1,0 +1,20 @@
+{
+  "_comment": "放送・配信の確定ルール(Phase 3)。LLMに毎試合調べさせず、この表から決定的に生成する。他県展開時はこのファイルを差し替える。verifiedAtの一次ソース: tvk公式 高校野球ページ",
+  "verifiedAt": "2026-07-10",
+  "sources": [
+    "https://www.tvk-yokohama.com/koko/"
+  ],
+  "streaming": [
+    {
+      "name": "バーチャル高校野球",
+      "url": "https://sports.yahoo.co.jp/livestream/vk",
+      "tag": "LIVE",
+      "scope": "全球場・開会式〜決勝(tvk公式ページで明言)"
+    }
+  ],
+  "tvLiveVenues": {
+    "サーティーフォー保土ケ谷球場": "tvk(テレビ神奈川)",
+    "横浜スタジアム": "tvk(テレビ神奈川)"
+  },
+  "_tvNote": "tvk生中継は1回戦〜5回戦=保土ケ谷球場のみ、準々決勝以降=横浜スタジアム。その他の球場はTV生中継なし(試合結果はtvkニュースで放送されるが、試合視聴手段ではないため記事には載せない)"
+}

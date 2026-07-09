@@ -1,0 +1,1867 @@
+<title>今日の一戦 — 夏の神奈川 観戦ガイド</title>
+<style>
+:root{
+  --bg:#F3F5EF; --surface:#FFFFFF; --ink:#1B2420; --muted:#5F6E64;
+  --line:#D8DED4; --green:#1E4D3B; --green-ink:#1E4D3B; --crimson:#A5162C;
+  --chip-bg:#E9EDE4; --score-bg:#1E4D3B; --score-ink:#F3F5EF;
+  --mk:rgba(228,190,70,.5); --gold:#B8934A;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0E1512; --surface:#182019; --ink:#E7ECE4; --muted:#9AA89D;
+    --line:#2A362D; --green:#2E5F4B; --green-ink:#8CC7AC; --crimson:#E5566B;
+    --chip-bg:#212B23; --score-bg:#101B15; --score-ink:#D7E2D6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1512; --surface:#182019; --ink:#E7ECE4; --muted:#9AA89D;
+  --line:#2A362D; --green:#2E5F4B; --green-ink:#8CC7AC; --crimson:#E5566B;
+  --chip-bg:#212B23; --score-bg:#101B15; --score-ink:#D7E2D6;
+  --mk:rgba(196,150,42,.38); --gold:#C9A45C;
+}
+:root[data-theme="light"]{
+  --bg:#F3F5EF; --surface:#FFFFFF; --ink:#1B2420; --muted:#5F6E64;
+  --line:#D8DED4; --green:#1E4D3B; --green-ink:#1E4D3B; --crimson:#A5162C;
+  --chip-bg:#E9EDE4; --score-bg:#1E4D3B; --score-ink:#F3F5EF;
+  --mk:rgba(228,190,70,.5); --gold:#B8934A;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic Medium","Yu Gothic",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.85; font-feature-settings:"palt";
+}
+.serif{font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif}
+a{color:inherit}
+.wrap{max-width:860px; margin:0 auto; padding:0 20px}
+
+/* ---- header ---- */
+header.site{
+  border-bottom:3px double var(--line); background:var(--surface);
+}
+header.site .wrap{padding-top:26px; padding-bottom:18px}
+.site-tag{
+  font-size:11.5px; letter-spacing:.22em; color:var(--crimson); font-weight:600;
+}
+h1.site-title{
+  margin:2px 0 4px; font-size:30px; letter-spacing:.06em; font-weight:600; line-height:1.3;
+}
+.site-sub{font-size:13px; color:var(--muted); margin:0}
+
+/* ---- date nav ---- */
+.datenav{display:flex; gap:8px; margin:22px 0 6px; flex-wrap:wrap}
+.datenav button{
+  font:inherit; font-size:14px; padding:7px 18px; cursor:pointer;
+  border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:3px;
+}
+.datenav button[aria-selected="true"]{
+  background:var(--green); color:#F3F5EF; border-color:var(--green); font-weight:600;
+}
+.day-note{font-size:12.5px; color:var(--muted); margin:0 0 14px}
+
+/* ---- venue groups ---- */
+.venue{margin:26px 0}
+.venue h2{
+  font-size:13px; font-weight:600; letter-spacing:.14em; color:var(--muted);
+  margin:0 0 8px; padding-bottom:5px; border-bottom:1px solid var(--line);
+}
+.game-row{
+  display:flex; align-items:center; gap:14px; padding:10px 4px;
+  border-bottom:1px dotted var(--line); font-variant-numeric:tabular-nums;
+}
+.game-row .t{font-size:13px; color:var(--muted); width:46px; flex-shrink:0}
+.game-row .card{flex:1; font-size:15px}
+.game-row .score{
+  font-size:14px; font-weight:600; letter-spacing:.04em; color:var(--green-ink); white-space:nowrap;
+}
+.game-row .win{font-weight:700}
+.badge-r1{
+  font-size:10.5px; color:var(--muted); border:1px solid var(--line);
+  padding:1px 6px; border-radius:2px; margin-left:8px; white-space:nowrap;
+}
+
+/* ---- 7/10 match cards ---- */
+.match-card{
+  display:block; text-decoration:none; background:var(--surface);
+  border:1px solid var(--line); border-radius:4px; padding:16px 18px 14px; margin:10px 0;
+  transition:border-color .15s;
+}
+.match-card:hover{border-color:var(--green)}
+.match-card .meta{
+  display:flex; gap:12px; align-items:center; font-size:12px; color:var(--muted);
+  font-variant-numeric:tabular-nums; margin-bottom:6px;
+}
+.pick{
+  color:var(--crimson); font-weight:700; font-size:11.5px; letter-spacing:.1em;
+}
+.match-card h3{
+  margin:0 0 6px; font-size:19px; font-weight:600; letter-spacing:.03em; line-height:1.5;
+}
+.match-card h3 .vs{font-size:13px; color:var(--muted); margin:0 8px}
+.match-card .hook{font-size:13.5px; color:var(--muted); margin:0; line-height:1.7}
+.match-card .more{
+  font-size:12.5px; color:var(--green-ink); font-weight:600; margin-top:8px; display:inline-block;
+}
+
+/* ---- detail page ---- */
+.detail-head{
+  color:var(--score-ink);
+  background:
+    radial-gradient(110% 85% at 50% -12%, rgba(255,255,255,.08), transparent 55%),
+    repeating-linear-gradient(115deg, transparent 0 30px, rgba(255,255,255,.02) 30px 60px),
+    var(--score-bg);
+}
+.detail-head .wrap{padding-top:30px; padding-bottom:48px}
+.detail-head .crumb{font-size:12.5px; margin-bottom:20px}
+.detail-head .crumb a{color:inherit; opacity:.75; text-decoration:none}
+.detail-head .crumb a:hover{opacity:1}
+.detail-head .round{font-size:12px; letter-spacing:.2em; opacity:.8; margin-bottom:18px; text-align:center}
+.matchup{
+  display:flex; align-items:center; justify-content:center; gap:clamp(14px,4vw,40px);
+  margin-bottom:18px;
+}
+.matchup .side{display:flex; flex-direction:column; align-items:center; gap:10px; flex:1; max-width:240px}
+.mono{
+  width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:28px; font-weight:600; color:#F6F4EC; letter-spacing:0;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.35), 0 2px 8px rgba(0,0,0,.25);
+}
+.matchup .mono{width:76px; height:76px; font-size:34px}
+.matchup .tname{
+  font-size:clamp(16px,3.4vw,22px); font-weight:600; letter-spacing:.04em; text-align:center; line-height:1.35;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+.matchup .vs-mark{
+  width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:14px; letter-spacing:0; flex-shrink:0; border:1px solid rgba(255,255,255,.35);
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif; opacity:.9;
+}
+.seed-badge{
+  font-size:10.5px; font-weight:700; letter-spacing:.1em; padding:2.5px 12px; border-radius:20px;
+  white-space:nowrap;
+}
+.seed-badge.s1{background:var(--gold); color:#FFF}
+.seed-badge.s2{background:#8C97A3; color:#FFF}
+.seed-badge.s3{background:#A0714B; color:#FFF}
+.seed-badge.ns{border:1px solid rgba(255,255,255,.4); color:rgba(255,255,255,.82)}
+.detail-head .info{
+  display:flex; gap:18px; flex-wrap:wrap; justify-content:center; font-size:13.5px; opacity:.9;
+  font-variant-numeric:tabular-nums;
+}
+.detail-head .pick-badge{
+  color:#F3F5EF; background:var(--crimson); font-size:11px; font-weight:700;
+  letter-spacing:.1em; padding:2px 10px; border-radius:3px;
+}
+
+/* ---- lead hook card (straddles the hero/paper boundary, poster-style) ---- */
+.lead-hook{
+  max-width:720px; margin:-26px auto 0; padding:0 20px; position:relative; z-index:2;
+}
+.lead-hook .inner{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:22px 26px 20px; position:relative; overflow:hidden;
+  box-shadow:0 8px 24px rgba(10,25,18,.14);
+}
+.lead-hook .inner::before{
+  content:"「"; position:absolute; top:-18px; left:8px; font-size:88px; line-height:1;
+  color:var(--crimson); opacity:.1; font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  pointer-events:none;
+}
+.lead-hook .eyebrow{
+  font-size:11px; font-weight:700; letter-spacing:.22em; color:var(--crimson); margin:0 0 8px;
+}
+.lead-hook p:not(.eyebrow){
+  margin:0; font-size:17.5px; line-height:1.95; font-weight:600;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+
+/* ---- profile cards ---- */
+.profile-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:0 0 14px}
+@media (max-width:600px){ .profile-grid{grid-template-columns:1fr} }
+.profile-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:18px 20px;
+}
+.profile-card .p-head{
+  display:flex; align-items:center; gap:12px; margin-bottom:12px;
+  padding-bottom:12px; border-bottom:1px solid var(--line);
+}
+.profile-card .mono{width:44px; height:44px; font-size:20px; flex-shrink:0}
+.profile-card .p-name{
+  font-size:17px; font-weight:700; letter-spacing:.03em;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+.profile-card p{font-size:14px; margin:0 0 10px; line-height:1.8}
+.profile-card p:last-child{margin-bottom:0}
+.profile-card ul{font-size:13.5px; margin:0 0 10px; padding-left:18px}
+
+/* ---- player cards ---- */
+.player-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:0 0 14px}
+@media (max-width:600px){ .player-grid{grid-template-columns:1fr} }
+.player-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:16px 18px;
+}
+.player-card .pl-name{
+  font-size:16px; font-weight:700; margin:0 0 4px; letter-spacing:.02em;
+  display:flex; align-items:center;
+}
+.player-card .pl-name .dot{
+  width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px; flex-shrink:0;
+}
+.player-card .pl-meta{display:flex; gap:6px; flex-wrap:wrap; margin:0 0 10px}
+.player-card .pl-meta span{
+  font-size:11px; font-weight:600; color:var(--muted); background:var(--chip-bg);
+  border-radius:3px; padding:2px 8px; letter-spacing:.04em;
+}
+.player-card ul{margin:0; padding-left:16px; font-size:13px; line-height:1.75; color:var(--ink)}
+.player-card li{margin:3px 0}
+
+/* ---- story lead paragraph ---- */
+.lead-para{
+  font-size:16.5px; line-height:2.0;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+}
+
+/* ---- comments (口コミ) ---- */
+.comment-form{
+  background:var(--surface); border:1px solid var(--line); border-radius:6px;
+  padding:16px 18px; margin:0 0 16px;
+}
+.comment-form .team-pick{display:flex; gap:8px; flex-wrap:wrap; margin:0 0 10px}
+.comment-form .team-pick label{cursor:pointer}
+.comment-form .team-pick input{display:none}
+.comment-form .team-pick span{
+  display:inline-block; font-size:12px; font-weight:600; padding:4px 14px;
+  border:1px solid var(--line); border-radius:20px; color:var(--muted);
+  transition:all .12s;
+}
+.comment-form .team-pick input:checked + span{
+  background:var(--tc, var(--green)); color:#F6F4EC; border-color:transparent;
+}
+.comment-form textarea{
+  width:100%; font:inherit; font-size:14px; color:var(--ink); background:var(--bg);
+  border:1px solid var(--line); border-radius:4px; padding:10px 12px; resize:vertical;
+  min-height:64px; margin:0 0 10px;
+}
+.comment-form textarea:focus{outline:2px solid var(--green); outline-offset:-1px}
+.comment-form .c-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.comment-form input[type="text"]{
+  font:inherit; font-size:13.5px; color:var(--ink); background:var(--bg);
+  border:1px solid var(--line); border-radius:4px; padding:7px 12px; width:180px;
+}
+.comment-form input[type="text"]:focus{outline:2px solid var(--green); outline-offset:-1px}
+.comment-form button{
+  font:inherit; font-size:14px; font-weight:700; cursor:pointer;
+  background:var(--green); color:#F3F5EF; border:none; border-radius:4px; padding:8px 26px;
+}
+.comment-form button:hover{opacity:.9}
+.comment-form .c-note{font-size:11.5px; color:var(--muted); margin:8px 0 0}
+.comment-item{
+  background:var(--surface); border:1px solid var(--line); border-radius:6px;
+  padding:12px 16px; margin:0 0 10px;
+}
+.comment-item .c-head{
+  display:flex; gap:10px; align-items:center; font-size:12px; color:var(--muted); margin:0 0 4px;
+  font-variant-numeric:tabular-nums;
+}
+.comment-item .c-head .c-name{font-weight:700; color:var(--ink); font-size:13px}
+.comment-item .c-head .c-team{
+  display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600;
+}
+.comment-item .c-head .c-team i{width:8px; height:8px; border-radius:50%; display:inline-block}
+.comment-item .c-head .c-del{
+  margin-left:auto; cursor:pointer; border:none; background:none; color:var(--muted);
+  font-size:14px; padding:2px 6px; line-height:1;
+}
+.comment-item .c-head .c-del:hover{color:var(--crimson)}
+.comment-item .c-text{margin:0; font-size:14px; line-height:1.8; white-space:pre-wrap; word-break:break-word}
+.c-empty{font-size:13px; color:var(--muted); padding:4px 2px 0}
+
+/* ---- collapsible sources ---- */
+details.sources-details{margin:0 0 14px}
+details.sources-details summary{
+  cursor:pointer; font-size:13px; color:var(--muted); font-weight:600;
+  padding:8px 0; user-select:none;
+}
+details.sources-details summary:hover{color:var(--green-ink)}
+
+/* ---- section header icons ---- */
+article.report h2{display:flex; align-items:center; gap:9px}
+article.report h2 svg{width:17px; height:17px; flex-shrink:0; stroke:var(--green-ink); fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+
+/* ---- story marker highlight ---- */
+article.report .mk{
+  font-weight:700;
+  background:linear-gradient(transparent 58%, var(--mk) 58%);
+  padding:0 1px;
+}
+
+/* ---- table zebra ---- */
+article.report tr:nth-child(even) td{background:var(--chip-bg)}
+
+/* ---- calendar card: team monograms + featured cards ---- */
+.mc-teams{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:0 0 7px}
+.mc-teams .mm{
+  width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+  font-size:12.5px; color:#F6F4EC; flex-shrink:0;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);
+}
+.mc-teams .mc-name{font-size:19px; font-weight:600; letter-spacing:.03em; line-height:1.4}
+.mc-teams .mc-vs{font-size:12px; color:var(--muted); margin:0 2px}
+.match-card.pick-card{border-color:var(--crimson); border-width:1.5px}
+.match-card.pick-card:hover{box-shadow:0 3px 14px rgba(165,22,44,.14)}
+article.report{max-width:720px; margin:0 auto; padding:10px 20px 60px}
+article.report h2{
+  font-size:16px; font-weight:600; letter-spacing:.1em; color:var(--green-ink);
+  margin:44px 0 12px; padding:0 0 6px; border-bottom:2px solid var(--green);
+}
+article.report h3{
+  font-size:15.5px; font-weight:700; margin:26px 0 6px; letter-spacing:.04em;
+}
+article.report p{margin:0 0 14px}
+article.report ul{margin:0 0 14px; padding-left:22px}
+article.report li{margin:4px 0}
+article.report a{color:var(--green-ink); text-decoration-color:var(--line)}
+article.report .sources{font-size:12.5px; color:var(--muted); line-height:1.9}
+article.report .sources a{color:var(--muted)}
+.broadcast-box{
+  background:var(--chip-bg); border:1px solid var(--line); border-radius:4px;
+  padding:14px 18px; margin:0 0 14px;
+}
+.broadcast-box p{margin:0 0 6px; font-size:12px; letter-spacing:.06em; color:var(--muted); font-weight:600}
+.broadcast-box p:first-child{margin-top:0}
+.broadcast-box ul{margin:0 0 14px; padding-left:0; list-style:none}
+.broadcast-box ul:last-child{margin-bottom:0}
+.broadcast-box li{display:flex; align-items:center; gap:8px; padding:4px 0; font-size:14px}
+.broadcast-box a{font-weight:600}
+.tag{
+  display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em;
+  color:var(--score-ink); background:var(--green); border-radius:3px; padding:2px 7px;
+  line-height:1.5; white-space:nowrap;
+}
+.video-embed{margin:0 0 20px}
+.video-frame{position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:4px; background:var(--chip-bg)}
+.video-frame iframe{position:absolute; top:0; left:0; width:100%; height:100%; border:0}
+.video-caption{margin:8px 0 0; font-size:13px; color:var(--muted); line-height:1.7}
+.video-caption strong{color:var(--ink)}
+.video-link-card{
+  border:1px solid var(--line); border-radius:4px; padding:12px 16px; margin:0 0 14px;
+}
+.video-link-card a{font-weight:600}
+.video-link-card p{margin:6px 0 0; font-size:13px; color:var(--muted)}
+.tablewrap{overflow-x:auto; margin:0 0 14px}
+article.report table{
+  border-collapse:collapse; font-size:13.5px; font-variant-numeric:tabular-nums;
+  min-width:480px; width:100%;
+}
+article.report th{
+  text-align:left; font-weight:600; color:var(--muted); font-size:12.5px;
+  padding:6px 10px; border-bottom:2px solid var(--green); white-space:nowrap;
+}
+article.report td{padding:7px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+.backlink{
+  display:inline-block; margin:34px 0 0; font-size:13.5px; text-decoration:none;
+  color:var(--green-ink); font-weight:600; border:1px solid var(--line);
+  padding:8px 16px; border-radius:3px;
+}
+.backlink:hover{border-color:var(--green)}
+
+/* ---- footer ---- */
+footer.site{
+  border-top:3px double var(--line); margin-top:50px; padding:22px 0 40px;
+  font-size:12px; color:var(--muted);
+}
+footer.site p{margin:4px 0}
+@media (max-width:560px){
+  h1.site-title{font-size:24px}
+  .detail-head h1{font-size:24px}
+  .game-row{flex-wrap:wrap}
+}
+</style>
+
+<div id="app"></div>
+
+<!-- ============ DATA ============ -->
+<script>
+// 日程データ(結果日 kind:"results" と 予定日 kind:"cards" の配列)。出典: kanagawa-baseball.com
+const DAYS = [{"key":"0707","label":"7月7日(火)","date":"2026-07-07","kind":"results","note":"1回戦 20試合 — 全試合終了。太字が勝者。","venues":[{"v":"サーティーフォー保土ケ谷球場","games":[{"t":"9:00","a":"横浜南陵","b":"中大横浜","sa":1,"sb":9,"r1":true},{"t":"11:30","a":"横浜栄","b":"舞岡","sa":5,"sb":1,"r1":true}]},{"v":"大和スタジアム","games":[{"t":"9:00","a":"逗子葉山","b":"厚木王子","sa":0,"sb":12,"r1":true},{"t":"11:30","a":"旭","b":"光陵","sa":4,"sb":7,"r1":true}]},{"v":"相模原ギオンベースボールパーク","games":[{"t":"9:00","a":"麻布大付","b":"戸塚","sa":2,"sb":1,"r1":true},{"t":"11:30","a":"松陽","b":"平塚工科","sa":14,"sb":4,"r1":true}]},{"v":"横須賀スタジアム","games":[{"t":"9:00","a":"市ケ尾","b":"関東六浦","sa":5,"sb":3,"r1":true},{"t":"11:30","a":"津久井浜","b":"百合丘","sa":7,"sb":0,"r1":true}]},{"v":"藤沢市八部野球場","games":[{"t":"9:00","a":"横須賀総合","b":"橘学苑","sa":"8x","sb":7,"r1":true},{"t":"11:30","a":"横浜瀬谷","b":"七里ガ浜","sa":0,"sb":5,"r1":true}]},{"v":"川崎市等々力球場","games":[{"t":"9:00","a":"城郷","b":"東","sa":13,"sb":3,"r1":true},{"t":"11:30","a":"元石川","b":"県川崎","sa":12,"sb":2,"r1":true}]},{"v":"中栄信金スタジアム秦野","games":[{"t":"9:00","a":"秦野総合","b":"神奈川総産橋本","sa":15,"sb":4,"r1":true},{"t":"11:30","a":"秦野","b":"綾瀬","sa":3,"sb":6,"r1":true}]},{"v":"小田原球場","games":[{"t":"9:00","a":"旭丘","b":"県商工","sa":4,"sb":2,"r1":true},{"t":"11:30","a":"藤沢清流","b":"高浜","sa":10,"sb":0,"r1":true}]},{"v":"いせはらサンシャイン・スタジアム","games":[{"t":"9:00","a":"綾瀬西","b":"湘南工大付","sa":0,"sb":7,"r1":true},{"t":"11:30","a":"霧が丘","b":"有馬","sa":4,"sb":11,"r1":true}]},{"v":"俣野公園横浜薬大スタジアム","games":[{"t":"9:00","a":"麻溝台","b":"追浜","sa":4,"sb":3,"r1":true},{"t":"11:30","a":"県相模原","b":"横浜桜陽","sa":10,"sb":0,"r1":true}]}]},{"key":"0708","label":"7月8日(水)","date":"2026-07-08","kind":"results","note":"1回戦 22試合 — 全試合終了。太字が勝者。","venues":[{"v":"サーティーフォー保土ケ谷球場","games":[{"t":"9:00","a":"藤嶺藤沢","b":"上溝南","sa":4,"sb":1,"r1":true},{"t":"11:30","a":"横浜翠陵","b":"希望ケ丘","sa":4,"sb":14,"r1":true}]},{"v":"バッティングパレス相石スタジアムひらつか","games":[{"t":"9:00","a":"森村学園","b":"法政二","sa":0,"sb":7,"r1":true},{"t":"11:30","a":"柏陽","b":"生田","sa":8,"sb":1,"r1":true}]},{"v":"大和スタジアム","games":[{"t":"9:00","a":"幸","b":"大和西","sa":3,"sb":18,"r1":true},{"t":"11:30","a":"サイエンス","b":"相模原中等","sa":3,"sb":10,"r1":true}]},{"v":"相模原ギオンベースボールパーク","games":[{"t":"9:00","a":"光明相模原","b":"厚木","sa":2,"sb":3,"r1":true},{"t":"11:30","a":"秀英","b":"津久井","sa":16,"sb":9,"r1":true}]},{"v":"横須賀スタジアム","games":[{"t":"9:00","a":"鶴見大付","b":"横須賀学院","sa":1,"sb":6,"r1":true},{"t":"11:30","a":"寒川・藤沢総合・深沢・厚木清南","b":"横須賀工業","sa":2,"sb":11,"r1":true}]},{"v":"藤沢市八部野球場","games":[{"t":"9:00","a":"荏田","b":"慶応藤沢","sa":7,"sb":0,"r1":true},{"t":"11:30","a":"市川崎","b":"大和南","sa":2,"sb":12,"r1":true}]},{"v":"川崎市等々力球場","games":[{"t":"9:00","a":"麻生","b":"星槎国際湘南","sa":0,"sb":7,"r1":true},{"t":"11:30","a":"金沢総合","b":"川崎総合科学","sa":3,"sb":2,"r1":true}]},{"v":"中栄信金スタジアム秦野","games":[{"t":"9:00","a":"上鶴間","b":"伊志田","sa":5,"sb":7,"r1":true},{"t":"11:30","a":"川崎北","b":"秦野曽屋","sa":13,"sb":0,"r1":true}]},{"v":"小田原球場","games":[{"t":"9:00","a":"二宮","b":"桜丘","sa":0,"sb":11,"r1":true},{"t":"11:30","a":"高津・横浜旭陵","b":"平塚学園","sa":0,"sb":10,"r1":true}]},{"v":"いせはらサンシャイン・スタジアム","games":[{"t":"9:00","a":"厚木西","b":"横浜緑園","sa":12,"sb":0,"r1":true},{"t":"11:30","a":"伊勢原","b":"青葉総合ほか6校連合","sa":3,"sb":4,"r1":true}]},{"v":"俣野公園横浜薬大スタジアム","games":[{"t":"9:00","a":"横浜学園","b":"港北","sa":0,"sb":12,"r1":true},{"t":"11:30","a":"磯子工業","b":"横浜立野","sa":12,"sb":4,"r1":true}]}]},{"key":"0709","label":"7月9日(木)","date":"2026-07-09","kind":"results","note":"2回戦・1回戦 22試合 — 全試合終了。太字が勝者。","venues":[{"v":"サーティーフォー保土ケ谷球場","games":[{"t":"9:00","a":"横浜","b":"湘南工大付","sa":7,"sb":0},{"t":"11:30","a":"横浜緑ケ丘","b":"城郷","sa":"5x","sb":4}]},{"v":"バッティングパレス相石スタジアムひらつか","games":[{"t":"9:00","a":"相洋","b":"市ケ尾","sa":5,"sb":6},{"t":"11:30","a":"鶴嶺","b":"横浜栄","sa":0,"sb":13}]},{"v":"大和スタジアム","games":[{"t":"9:00","a":"岸根","b":"東海大相模","sa":0,"sb":10},{"t":"11:30","a":"川崎工科","b":"有馬","sa":9,"sb":2}]},{"v":"相模原ギオンベースボールパーク","games":[{"t":"9:00","a":"慶応","b":"元石川","sa":10,"sb":0},{"t":"11:30","a":"相原","b":"横浜氷取沢","sa":3,"sb":15}]},{"v":"横須賀スタジアム","games":[{"t":"9:00","a":"三浦学苑","b":"秦野総合","sa":12,"sb":0},{"t":"11:30","a":"白山","b":"逗子開成","sa":2,"sb":9}]},{"v":"藤沢市八部野球場","games":[{"t":"9:00","a":"湘南台","b":"住吉","sa":1,"sb":8},{"t":"11:30","a":"茅ケ崎","b":"厚木王子","sa":12,"sb":0}]},{"v":"川崎市等々力球場","games":[{"t":"9:00","a":"川和","b":"横須賀総合","sa":15,"sb":1},{"t":"11:30","a":"大師","b":"綾瀬","sa":1,"sb":12}]},{"v":"中栄信金スタジアム秦野","games":[{"t":"9:00","a":"藤沢工科","b":"旭丘","sa":0,"sb":11},{"t":"11:30","a":"座間","b":"麻布大付","sa":2,"sb":6}]},{"v":"小田原球場","games":[{"t":"9:00","a":"平塚湘風","b":"足柄","sa":8,"sb":0,"r1":true},{"t":"11:30","a":"大磯","b":"平塚農商","sa":12,"sb":1,"r1":true}]},{"v":"いせはらサンシャイン・スタジアム","games":[{"t":"9:00","a":"鎌倉","b":"中央農業","sa":12,"sb":0,"r1":true},{"t":"11:30","a":"西湘","b":"横浜商大","sa":1,"sb":8,"r1":true}]},{"v":"俣野公園横浜薬大スタジアム","games":[{"t":"9:00","a":"武相","b":"中大横浜","sa":10,"sb":0},{"t":"11:30","a":"新栄","b":"鶴見総合","sa":6,"sb":9}]}]},{"key":"0710","label":"7月10日(金)","date":"2026-07-10","kind":"cards","round":"2回戦","roundLabel":"二回戦","note":"2回戦 22試合 — 各球場 9:00 / 11:30 開始。カードをタップすると試合の背景・見どころを読めます。","games":[{"id":"g1","t":"9:00","a":"横浜創学館","b":"平塚学園","v":"サーティーフォー保土ケ谷球場"},{"id":"g2","t":"11:30","a":"日大","b":"松陽","v":"サーティーフォー保土ケ谷球場"},{"id":"g3","t":"9:00","a":"立花学園","b":"藤沢清流","v":"バッティングパレス相石スタジアムひらつか"},{"id":"g4","t":"11:30","a":"サレジオ","b":"厚木","v":"バッティングパレス相石スタジアムひらつか"},{"id":"g5","t":"9:00","a":"横浜隼人","b":"七里ガ浜","v":"大和スタジアム"},{"id":"g6","t":"11:30","a":"大和","b":"津久井浜","v":"大和スタジアム"},{"id":"g7","t":"9:00","a":"桐蔭学園","b":"大和南","v":"相模原ギオンベースボールパーク"},{"id":"g8","t":"11:30","a":"相模原城山","b":"大和西","v":"相模原ギオンベースボールパーク"},{"id":"g9","t":"9:00","a":"横浜清陵","b":"麻溝台","v":"横須賀スタジアム"},{"id":"g10","t":"11:30","a":"大和東・相模向陽館","b":"浅野","v":"横須賀スタジアム"},{"id":"g11","t":"9:00","a":"茅ケ崎北陵","b":"藤沢西","v":"藤沢市八部野球場"},{"id":"g12","t":"11:30","a":"座間総合","b":"伊志田","v":"藤沢市八部野球場"},{"id":"g13","t":"9:00","a":"鎌倉学園","b":"川崎北","v":"川崎市等々力球場"},{"id":"g14","t":"11:30","a":"向の岡工業","b":"新羽","v":"川崎市等々力球場"},{"id":"g15","t":"9:00","a":"海老名","b":"県相模原","v":"中栄信金スタジアム秦野"},{"id":"g16","t":"11:30","a":"山北","b":"山手学院","v":"中栄信金スタジアム秦野"},{"id":"g17","t":"9:00","a":"菅","b":"小田原","v":"小田原球場"},{"id":"g18","t":"11:30","a":"横浜翠嵐","b":"小田原北","v":"小田原球場"},{"id":"g19","t":"9:00","a":"柏木学園","b":"柏陽","v":"いせはらサンシャイン・スタジアム"},{"id":"g20","t":"11:30","a":"多摩","b":"厚木北","v":"いせはらサンシャイン・スタジアム"},{"id":"g21","t":"9:00","a":"横浜商業","b":"荏田","v":"俣野公園横浜薬大スタジアム"},{"id":"g22","t":"11:30","a":"横須賀大津","b":"光陵","v":"俣野公園横浜薬大スタジアム"}]}];
+// カレンダー面の1行フック(各試合レポートから抽出)
+const HOOKS = {"g1":"第1シード創学館と「ノーシード爆弾」平塚学園。3か月前の7-0コールドの再戦は140キロ台右腕対決","g2":"準優勝4回・甲子園出場ゼロの古豪日大。昨夏は慶応をコールドで沈めた実力校がノーシードで潜む","g3":"2022年、春夏連続サヨナラ決着の因縁。第2シード立花学園に「公立の星」藤沢清流が4年ぶりの再戦","g4":"2年前の同じ7月10日・同じ球場・同じ2回戦の完全再現。名門進学校同士、平塚のリベンジマッチ","g5":"甲子園1勝の隼人、35年目の水谷監督とノーノー右腕。「渚の野球部」七里ガ浜が12年ぶりの再戦へ","g6":"40年語り継がれる「津浜旋風」の末裔と、1点差に泣き続けた地元進学校が大和スタジアムで激突","g7":"全国制覇の名門・桐蔭学園、生え抜き新監督が夏初采配。初戦12-2快勝の大和南が公立の意地で挑む","g8":"創立4年目の新設校と4年ぶり白星の復活組。フルスイング同士、打撃戦の予感","g9":"21世紀枠で71年ぶり甲子園「県立の星」清陵へ、同じ県立・麻溝台が5年越しの再戦を挑む","g10":"部員12人と定時制の連合チーム、対するは88年前の甲子園8強・浅野。それぞれの夏が交差する","g11":"湘南の隣町ダービー、4年ぶり夏の再戦。過去4戦はすべて打ち合い、両軍とも「馬場投手」が看板","g12":"「逆転の伊志田」29歳の野球マニア監督と、少人数で勝ち上がる座間総合がぶつかる2回戦","g13":"東海大相模に2-1惜敗の第3シード鎌学へ、初戦13-0・「夏ベスト4以上」を掲げる川崎北が挑む","g14":"部員11人と17人。全員野球の公立2校が、6年ぶりの夏1勝と昨夏1点差の借りを懸けて","g15":"横浜を倒した「県立の雄」県相と、雪辱を期す海老名。北相のライバル対決、夏の大舞台で","g16":"「山の子旋風」再びを掲げる古豪山北と、横浜清陵をあと一歩まで追い詰めた山手学院","g17":"藩校由来200年・地元開催の小田原と、ヨット部兼部の二塁手を擁する川崎の工夫派・菅","g18":"「東大野球部に人材を」の翠嵐と、開校3か月・クラファンで用具を揃えた小田原北の初陣","g19":"スコアボードに「柏」が二つ並ぶ。夏の初戦負けなしの柏木学園と、夏だけは勝つ進学校・柏陽","g20":"昨夏シード隼人に9回サヨナラ負けの厚木北と、OBが指揮を執る文武両道・多摩が伊勢原でぶつかる","g21":"神奈川県勢初の甲子園を踏んだ古豪Y校、昨年の初戦敗退からちょうど1年。第1シード撃破の荏田が挑戦状","g22":"昨夏そろってベスト32の「鏡合わせ」対決。創立120周年の大津と、元プロ・大和コーチ就任の光陵"};
+// 編集部注目マーク
+const PICKS = {"g1":1,"g3":1,"g7":1,"g13":1,"g21":1};
+
+function dayOf(key){ return DAYS.find(d => d.key === key); }
+function defaultDayKey(){
+  const cards = DAYS.filter(d => d.kind === "cards");
+  return (cards.length ? cards[cards.length - 1] : DAYS[DAYS.length - 1]).key;
+}
+function findGame(id){
+  for(const d of DAYS){
+    if(d.kind !== "cards") continue;
+    const g = d.games.find(x => x.id === id);
+    if(g) return { g, day: d };
+  }
+  return null;
+}
+</script>
+
+<!-- ============ REPORTS(markdown) ============ -->
+<script type="text/plain" id="report-g7">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 桐蔭学園
+神奈川県の私立高校。野球部は1966年創部。全員全寮制で、関東圏を中心に県外出身選手も多く集まる。小倉丞太郎監督が昨秋に就任し、2026年春季県大会が采配初陣となった。同大会では4年ぶりのベスト8進出を果たし、「伝統の守り勝つ野球」を引き継ぎながらチームを作り上げてきた。甲子園出場は春6回・夏6回の計12回で通算16勝11敗。1971年(昭和46年)夏の選手権では初出場で初優勝を飾った。その後も1984年夏3回戦、1988年春ベスト4、1991年夏3回戦、1999年夏ベスト8、2019年春1回戦と甲子園の舞台を踏んでいるが、最後の出場となった2019年センバツ以降、夏の甲子園から遠ざかっている。今大会は第2シード。
+
+### 大和南
+神奈川県立大和南高等学校は大和市上和田に所在する公立校。野球部は「勝つために」と「応援される人・チーム」を活動方針に掲げ、初心者から高いレベルを求める選手まで幅広く受け入れる指導を行っている。今大会は7月8日の1回戦で市川崎を12-2で下し、2回戦へ駒を進めている。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式、7月7日に開幕した。172チーム(連合5チームを含む)が参加し、決勝は7月26日に行われる。組み合わせ抽選は6月13日に実施された。桐蔭学園は第2シードとして1回戦を免除されており、7月10日の大和南戦が今大会の初戦となる。大和南はシード校ではないが、7月8日の1回戦で市川崎に12-2で快勝して2回戦進出を決めている。
+
+## 注目選手
+### 棚原ふう(桐蔭学園・投手)
+- 背番号1
+
+### 光岡駿(桐蔭学園・DH)
+- 4番打者
+- 2026年春季県大会で打線の中心を担った
+
+## 関連動画
+- [横浜 vs 桐蔭学園 夏の第1シードをかけて激突!【高校野球 春季神奈川大会 準々決勝 全打席ハイライト】2026.4.25](https://www.youtube.com/watch?v=c83EDfIgtgU)
+- [桐蔭学園 新チーム!伝統のランニング 球場から拍手が湧く!](https://www.youtube.com/watch?v=acFn70l2jT0)
+- [桐蔭学園高校(神奈川)野球部トレーニング(プレイリスト)](https://www.youtube.com/playlist?list=PLoflRgVsxyxquBPiKVbHWtNPDqX-MI_BD)
+
+## ストーリー・見どころ
+指揮官にとっても特別な夏になる。桐蔭学園を率いる小倉丞太郎監督は同校中学から進んだ生え抜きOBで、高校3年春の第66回選抜(1994年)にエースとして甲子園のマウンドに立った経験を持つ。だが初戦で北陽(大阪)に0-3で敗れ、甲子園はその1試合だけで終わった。教員として約20年にわたりコーチ・部長を務めた後、昨秋に監督へ就任。7月10日の大和南戦は、その小倉監督にとって夏の選手権初采配となる。
+
+チームとしての勢いも申し分ない。桐蔭学園は今春の県大会で4年ぶりのベスト8進出を果たしたが、その3回戦では星槎国際湘南を相手に1-3から逆転し6-5で辛勝している。準々決勝では横浜のエース・織田翔希の前に0-3で屈したものの、苦しい試合を勝ち切る力を証明した春だった。夏はその上積みが問われる。
+
+対する大和南も、粘りの野球で夏を勝ち上がってきたチームだ。昨夏(2025年)の2回戦では7校連合を相手に14-13の乱打戦を制し、9回に途中出場の1年生が右前へサヨナラ打を放って先輩に白星を贈った。その勢いのまま進んだ3回戦では星槎国際湘南に完封負けを喫して夏を終えているが、桐蔭学園が今春に苦しめられた同じ相手だけに、両校の力量を測る一つの物差しにもなる。そして迎えた今夏、大和南は1回戦で市川崎に12-2と圧勝し、再び2回戦の舞台に立った。
+
+第2シードとしての貫禄を示したい桐蔭学園と、公立校ながら勝ち星を積み重ねてきた大和南。27年ぶりの夏の甲子園出場を目指す伝統校と、着実に勝率を上げてきた挑戦者が、7月10日9時、相模原ギオンベースボールパークで対戦する。
+
+## 出典
+- https://monthly-charge.com/charge/24583
+- https://data-man.com/kokoyakyu/school/school.php?s_id=03140007
+- https://office-morioka.com/h_baseball/seiseki/toin_gakuen.html
+- https://baseball.yahoo.co.jp/hsb_summer_local/entryteams/21615/results/game
+- https://www.pen-kanagawa.ed.jp/yamatominami-h/seikatsu/club/baseball.html
+- https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287231.html
+- https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+- https://kanagawa.hsbflash.jp/
+- https://timely-web.jp/article/5248/
+- https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1218100.html
+- https://data-man.com/kokoyakyu/meeting/?season=spring&m_id=10066
+- https://www5c.biglobe.ne.jp/~mori95/khb/kh1994.htm
+- https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1189773.html
+- https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1190410.html
+- https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1189570.html
+- https://baseball.omyutech.com/CupHomePageHistory.action?gameId=20261600711
+- https://sports.yahoo.co.jp/livestream/vk
+</script>
+
+<script type="text/plain" id="report-g1">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+
+### 横浜創学館高等学校
+
+甲子園出場経験はまだない。2026年春季神奈川県大会は決勝で横浜に3-8で敗れ準優勝。2021年夏の第103回選手権神奈川大会でも準優勝を果たしている。秋季県大会優勝1回、夏季県大会準優勝2回、関東大会出場3回と、県内屈指の実力校。「神奈川を制し甲子園で勝つ」を目標に掲げ、技術面のみならず挨拶や礼儀作法といった野球以外の部分にも力を入れる。部員は男子108名、女子マネージャー2名の計110名。ほとんどが県内出身で横浜市南部・横須賀市出身が多く、専用寮を持たず全員が自宅から通学。「地元から愛されるチーム」を掲げる。
+
+### 平塚学園高等学校
+
+1998年の第80回全国高等学校野球選手権大会に出場し、初出場初勝利で九州学院に10-9で勝利、2回戦へ進出した実績を持つ。2026年春季神奈川県大会は3回戦で敗退したが、2024年度秋季大会では3位に入り関東大会に出場。2023年度は春季・夏季・秋季いずれもベスト16に進んでいる。「全国一の激戦区」神奈川に位置する強豪校で、モットーは「日本一」を目指し"「愛されるチーム」「信頼される人間」になる"こと。湘南研修センターを練習拠点に、ウェイトトレーニングとメンタルトレーニングを重視している。
+
+## 過去の対戦成績
+
+2026年4月11日、いせはらサンシャイン・スタジアムで行われた春季神奈川県大会3回戦で対戦し、横浜創学館が平塚学園を7-0で下している。
+
+## 今大会の状況
+
+第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式、7月7日に開幕。172チーム(連合5チーム含む)が出場し、決勝は7月26日に行われる。横浜創学館は今春の県大会成績により第1シードを獲得。平塚学園はノーシードながら7月8日の1回戦で高津・横浜旭陵を10-0で下し、2回戦へ駒を進めた。
+
+## 注目選手
+
+### 上村怜央(横浜創学館・投手・2年)
+- 今大会成績: 春季神奈川大会準決勝の慶応戦に先発登板し、7回1失点。スプリットを武器に三振を奪う投球を見せた
+- 最速143km/hの2年生右腕。軟式野球から硬式球に転向後、急速に力をつけ、春季大会では継投の中心を担った
+
+### 稲嶺啓(横浜創学館・投手・3年)
+- 今大会成績: 春季大会で関東大会出場に貢献し、継投を組む主要メンバーの一人
+- 最速145km/h程度の力強い球を投げ込む3年生右腕。投手陣の柱
+
+### 高田和音(横浜創学館・内野手・3年)
+- 今大会成績: 春季決勝は四番・一塁で出場し、初回に適時打。今年の出場5試合ではチーム四番を務める
+- 右打の3年生一塁手。春季決勝では四番として起用され、チームの主要打者に名を連ねる
+
+### 川崎進太朗(横浜創学館・投手・指名打者・3年)
+- 今大会成績: 投打二刀流で活躍し、最速143km/h。春季大会ではDHや一番打者としても起用された
+- 投げても打っても持ち味を発揮する3年生。多彩な役割をこなすユーティリティプレーヤー
+
+## 関連動画
+
+- [慶應義塾 vs 横浜創学館 関東大会出場をかけて激突!【高校野球 春季神奈川大会 準決勝 全打席ハイライト】](https://www.youtube.com/watch?v=2z-xF0iu8Dk)
+- [横浜 vs 横浜創学館 5季連続Vか!?初優勝か!?【高校野球 春季神奈川大会 決勝 全打席ハイライト】](https://www.youtube.com/watch?v=u-6ILp-E-Uk)
+- [高校野球 神奈川大会開会式 激戦区・神奈川の夏が開幕!甲子園を目指す183校172チームがハマスタに集結!](https://www.youtube.com/watch?v=lebr9u0gKo8)
+
+## ストーリー・見どころ
+
+この一戦、両校のベンチに目を向けると共通点が浮かび上がる。横浜創学館を率いる森田誠一監督は横浜高校OBで、指揮官として臨んだ2008年と2021年の夏の決勝、そして2026年春の決勝でも、いずれも母校・横浜の前に涙をのんできた。一方の平塚学園も直近の壁は横浜だ。2013年夏の決勝で0-3の完封負けを喫し、2025年夏の準々決勝では9回2死まで横浜を追い詰めながらサヨナラ負け。両者にとって横浜は幾度となく夏の道を阻んできた存在であり、そこへ挑む前哨戦としてこの2回戦を見る面白さがある。
+
+平塚学園の八木崇文監督の経歴も興味深い。神奈川の法政二高で投手として甲子園を目指した後、三重の津田学園で23歳の若さで監督に就任すると、翌年の選抜でいきなり甲子園初勝利を挙げている。2008年に平塚学園の監督に就任して以来、湘南研修センターを拠点にウェイトとメンタル両面を鍛え上げ、「日本一」を掲げるチームを作り上げてきた。甲子園で勝った経験を持つ指揮官と、指揮官としては甲子園未勝利のまま35年目を迎えるベテラン・森田監督との采配比べも見どころの一つとなる。
+
+平塚学園にとって唯一の甲子園出場である1998年は、神奈川が東西2代表制を敷いた記念大会の年。西神奈川代表として初出場だった。横浜創学館にはNPBのシーズン最多安打記録保持者・秋山翔吾を輩出した歴史もあり、両校とも県内屈指の伝統と実績を積み重ねてきた学校同士の対戦と言える。
+
+投打では横浜創学館の充実ぶりが目を引く。春の準決勝で慶応打線を7回1失点に抑えた2年生右腕・上村怜央、最速145km/hを誇る3年生右腕・稲嶺啓、そして投打二刀流でチームを支える川崎進太朗と、投手陣の層は厚い。打線でも四番を担う高田和音がおり、春季大会で平塚学園に7-0で勝った実績を持つチームがどこまで攻守で圧倒できるか。対する平塚学園は1回戦で高津・横浜旭陵を10-0と圧倒しての勢いを持って乗り込んでくる。両校の力量差を占う意味でも、保土ケ谷球場の一戦は注目に値する。
+
+## 出典
+
+https://so-gakukan.ed.jp/school_life/club/s_koushiki/
+https://www.hiragaku.ac.jp/hs/club_activities/club_01_baseball/
+https://www.kanagawa-baseball.com/sokuho/isehara/2026-0411-0930/
+https://sports.yahoo.co.jp/column/detail/2024070300005-spnavi
+https://www.kyureki.com/player/211511/
+https://timely-web.jp/article/762/
+https://www.townnews.co.jp/0605/2017/08/10/394085.html
+https://monthly-charge.com/2024%E5%B9%B42%E6%9C%88%E5%8F%B7/16496
+https://data-man.com/kokoyakyu/school/school.php?s_id=04190016
+https://baseball-memories.jp/archives/9238
+https://full-count.jp/2025/07/22/post1796468/
+https://baseball-memories.jp/archives/89045
+https://www.jhbf.or.jp/sensyuken/outing/76-80.html
+https://ja.wikipedia.org/wiki/全国高等学校野球選手権神奈川大会
+https://www.kanagawa-baseball.com/summer/20c/
+https://ja.wikipedia.org/wiki/秋山翔吾
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1269021.html
+</script>
+
+<script type="text/plain" id="report-g2">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+
+### 日大
+
+日本大学高等学校は横浜市港北区にある文武両道の進学校。2025年春季大会で9年ぶりのベスト8進出を果たすと、同年夏の大会でも4回戦で慶應を7回コールドで破りベスト8まで勝ち上がった。秋季大会もベスト16に進出するなど、近年着実に力をつけている。エースの新田力輝投手を中心に、スター選手に頼らず全員で戦うスタイルが持ち味。2026年夏大会はノーシードでの出場となる。
+
+### 松陽
+
+神奈川県立松陽高等学校は横浜市泉区の県立共学校。ロングティーで鍛え上げた打線が武器で、2024年選手権大会では4回戦まで進出した実績を持つ。2025年夏大会は2回戦で横浜翠嵐に3-5で惜敗、秋季地区予選も2勝1敗ながら得失点差で敗退と、あと一歩で上位に届かないシーズンが続く。2026年春季大会は2回戦で慶応藤沢に敗れたが、今大会は1回戦で平塚工科を14-4で下し初戦を突破。2026年夏大会はノーシードでの出場。
+
+## 今大会の状況
+
+第108回全国高等学校野球選手権神奈川大会。松陽は7月7日の1回戦で平塚工科を14-4で撃破し、打線の勢いそのままに2回戦へ進出。日大はこの試合が初戦となる。両校ともノーシードから勝ち上がりを目指す一戦で、7月10日11時30分にサーティーフォー保土ケ谷球場で対戦する。
+
+## 注目選手
+
+### 新田力輝(日大・投手・2年)
+
+- 身長185cmの右腕投手
+
+## 関連動画
+
+- [バーチャル高校野球公式チャンネル](https://www.youtube.com/@virtual_kokoyakyu) — 高校野球関連企画動画・試合配信情報
+
+## ストーリー・見どころ
+
+初戦から打線が14得点と爆発した松陽と、昨夏・昨秋で着実に勝ち星を重ねてきた日大。ともにノーシードの立場から公式戦を勝ち上がってきた両校が、2回戦で正面からぶつかる。
+
+松陽はロングティーで磨いた一発力のある打線が持ち味で、この日も初戦の勢いを持ち込めるかが鍵。対する日大は185cmの右腕・新田力輝を軸にした守りを固めつつ、昨年夏に慶應を7回コールドで下した勝負強さを見せられるか。ノーシード校同士の一戦だけに、初戦を勝ち上がった側の流れがそのまま試合を左右しそうだ。
+
+## 出典
+
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://hiyosi.net/2025/04/28/koko_yakyu2025-4/
+https://www.pen-kanagawa.ed.jp/shoyo-h/seikatsu/club/baseball-taikaikekka-aki.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287343.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1185546.html
+https://sports.yahoo.co.jp/livestream/vk
+</script>
+
+<script type="text/plain" id="report-g3">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+- [スポーツブル](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 立花学園
+神奈川県足柄上郡松田町に所在。「打」を看板とするチームで、上位打線の破壊力は県内屈指。部員は男子107名、女子9名を数え、大井総合グラウンドを拠点に月曜休みの週6日体制で汗を流す。指揮を執るのは2017年に30歳の若さで就任した志賀正啓監督。データやSNSを積極活用する革新派で、掲げるスローガンは「革命」。全国制覇を見据えながら、新しい高校野球の形を模索し続けている。近年は2022年夏(第104回選手権神奈川大会)で創部初のベスト4進出を果たすと、同年春もベスト8。2025年秋季大会でもベスト4まで勝ち上がり、前回2025年夏(第107回選手権神奈川大会)はベスト4だった。今大会は第2シード。
+
+### 藤沢清流
+神奈川県藤沢市に所在。2010年の学校統合により誕生した比較的新しい公立校。チームスローガンは「清流PRIDE! 〜魂の一球を追いかけて〜」。過去最高成績は2022年夏の第104回選手権神奈川大会でのベスト8で、2023年は3回戦、2024年は4回戦、2025年は3回戦とここ数年は着実に力をつけてきた。2026年はこの過去最高に並ぶベスト8進出を目標に掲げる。なお本校は深沢高校との統合により、2026年夏が現校名で戦う最後の大会。2027年4月からは「藤沢東高校」として新たなスタートを切る予定で、清流の名を背負って戦えるのはこの夏が最後となる。今大会はノーシード。
+
+## 過去の対戦成績
+両校は幾度となく対戦を重ねてきた間柄で、なかでも2022年は春夏ともに準々決勝で顔を合わせ、いずれもサヨナラ決着という激闘を演じている。
+
+- **2022年7月22日 第104回選手権神奈川大会準々決勝(横浜スタジアム)**:立花学園 3-2 藤沢清流(延長11回)。1死満塁からフルカウントで高橋琉吉(2番・3年内野手)が右前へ勝ち越し打を放ちサヨナラ勝ち。この試合を制した立花学園は創部初のベスト4進出を決めた。藤沢清流は当時プロ注目の二刀流投手・木島直哉が先発した。
+- **2022年4月23日 春季神奈川県大会準々決勝(保土ケ谷球場)**:藤沢清流 4x-3 立花学園。9回裏2死二・三塁から代打・樫山航陽(3年)がサヨナラ打を放ち、藤沢清流が創部初のベスト4進出を果たした。夏の準々決勝は、この春の借りを返す形となった。
+- **2020年**:立花学園 11-1 藤沢清流(6回コールド)。
+- **2017年7月19日 第99回選手権神奈川大会3回戦(大和球場)**:藤沢清流 0-8 立花学園(7回コールド)。
+
+通算では立花学園が対戦成績で優位に立ち、とりわけ夏の大会では強さを見せている。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は7月7日に開幕、決勝は7月26日に予定されている。172チーム(連合5チームを含む)が参加し、組み合わせ抽選は6月13日に行われた。2026年春季県大会の成績により、立花学園は第2シードに位置づけられている一方、藤沢清流はノーシードでの出場。藤沢清流は1回戦(7月7日、小田原球場)で高浜に10-0で快勝し、勢いを持って2回戦に臨む。
+
+## 注目選手
+### 根本奨大(立花学園・投手・3年)
+- 右投げ右打ち、最速141km/hのストレートに加え鋭い変化球を武器とする。精神的なタフネスと試合の中で学ぶ姿勢が評価されており、背番号1を背負う立花学園のエース。
+
+## 関連動画
+- [立花学園 応援メドレー 第2シード初戦から応援団集結!ブラバン&チアも勢ぞろい! 立花学園 vs 県川崎 2025.7.12 第107回全国高校野球選手権 甲子園](https://www.youtube.com/watch?v=3e9ZYJL25tY)
+- [横浜高校 vs 立花学園 センバツ王者横浜・Wエース今大会初登板! 【高校野球 春季神奈川大会 準々決勝 全打席ハイライト】 2025.4.26](https://www.youtube.com/watch?v=oTYfUVttj1w)
+- [立花学園VS東海大相模【神奈川県高校野球 秋季大会】【完全版】](https://www.youtube.com/watch?v=imQQTquTYC4)
+- [【2025春季神奈川県大会】藤沢清流vs住吉 全イニングハイライト](https://www.youtube.com/watch?v=q_P-2U6OG7Q)
+- [藤沢清流VS柏陽【神奈川県夏季大会】【完全ノーカット版】](https://m.youtube.com/watch?v=25qzXrxYC5A)
+- [藤沢清流はプロ注目の二刀流木島直哉投手を封印!試合は終盤にドラマチックな展開に!百合丘vs藤沢清流 【全国高校野球選手権 神奈川大会 4回戦】](https://www.youtube.com/watch?v=4vXnJj1cf5c)
+
+## ストーリー・見どころ
+第2シードの立花学園と、初戦を大勝で突破したノーシードの藤沢清流が激突する2回戦。立花学園は「打」の看板通り上位打線の破壊力で押し切りたいところで、エース根本奨大が試合をどう作るかが焦点になる。対する藤沢清流は高浜戦の10-0という結果が示す通り、初戦から仕上がりの良さをうかがわせており、勢いそのままに格上に挑む一戦となる。
+
+両校の対戦といえば、2022年の記憶が色濃い。春の準々決勝では藤沢清流が代打・樫山航陽のサヨナラ打で創部初のベスト4をつかみ取ると、その借りを返すように迎えた夏の準々決勝では、延長11回に立花学園の高橋琉吉が値千金の勝ち越し打を放ってサヨナラ勝ち。立花学園にとってもこちらが創部初のベスト4進出だった。あのとき藤沢清流の先発マウンドに立っていたのが、プロ注目の二刀流投手として名を馳せた木島直哉である。同じ年に2度、それぞれの校史に刻まれる白星をサヨナラで分け合った両校が、再びぶつかる。
+
+シードの構図にも面白い変化がある。4年前の2022年夏は公立の藤沢清流が第1シード、立花学園が第2シードという立場だったが、今回はそれが入れ替わり、立花学園が第2シードとして優位に立つ。上位進出校としての重圧を背負う立花学園と、ノーシードから挑む藤沢清流という構図は、あの夏の再現でもあり、逆転の物語でもある。
+
+藤沢清流にとって、この夏には特別な重みがある。深沢高校との統合により、2027年4月からは「藤沢東高校」として新たな一歩を踏み出す予定であり、「藤沢清流」の名を背負って戦えるのはこの夏が最後となる。過去最高のベスト8を、現校名最後の夏に更新できるか。清流の誇りを胸に戦う選手たちの姿は、見る者の心を打つはずだ。
+
+一方の立花学園は、スローガン「革命」を掲げ、全国制覇を見据えて歩みを進めてきたチーム。2025年秋にはベスト4まで勝ち上がっており、その勢いをこの夏にもつなげられるかが問われる。幾度となくサヨナラ劇を演じてきた両校が迎える一戦は、単なる2回戦を超えた意味を持つ、目の離せない試合になりそうだ。
+
+## 出典
+https://tachibana-g.ac.jp/school-life/club/baseball/
+https://tachibana-g.ac.jp/
+https://ja.wikipedia.org/wiki/立花学園高等学校
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1283844.html
+https://www.townnews.co.jp/0601/2026/06/26/841937.html
+https://hujisawaseiryubbc.wixsite.com/hujisawaseiryubbc/home
+https://baseball-memories.jp/archives/69307
+https://baseball-memories.jp/archives/category/kanagawa/area-seisho/tachibana-gakuen
+https://baseball-memories.jp/archives/category/kanagawa/area-shonan/fujisawa-seiryu
+https://www.hb-nippon.com/tournaments/1566
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-925859.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-925793.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-925872.html
+https://www.townnews.co.jp/0601/2022/04/29/623400.html
+https://home.kingsoft.jp/news/sports/nikkansports/202207220001478.html?from=sitemap
+https://baseball-memories.jp/archives/64306
+https://sportiva.shueisha.co.jp/clm/baseball/hs_other/2022/02/07/post_2/
+https://www.townnews.co.jp/0601/2022/06/17/630047.html
+https://www.kyureki.com/player/230054/
+https://news.goo.ne.jp/article/sponichi/sports/npb/sponichi-spngoo-20220723-0046.html
+https://www.daily.co.jp/baseball/2022/07/22/0015493219.shtml?pg=2
+https://tp-bb.jp/announce/370
+https://tp-bb.jp/announce/371
+https://monthly-charge.com/charge/6312/
+https://www.nikkei.com/article/DGKKZO59641930R00C22A4XXA000/
+</script>
+
+<script type="text/plain" id="report-g4">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### サレジオ学院
+2026年の野球部員は11人。2025年(第107回)夏の神奈川大会は1回戦を突破し、2回戦で関東学院と対戦。8回表までリードしながら8回裏に追いつかれ、9回裏に勝ち越しを許して5-6で敗れた。
+
+### 厚木
+2026年夏の大会は7月8日の1回戦で光明相模原と対戦し、3-2で逆転勝利。相模原ギオンベースボールパークでの接戦を制し、2回戦に駒を進めた。前年(2025年)は1回戦で百合丘に2-0、2回戦で鎌倉に4-3と勝ち進んだが、3回戦で横浜南陵に6-16で敗れている。シード校には選ばれていない。
+
+## 過去の対戦成績
+2024年7月10日、第107回全国高校野球選手権神奈川大会2回戦で両校は対戦。会場は今回と同じバッティングパレス相石スタジアムひらつかで、厚木が9回に一挙4得点を挙げてサレジオ学院を7-3で下した。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式を行い、7月7日開幕。172チームが参加し、決勝は7月26日。両校ともシード校ではない。厚木は7月8日の1回戦で光明相模原に3-2で逆転勝利し、2回戦進出を決めた。サレジオ学院と厚木は7月10日11時30分、バッティングパレス相石スタジアムひらつかで対戦する。
+
+## 注目選手
+### 飯島(厚木高校・4番)
+- 今大会成績: 1回戦(光明相模原戦)で2点適時打を放ち、チームの逆転勝利に貢献
+
+### 柴田(厚木高校・左翼手)
+- 今大会成績: 1回戦(光明相模原戦)、7回2死二塁の場面で左翼線への飛球を好捕。「落ちれば長打コースだけに、絶対にピッチャーを助ける気持ちで手を伸ばした」と振り返っている
+
+## 関連動画
+- [【高校野球 神奈川大会開会式】激戦区・神奈川の夏が開幕!甲子園を目指す183校172チームがハマスタに集結! 2026.7.5](https://www.youtube.com/watch?v=lebr9u0gKo8)
+
+## ストーリー・見どころ
+2年前の同じ舞台で、厚木が土壇場の逆転劇を演じた記憶が残る一戦。第107回大会2回戦、バッティングパレス相石スタジアムひらつかで相まみえた両校は、厚木が9回に一挙4得点を挙げて7-3で競り勝った。あれから2年、舞台は再び同じ球場に戻る。
+
+厚木は1回戦の光明相模原戦を3-2の接戦で制し、勢いに乗って2回戦に臨む。4番・飯島の勝負強い一打、好守で流れを引き寄せた柴田の存在感は大きい。サレジオ学院は昨夏、2回戦で終盤に追いつかれ、逆転負けを喫した苦い経験を持つ。初戦を突破した両校が、どちらが最後まで集中力を保てるか注目の一戦となる。
+
+## 出典
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287229.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284802.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1092410.html
+https://www.salesio-gakuin.ed.jp/blog/diario/32454.html
+https://www.kyureki.com/koko/92/6718/
+https://www.kyureki.com/koko/92/2374/
+https://www.kyureki.com/score/531871/
+https://www.kanagawa-baseball.com/
+https://www.hb-nippon.com/tournaments/1566
+https://baseball.yahoo.co.jp/hsb/teams/21494/top
+</script>
+
+<script type="text/plain" id="report-g5">
+## 放送・配信情報
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+
+### 横浜隼人
+2026年春季神奈川県大会はベスト16。4回戦で桐光学園に0-10で敗れた。2025年秋季神奈川県大会ではベスト4に進出しており、投手陣が充実した伝統校として知られる。今大会は第3シードに入り、2回戦からの登場となる。
+
+### 七里ガ浜
+神奈川県鎌倉市に所在する県立校。2025年秋季神奈川県大会は3回戦まで進んだ。今大会は1回戦で横浜瀬谷を5-0で下し、2回戦に駒を進めた。「日々成長」「完全燃焼」をチーム目標に掲げる。
+
+## 過去の対戦成績
+2014年、第96回全国高等学校野球選手権神奈川大会3回戦で対戦。横浜隼人が7回コールドで勝利している。この試合では横浜隼人が柏原・和田の両投手を起用、七里ガ浜は高島投手が登板。横浜隼人は手塚・森山が本塁打を放った。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式が行われ、7月7日に開幕。172チーム(連合5チーム含む)が出場し、決勝は7月26日に予定される。横浜隼人は2026年春季県大会の成績により第3シードを獲得し、2回戦からの登場。七里ガ浜は7月7日の1回戦で横浜瀬谷を5-0で下して勝ち上がってきた。両校は7月10日9時、大和スタジアムで2回戦を戦う。
+
+## 関連動画
+- [横浜隼人高校硬式野球部 第107回選手権大会2回戦ハイライト](https://www.youtube.com/watch?v=BEmnd8263W8)
+- [桐光学園vs横浜隼人 高校野球春季神奈川大会4回戦全打席ハイライト 2026.4.18](https://www.youtube.com/watch?v=IF1beRvSebk)
+- [横浜隼人高校硬式野球部 第107回選手権大会4回戦ハイライト](https://www.youtube.com/watch?v=_xKCbCXwzGo)
+- [横浜隼人高校硬式野球部 第107回選手権大会3回戦ハイライト](https://www.youtube.com/watch?v=C6vu-Uu0K3I)
+
+## ストーリー・見どころ
+第3シードの横浜隼人と、1回戦を5-0快勝で突破した七里ガ浜の一戦。横浜隼人は春の県大会でベスト16、秋はベスト4と安定した戦績を残しており、投手力を軸にした試合運びが持ち味だ。対する七里ガ浜は初戦の完封勝利で勢いに乗る。
+
+両校は2014年の選手権神奈川大会3回戦でも対戦しており、その際は横浜隼人が7回コールドで勝利している。シード校の貫禄と初戦を突破した勢いがぶつかる一戦、大和スタジアムでの立ち上がりの入り方に注目したい。
+
+## 出典
+https://www.hayato.ed.jp/annai/club/hs-baseball/
+https://www.pen-kanagawa.ed.jp/shichirigahama-h/seikatsu/yakyuubu.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284801.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287343.html
+</script>
+
+<script type="text/plain" id="report-g6">
+## 両校プロフィール
+### 大和
+神奈川県立大和高等学校は大和市に位置する公立校。2025年秋季県大会では秦野曽屋・二宮・足柄連合に4-1で勝利し初戦を突破したが、2回戦で平塚学園に0-8で敗退した。第108回大会ではシード校に入っておらず、横浜清陵ブロックからの勝ち上がりを目指す。部員は3年生9名、2年生12名、1年生5名(マネージャー3名含む)の計26名。
+
+### 津久井浜
+神奈川県立津久井浜高等学校は横須賀市津久井に位置する公立校。第108回大会の1回戦(7月7日・横須賀スタジアム)で百合丘を7-0で下し、初戦を突破した。シード校ではなく、大和と同じ横浜清陵ブロックに属する。部員は3年生6名、2年生11名(女子マネージャー1名含む)、1年生8名(女子マネージャー1名含む)。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式が行われ、7月7日に開幕。決勝は7月26日に予定されている。大和・津久井浜の2回戦は7月10日(金)11時30分から大和スタジアムで実施。大和が一塁側、津久井浜が三塁側に入る。両校ともにシード校ではなく、横浜清陵ブロックでの一戦となる。
+
+## 注目選手
+### 川崎(津久井浜・投手・1年生)
+- 今大会成績: 1回戦(7月7日・対百合丘)で7回無失点
+- 公式戦初登板ながら百合丘打線を7回無失点に抑え、津久井浜の初戦突破を投手として支えた1年生
+
+## ストーリー・見どころ
+ともにシード校ではない大和と津久井浜が、横浜清陵ブロックの2回戦で顔を合わせる。津久井浜は1回戦で百合丘を7-0の完封で下しており、その立役者となったのが1年生投手・川崎だ。公式戦初登板で7回無失点という結果を残し、早くもチームの柱としての期待がかかる。一方の大和は昨秋の県大会で初戦を突破しながら2回戦で平塚学園に0-8と大敗しており、今大会でその悔しさを晴らせるかが焦点となる。両校とも大きな注目を浴びる存在ではないが、初戦を勝ち上がった津久井浜の勢いと、雪辱を期す大和の意地がぶつかる一戦になりそうだ。
+
+## 出典
+https://www.pen-kanagawa.ed.jp/yamato-h/seikatsu/bukatsu/athletics/baseball/top.html
+https://www.pen-kanagawa.ed.jp/tsukuihama-h/seikatsu/bukatsu/baseball.html
+https://baseball.omyutech.com/teamGames.action?teamId=12273
+https://baseball.omyutech.com/teamTop.action?teamId=12217
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+https://kanagawa-hbf.sakura.ne.jp/2026/?result-hard_=prefecture-summer
+https://www.kanagawa-baseball.com/summer/2026/
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://baseball.yahoo.co.jp/hsb/teams/21582/results/game
+</script>
+
+<script type="text/plain" id="report-g8">
+## 放送・配信情報
+**TV放送**
+- [かながわCATV情熱プロジェクト](https://kjproject.com/koukou-yakyu2026/) `LIVE`
+- イッツコムチャンネル `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+
+### 相模原城山
+
+神奈川県相模原市緑区に所在する県立高校。野球部は同校専用の県立野球グラウンドを持ち、県内でも恵まれた練習環境を誇る。2025年夏の第107回大会では3回戦で相模田名に16-6で勝利し4回戦に進出したが、横浜に0-9で敗れた。今大会の部員25名は全員が相模原市出身で、「本気」をモットーにフルスイングを持ち味とする強力打線が売りだ。1回戦を突破し、2回戦に駒を進めている。
+
+### 大和西
+
+神奈川県大和市南林間に所在する県立高校。野球部は「全力プレーで攻め勝つチーム」をスローガンに掲げ、打撃では低く強い打球を重視する。2025年春季大会では2回戦で湘南学院に0-10の7回コールドで敗退。迎えた今大会の7月8日の1回戦では幸を18-3の5回コールドで下し、4年ぶりとなる夏季大会での勝利を挙げた。
+
+## 今大会の状況
+
+第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式、7日に開幕。連合5チームを含む172チームが参加する激戦区の頂点を目指す。相模原城山、大和西ともにシード校ではなく、ともに1回戦を突破しての2回戦進出。7月10日に相模原ギオンベースボールパークで対戦する。
+
+## 関連動画
+
+- [相模原城山VS桐光学園【春季大会】【4K 完全ノーカット版】](https://www.youtube.com/watch?v=W3NRv8WTWgE)
+- [【高校野球 応援】横浜高校 応援メドレー 横浜高校 vs 相模原城山 高校野球 神奈川大会4回戦 2025.7.18](https://www.youtube.com/watch?v=0NdVVL-ZQs4)
+- [横浜高校 vs 相模原城山 横浜のエース奥村頼人が今夏初登板!圧巻の奪三振ショー!【高校野球 神奈川大会 4回戦 全打席ハイライト】 2025.7.18](https://www.youtube.com/watch?v=5dauTU8z2wg)
+- [【高校野球 神奈川大会開会式】激戦区・神奈川の夏が開幕!甲子園を目指す183校172チームがハマスタに集結! 2026.7.5](https://www.youtube.com/watch?v=lebr9u0gKo8)
+
+## ストーリー・見どころ
+
+昨夏4回戦まで勝ち上がった相模原城山の強力打線と、4年ぶりの夏季大会勝利で勢いに乗る大和西。専用グラウンドを拠点に鍛え上げたフルスイング打線を持つ相模原城山に対し、大和西は低く強い打球を軸にした堅実な野球で1回戦を5回コールドの快勝で飾った。
+
+両校ともシードなしの立場から白星を重ねての2回戦進出だけに、勢いをつかんだ側が上位進出への弾みをつける一戦となる。相模原ギオンベースボールパークでの熱戦に注目したい。
+
+## 出典
+
+https://www.townnews.co.jp/0301/2026/07/02/843174.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284802.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287343.html
+https://www.kanagawa-baseball.com/sokuho/sagamihara/
+https://baseball.yahoo.co.jp/hsb/teams/23721/top
+https://baseball.omyutech.com/teamGames.action?teamId=12189
+https://baseball.omyutech.com/teamTop.action?teamId=12275
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1088414.html
+https://www.kanagawa-baseball.com/summer/2026/
+https://www.hb-nippon.com/teams/1966
+https://www.hb-nippon.com/teams/1880
+https://www.pen-kanagawa.ed.jp/s-shiroyama-h/bukatsu/baseball.html
+https://www.pen-kanagawa.ed.jp/yamatonishi-h/seikatsu/sportsclub.html
+</script>
+
+<script type="text/plain" id="report-g9">
+## 両校プロフィール
+
+### 横浜清陵
+横浜市南区に所在する県立校で、今大会は第3シード。3年連続でシード権を獲得している。2025年春の選抜大会には21世紀枠で初出場を果たしたが1回戦で広島商に敗退、同年夏も4回戦で敗れた。2026年春季県大会では4回戦で慶応に2-12で敗退している。
+
+### 麻溝台
+相模原市南区の県立校で、今大会はノーシードから1回戦を突破。2021年夏にはベスト16まで勝ち上がった実績を持つ。2024年夏は4回戦、2025年夏は3回戦でそれぞれ敗退し、2026年春季県大会も日大藤沢に2-7で敗れた。迎えた今大会初戦の7月7日、追浜相手に4-3で競り勝ち2回戦進出を決めている。
+
+## 今大会の状況
+
+横浜清陵は第3シードとして2回戦から登場。麻溝台は7月7日の1回戦、俣野公園横浜薬大スタジアムで追浜と対戦し、エース夏目が3失点完投で4-3の接戦を制して初戦を突破した。両校は7月10日9時、横須賀スタジアムで2回戦を戦う。
+
+## 注目選手
+
+### 夏目(麻溝台・投手)
+- 1回戦の追浜戦で3失点完投、4-3の勝利を導いた
+
+## 関連動画
+
+- [いざセンバツへ!大会直前の横浜高校＆横浜清陵高校に聞く【News Linkオンライン】](https://www.youtube.com/watch?v=IBCdiJ_4iKw)
+- [横浜清陵エース兼マネジャーの１日に密着 甲子園に挑む県立校の「自治」に迫る 甲子園にかける 第15回](https://www.youtube.com/watch?v=cBESJ8mtf1Q)
+- [【高校野球 神奈川大会開会式】激戦区・神奈川の夏が開幕!甲子園を目指す183校172チームがハマスタに集結! 2026.7.5](https://www.youtube.com/watch?v=lebr9u0gKo8)
+
+## ストーリー・見どころ
+
+3年連続シード入りの実力校・横浜清陵と、初戦を1点差でもぎ取った麻溝台の一戦。横浜清陵は21世紀枠での選抜出場も経験する公立の雄として貫禄の2回戦からの登場、対する麻溝台はエース夏目の完投で追浜を振り切り勢いに乗る。
+
+シードの看板を持つ横浜清陵に、初戦を接戦でものにした麻溝台がどこまで食らいつくか。夏目の粘りの投球が2回戦でも続くのか、横須賀スタジアムでの一戦に注目だ。
+</script>
+
+<script type="text/plain" id="report-g10">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 大和東・相模向陽館
+神奈川県立大和東高等学校(大和市)と神奈川県立相模向陽館高等学校(座間市)による連合チーム。選手不足の小規模校が力を合わせて夏の大会に臨む仕組みで、今大会は県内16校が5つの連合チームを編成しており、本チームもそのひとつ。
+
+### 浅野
+横浜市神奈川区に所在する私立高校。2025年秋季県大会では初戦で七里ガ浜を破ったものの、2回戦で横浜に0-10のコールド負けを喫している。今大会は無シードからの出場となる。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は172チーム(連合5チームを含む)が参加。7月5日に横浜スタジアムで開会式、7月7日に開幕し、決勝は7月26日に予定されている。シード校は第1シードの横浜・横浜創学館・桐光学園・慶応をはじめ計16校が出そろっているが、大和東・相模向陽館、浅野ともにシード校には入っていない。なお今春の県大会は横浜が優勝、横浜創学館が準優勝している。
+
+## 関連動画
+- [神奈川県立大和東高等学校 - YouTube](https://www.youtube.com/@%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E7%AB%8B%E5%A4%A7%E5%92%8C%E6%9D%B1%E9%AB%98%E7%AD%89)
+- [横浜高校VS浅野高校全打席ダイジェスト【2025秋季高校野球神奈川県大会】](https://www.youtube.com/watch?v=0_a9j-TVWFw)
+
+## ストーリー・見どころ
+ともにノーシードで挑む一戦。連合チームの大和東・相模向陽館は、限られた部員数の中でチームを組み上げてこの舞台に立っており、一つ勝ち上がるごとにその意義は大きくなる。対する浅野は昨秋、横浜相手にコールド負けを喫した悔しさを糧に、この夏どこまで立て直せるかが問われる。
+
+シード校同士の激突とは違う、地力と勢いがものを言う一戦になりそうだ。横須賀スタジアムでどちらが夏を勝ち抜くか、注目したい。
+
+## 出典
+https://www.townnews.co.jp/0401/2026/06/20/841830.html
+https://data-man.com/kokoyakyu/school/school.php?s_id=03140012
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1268715.html
+https://www.kanagawa-baseball.com/spring/2026/
+https://baseball-memories.jp/archives/category/kanagawa/rengo
+https://www.kyureki.com/koko/92/4628/
+https://www.pen-kanagawa.ed.jp/yamatohigashi-h/
+https://www.pen-kanagawa.ed.jp/sagamikoyokan-h/
+https://kanagawa-hbf.sakura.ne.jp/
+https://www.kyureki.com/koko/92/4628/2025/game/
+</script>
+
+<script type="text/plain" id="report-g11">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+- [かながわCATV情熱プロジェクト](https://kjproject.com/koukou-yakyu2026/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+
+### 茅ケ崎北陵
+
+公立の進学校で、「進学校で野球やるなら北陵」をスローガンに掲げる。部員は男子29名・女子5名の計34名と少数ながら、平日4日と土日を活動日に据えて練習を積む。2025年秋季県大会では5年ぶりに本戦へ進出しベスト16入り。3回戦で横浜商業に4-0で勝利したが、4回戦で日大藤沢に1-8で敗れた。2025年春季県大会は2回戦で三浦学苑に3-2で惜敗している。
+
+### 藤沢西
+
+公立校でありながら強豪私学を苦しめる「私学キラー」の異名を持つ。指揮を執るのは三宅裕太監督で、打球方向を予測して守備を誘導する「60度の守備シフト」がチームの武器。2025年春季県大会は湘南工科大学附属に延長10回9-10で惜敗するなど上位校との接戦を演じ、2025年夏季県大会は2回戦で麻溝台に4-3で敗れた。「全員戦力」をテーマに個々の特長を見極めたトレーニングを重ね、今大会はベスト16を目標に掲げる。
+
+## 今大会の状況
+
+第108回全国高等学校野球選手権神奈川大会は172チーム(連合5チーム含む)が参加。7月5日に横浜スタジアムで開会式が行われ、7月7日に開幕した。決勝は7月26日。茅ケ崎北陵・藤沢西とも第1〜第3シード校には入っていないノーシード同士の対戦で、両校ともに1回戦を突破して2回戦へ進出した。
+
+## 注目選手
+
+### 馬場龍之介(茅ケ崎北陵・投手・1年)
+- しなやかな腕の振りからキレのあるストレートを投げ込むエース格
+- 現在最速130キロ、夏までに140キロを目指す
+
+### 濵田遼太朗(茅ケ崎北陵・遊撃手兼投手・2年)
+- 主将を務める、走攻守が揃った県屈指のアスリート
+- 本職は遊撃手だが投手としても最速135キロをマークする二刀流
+
+### 小峰泰輔(茅ケ崎北陵・捕手・2年)
+- 県立屈指の捕手として4番を任される
+- 強肩が武器で、二塁送球1.9秒台をマークする強打・強肩の女房役
+
+## 関連動画
+
+- [県立藤沢西高校野球部44期(2018～2019)](https://www.youtube.com/channel/UCqdltUn-t2zk--CmTWS9nsw)
+- [藤沢西高校関連YouTube](https://www.youtube.com/channel/UCpj_nD9850tykDqIrjtIXdg)
+
+## ストーリー・見どころ
+
+5年ぶりの秋季県大会ベスト16入りで勢いに乗る茅ケ崎北陵と、「私学キラー」の名の通り上位校相手に接戦を演じてきた藤沢西。ともにシードなしの立場から1回戦を突破しての2回戦だけに、両者譲らぬ展開が予想される。
+
+注目は茅ケ崎北陵の投打の中心を担う3人。最速130キロを投げるエース馬場に加え、遊撃と投手をこなす二刀流の主将・濵田、強肩強打の捕手・小峰が脇を固める布陣は、少数精鋭ながら侮れない。対する藤沢西は三宅監督が仕込む「60度の守備シフト」というデータ分析型の守りが持ち味で、接戦をものにしてきた勝負強さが光る。ノーシード対決の行方が、大会中盤に向けた台風の目を占う一戦になりそうだ。
+
+## 出典
+
+https://www.pen-kanagawa.ed.jp/chigasakihokuryo-h/seikatsu/baseball.html
+https://monthly-charge.com/charge/1610/
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1184235.html
+https://www.pen-kanagawa.ed.jp/fujisawanishi-h/seikatsu/kaiso2/baseball/senseki.html
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://www.kanagawa-baseball.com/summer/2026/
+</script>
+
+<script type="text/plain" id="report-g12">
+## 放送・配信情報
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+
+### 座間総合
+
+座間総合高校(神奈川県座間市)は上溝高校との合同チームで、部員7名という少人数で今大会に挑む。2025年夏は3回戦まで進出し、2回戦で津久井浜に8-1でコールド勝ちしたが、3回戦で横須賀大津に4-6で敗れた。2024年秋季県大会では2018年秋以来となる県大会出場を果たしたものの初戦敗退。2025年春季県大会は1回戦で敗れている。
+
+### 伊志田
+
+伊志田高校(神奈川県伊勢原市)は部員39名を抱える。2025年秋季県大会では弥栄を4-1で下し、27年ぶり3度目の16強進出を果たした。2025年夏は4回戦まで進出し横浜商大に8-5で敗退、2025年春季県大会は有馬に4-3で1回戦敗退している。今大会は1回戦で上鶴間を5-7で下し、2回戦へ駒を進めた。
+
+## 今大会の状況
+
+第108回全国高等学校野球選手権神奈川大会2回戦。172チーム(連合5チーム含む)が参加し、7月5日に横浜スタジアムで開会式、7月7日に開幕、決勝は7月26日に行われる。両校は第3シード・鎌倉学園を擁するブロックに所属。伊志田は7月8日の1回戦で上鶴間を5-7で下し、座間総合とともに2回戦へ進出した。
+
+## 注目選手
+
+### 武井陸(座間総合・4番)
+- スイングスピードと走力に定評
+
+### 辻村(伊志田・投手)
+- 2025年秋季県大会、弥栄戦で1失点完投
+- 秋季県大会を通じて堅実なピッチングを披露
+
+### 遠藤千隼(伊志田・主将・外野手・2年)
+- 部員全員の一体感をチームの武器に掲げる
+
+## ストーリー・見どころ
+
+伊志田は前日8日の1回戦、上鶴間との接戦を5-7で制して勢いに乗る。秋季県大会では27年ぶりの16強進出を果たしており、エース辻村を中心とした投手陣の粘りが持ち味だ。対する座間総合は上溝高校との合同チームで部員わずか7名という厳しい台所事情ながら、2回戦まで駒を進めてきた。4番・武井のスイングスピードと走力が、少人数チームの攻撃を牽引する。
+
+第3シード・鎌倉学園を擁するブロックの一戦。2025年夏に3回戦で涙をのんだ座間総合が、部員39名を抱える伊志田の厚みをどう崩すか注目される。
+
+## 出典
+
+https://www.pen-kanagawa.ed.jp/zamasogo-ih/seikatsu/club/baseball.html
+https://www.pen-kanagawa.ed.jp/ishida-h/seikatsu/club/baseball.html
+https://baseball.omyutech.com/teamTop.action?teamId=12177
+https://baseball.omyutech.com/teamTop.action?teamId=12104
+https://www.kanaloco.jp/sports/baseball/hsbaseball/entry-36305.html
+https://denrei.net/kanagawa-ishida-baseballclub/
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287343.html
+https://www.kanagawa-baseball.com/
+https://kanagawa-hbf.sakura.ne.jp/2026/?result-hard_=prefecture-summer
+https://sports.yahoo.co.jp/livestream/vk
+</script>
+
+<script type="text/plain" id="report-g13">
+## 放送・配信情報
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 鎌倉学園
+夏の甲子園出場歴はなく、春の選抜には過去2度出場。1962年の第34回大会でベスト8、1969年の第41回大会は1回戦敗退で、以降は甲子園から遠ざかっている。
+
+直近の実績は2026年春季県大会でベスト16。関東大会を制した横浜と接戦を演じた末に敗れている。2025年秋季県大会は4回戦で東海大相模に2-1で敗退した。竹内智一監督は「全員が喜びや悔しさを共有することでチームは強くなっていく」という方針でチームを率い、部員は87名(2025年度)。学年やポジション別に休養日を設ける一方、朝は基本的に全体練習を行わない。掲げる目標は「甲子園で勝利の校歌を歌うこと」。今大会は第3シード。
+
+### 川崎北
+甲子園出場歴はないが、1990年夏にベスト4まで進んだ経験を持つ県立屈指の伝統校。
+
+2026年春季県大会は2回戦で新羽に16-1で快勝したものの、3回戦で橘に10-2で敗れた。夏の大会は7月8日の1回戦で秦野曽屋を13-0で下して2回戦進出を決めている。指揮を執る川村太志監督のもとでは、守備位置ごとのリーダーが主体的に練習メニューを決める組織体制が特徴。部員はスタッフ7名を含む42名で、吹奏楽部やダンス部といった応援団体も充実している。掲げる目標は「夏ベスト4以上」。今大会はシード校外からの挑戦となる。
+
+## 今大会の状況
+第3シードの鎌倉学園に対し、川崎北はシード外から白星を重ねて勝ち上がってきた。7月8日の1回戦(中栄信金スタジアム秦野)では秦野曽屋を13-0で圧倒。背番号10の木村が5回1安打無失点と好投し、監督からエース級の評価を受けている。
+
+2回戦は7月10日9時、川崎市等々力球場で開催。第108回全国高等学校野球選手権神奈川大会は172チームが参加し、決勝は7月26日に予定されている。
+
+## 注目選手
+### 足達晶斗(鎌倉学園・投手)
+- 湘南ボーイズ出身
+- 2026年春季大会で先発登板経験がある
+
+### 横田恭平(鎌倉学園・捕手)
+- 横浜東金沢リトルシニア出身
+- 2026年春季大会に登録
+
+### 大竹幹汰(鎌倉学園・二塁手)
+- 中本牧リトルシニア出身
+- 2026年春季大会に登録
+
+### 木村(川崎北・投手)
+- 今大会成績: 5回1安打無失点(対秦野曽屋戦、7月8日)
+- 背番号10。1回戦で先発し好投、監督からエース級の評価を受けている
+
+## 関連動画
+- [横浜vs鎌倉学園【高校野球 春季神奈川大会 4回戦 全打席ハイライト】2026.4.18](https://www.youtube.com/watch?v=0O3uEMDkvAo)
+
+## ストーリー・見どころ
+第3シードの鎌倉学園と、シード外から勢いに乗る川崎北の対戦。川崎北は1回戦で秦野曽屋を13-0の大差で下し、背番号10の木村が5回1安打無失点と圧巻の内容を見せた。監督からエース級の評価を受ける右腕がこのまま波に乗れるかが、まず一つの焦点になる。
+
+指揮官同士の物語にも目を向けたい。太志監督が生まれた1990年こそ、川崎北が夏に史上最高となるベスト4へ進んだ年でもある。当時のエース・河原純一(後に巨人へ進み守護神として活躍)は準々決勝で厚木の川村丈夫(後に横浜)と延長16回、河原240球・川村199球という死闘を演じて投げ勝った、神奈川で語り継がれる一戦だ。「夏ベスト4以上」という現在のチーム目標は、図らずも監督の生まれ年の記録に並ぶことを意味している。
+
+一方、鎌倉学園を率いる竹内智一監督は、卒業後「鎌学に恩返ししたい」と2006年に母校の教員となり、2013年から監督を務める。「甲子園で勝利の校歌を歌うこと」を目標に掲げ、部員同士が喜びも悔しさも分かち合うチームづくりを進めてきた。
+
+両校のOBがプロの世界で交差した過去もある。川崎北の河原純一は2005年から2007年まで西武ライオンズに在籍。鎌倉学園OBで慶大からNPB入りした長田秀一郎も、ちょうど2003年から2013年まで西武でプレーしており、両者が同じユニフォームを着ていた時期が重なる。土台の異なる県立校と私立校が、投打で異なる道を歩みながら同じ舞台にたどり着いていたことになる。
+
+伝統と目標を背負う両校が、夏の等々力球場でどんな試合を見せるのか。1回戦で圧勝劇を演じた川崎北の勢いに、第3シード鎌倉学園がどう対するか注目したい。
+
+## 出典
+https://sports.yahoo.co.jp/livestream/vk
+https://www.kamagaku.ac.jp/schoollife/club/baseball.html
+https://baseball-memories.jp/archives/71156
+https://www.hb-nippon.com/articles/8589
+https://baseball-memories.jp/archives/90104
+https://baseball-memories.jp/archives/category/kanagawa/kawasaki/kawasaki-kita
+https://monthly-charge.com/charge/8290/
+https://monthly-charge.com/charge/8264/
+https://www.kanaloco.jp/sports/baseball/hsbaseball/entry-28693.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-248024.html
+https://ja.wikipedia.org/wiki/%E6%B2%B3%E5%8E%9F%E7%B4%94%E4%B8%80
+https://ja.wikipedia.org/wiki/%E9%95%B7%E7%94%B0%E7%A7%80%E4%B8%80%E9%83%8E
+https://www.youtube.com/watch?v=0O3uEMDkvAo
+</script>
+
+<script type="text/plain" id="report-g14">
+## 放送・配信情報
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 向の岡工業
+川崎市多摩区に所在する工業高校。2026年春季神奈川県大会は川崎・横浜北地区Bブロックに出場。シード校ではない中、第108回全国高等学校野球選手権神奈川大会に駒を進めた。
+
+### 新羽
+横浜市港北区に所在。2025年夏の大会は1回戦で菅高校に8-7で敗退、2025年春季大会も1回戦で県商工高校に8-1で敗れている。2022年秋季県大会にも出場歴があり、2026年春季県大会は川崎・横浜北地区Lブロックで戦った。部員17名(1年6名、2年8名、3年3名、マネージャー1名)の陣容で今大会に臨む。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は172チーム(連合5チーム含む)が参加。7月5日に横浜スタジアムで開会式、7月7日に開幕し、決勝は7月26日に横浜スタジアムで行われる。向の岡工業・新羽の両校はいずれもシード校ではなく、横浜隼人ブロックの2回戦で川崎市等々力球場にて対戦する。
+
+## 関連動画
+- [向の岡工業高等学校 Official](https://www.youtube.com/channel/UCfN_t2P7Ohl7U8uiV3AtLDA)
+- [新羽高校](https://www.youtube.com/channel/UCdwosW1u9hU4j8ulijlqA6Q)
+
+## ストーリー・見どころ
+川崎市多摩区の向の岡工業と横浜市港北区の新羽、ともに横浜隼人ブロックの非シード校同士が等々力球場で相まみえる一戦。新羽は昨夏・昨春と1回戦敗退が続いており、雪辱を期して今大会に臨む17名の少数精鋭がどこまで勢いを持続できるかが焦点となる。
+
+無名校同士の対戦とはいえ、夏の神奈川を勝ち上がるには一戦一戦が正念場。等々力球場という好舞台で、両校がどんな采配とプレーを見せるか注目したい。
+
+## 出典
+https://ja.wikipedia.org/wiki/%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E7%AB%8B%E5%90%91%E3%81%AE%E5%B2%A1%E5%B7%A5%E6%A5%AD%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1
+https://www.pen-kanagawa.ed.jp/mukainooka-th/zennichi/
+https://www.pen-kanagawa.ed.jp/nippa-h/seikatsu/bukatsu/baseball.html
+https://www.pen-kanagawa.ed.jp/nippa-h/
+https://baseball-memories.jp/archives/93466
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+https://kanagawa-hbf.sakura.ne.jp/
+https://www.kanagawa-baseball.com/summer/2026/
+https://www.minkou.jp/hischool/school/1285/
+</script>
+
+<script type="text/plain" id="report-g15">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 海老名高校
+海老名高校(神奈川県海老名市)は公立校。監督は川崎真一。2026年春季県大会では1回戦で百合丘に1-8で敗退。前年、2025年夏の第107回大会でも1回戦で横須賀に8x-7の接戦の末に敗れている。
+
+### 県立相模原高校
+県立相模原高校(神奈川県相模原市中央区)は公立の進学校。今大会の1回戦(7月7日)では横浜桜陽を10-0の6回コールドで撃破した。3回に5点、4回に3点、6回に2点と効率よく加点し、先発の吉野谷郁仁(2年)が5回を無失点に抑える好投で試合を締めた。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は7月7日に開幕。両校とも第1〜3シードには入っていないノーシード校で、県立相模原は1回戦の横浜桜陽戦を10-0で快勝している。海老名・県立相模原の両校は7月10日9時、中栄信金スタジアム秦野で2回戦を戦う。
+
+## 注目選手
+### 崎山能活(県立相模原・4番打者・3年)
+- 高校通算22本塁打
+- ベンチプレス110kg、遠投100mの体格を誇り、プロ野球スカウトからも注目される長距離砲
+- 中学時代の挫折を乗り越え、打撃に磨きをかけてきた経歴を持つ
+
+## 関連動画
+- [バーチャル高校野球公式チャンネル](https://www.youtube.com/@virtual_kokoyakyu) — 高校野球総合情報。試合終了後にハイライトや見逃し配信で視聴可能
+- [神奈川県立相模原高等学校応援団部](https://www.youtube.com/channel/UCYI2UFGFfa-PXbPhirBrRjQ) — 県立相模原高校応援団部チャンネル
+- [2026年7月5日 高校野球神奈川大会開会式](https://www.youtube.com/watch?v=lebr9u0gKo8) — 第108回全国高校野球選手権神奈川大会の開会式(横浜スタジアム)
+
+## ストーリー・見どころ
+1回戦を10-0の快勝で突破した県立相模原は、投打がかみ合った勢いをそのまま2回戦にぶつける。長打力を誇る崎山能活を中心とした強力打線が、海老名投手陣にどこまで襲いかかるかが焦点となる。
+
+対する海老名は、前年夏・今春と続けて1回戦で涙をのんできただけに、この夏こそ大会初勝利を挙げたいところ。ノーシード校同士の対戦は、番狂わせの可能性も十分に秘めている。中栄信金スタジアム秦野で迎える一戦、初戦を白星で飾った勢いの県立相模原を海老名がどう止めるかに注目したい。
+
+## 出典
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284801.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280997.html
+https://www.hb-nippon.com/articles/14335
+https://news.yahoo.co.jp/articles/e1eafb58675f7799bad8021d09e447c40346fc79
+https://news.yahoo.co.jp/articles/5c66c464be2dc9893d9e7942afaa23ea273c17e4
+https://ebiko-ob.com/
+https://www.kyureki.com/koko/92/1821/
+https://kanagawa-hbf.sakura.ne.jp/
+https://sports.yahoo.co.jp/livestream/vk
+https://www.youtube.com/@virtual_kokoyakyu
+https://www.tvk-yokohama.com/koko/
+</script>
+
+<script type="text/plain" id="report-g16">
+## 放送・配信情報
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE` `見逃し`
+
+## 両校プロフィール
+### 山北
+2025年夏の選手権大会は3回戦で横浜隼人に2-3で惜敗。2024年春季県大会はベスト16に進出した。2025年秋季大会の湘南・西湘地区予選では鎌倉学園に11-4で敗退。新監督のもと3投手の継投体制を軸に、ウエイトトレーニングにも注力して力をつけてきた。
+
+### 山手学院
+2025年夏の選手権大会は3回戦で慶応に敗戦。2024年春季県大会は1回戦で湘南を7-6で下している。低く強い打球を狙う打撃スタイルを掲げ、今大会も上位進出を目指す。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は172チーム(連合5チーム含む)が出場。7月5日に横浜スタジアムで開会式を行い、7月7日に開幕した。決勝は7月26日。山北・山手学院ともに今回のシード校には入っておらず、秦野ブロックの2回戦で中栄信金スタジアム秦野にて対戦する。
+
+## 関連動画
+- [バーチャル高校野球公式チャンネル](https://www.youtube.com/@virtual_kokoyakyu)
+- [【高校野球 神奈川大会開会式】激戦区・神奈川の夏が開幕!2026.7.5](https://www.youtube.com/watch?v=lebr9u0gKo8)
+- [【山手学院】部活動紹介『高校野球部』](https://www.youtube.com/watch?v=02HoWeHzdyc)
+- [神奈川県立山北高等学校 公式チャンネル](https://www.youtube.com/channel/UCRDnCiZLQm0GY7V8VEioqWg)
+- [山手学院中学校・高等学校 公式チャンネル](https://www.youtube.com/channel/UCMzl9XpLAfYVN5Yx2gkNrWA)
+
+## ストーリー・見どころ
+昨夏はともに3回戦で涙をのんだ両校。山北は新体制の継投策とフィジカル強化で「山の子旋風」の再来を狙い、山手学院は低く強い打球を軸にした堅実な打撃野球で上位進出を目指す。ノーシードの2校が2回戦で激突する一戦、勝った方が波に乗るだけに目が離せない。
+
+## 出典
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284469.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284471.html
+https://www.pen-kanagawa.ed.jp/yamakita-h/seikatsu/bukatsu/kousikiyakyu.html
+https://www.yamate-gakuin.ac.jp/school_life/club/sport/
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://kanagawa-hbf.sakura.ne.jp/2026/?result-hard_=prefecture-summer
+</script>
+
+<script type="text/plain" id="report-g17">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+
+### 菅
+
+2025年夏の選手権は1回戦で新羽に8-7で勝利し、2回戦で日大に6-13で敗退。同年春季県大会は1回戦で山北に1-8で敗れている。部員は3年生11人、2年生2人、1年生3人、女子マネージャー1人の17人という小所帯ながら、外部コーチを招いて技術向上に取り組んでいるのが特徴。過去最高成績のベスト32を超え、ベスト16進出を目標に掲げる。
+
+### 小田原
+
+明治35年(1902年)創部、100年を超える歴史を持つ伝統校。2025年夏の選手権は1回戦で柏陽に3-5で敗退、同年春季県大会は1回戦で川崎総合科学に1-2で惜敗した。前年2024年夏の選手権では2回戦で神奈川総合産業に14-3で快勝したのち、3回戦で相洋に0-7で敗れている。「堅忍不抜」「至誠無息」を校訓に、文武両道を掲げて県上位を目指す。
+
+## 今大会の状況
+
+172チーム(連合5チームを含む)が参加する第108回全国高等学校野球選手権神奈川大会。7月5日に横浜スタジアムで開会式が行われ、7日に開幕、決勝は7月26日に予定される。シードは第1シードの横浜・横浜創学館・桐光学園・慶応をはじめ第3シードまで計16校が指定されているが、菅・小田原とも今大会はシード校に名を連ねていない。ノーシード同士の2回戦として、7月10日9時から小田原球場で対戦する。
+
+## ストーリー・見どころ
+
+部員17人の小規模チームで戦う菅と、100年を超える歴史を誇る伝統校・小田原。ともにノーシードから夏を戦う両校が2回戦で対戦する一戦だ。菅は初戦で新羽に競り勝った勢いをどこまで持続できるか、小田原は前年2024年夏に3回戦まで勝ち上がった経験を今年の初戦突破に生かせるかが焦点となる。小田原球場の地元開催で、地力の差をどう埋めるかに注目したい。
+
+## 出典
+
+https://www.pen-kanagawa.ed.jp/suge-h/baseball.html
+https://www.pen-kanagawa.ed.jp/odawara-h/zennichi/seikatsu/bukatsu/baseball.html
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://www.kanagawa-baseball.com/
+https://www.tvk-yokohama.com/koko/
+https://sports.yahoo.co.jp/livestream/vk
+</script>
+
+<script type="text/plain" id="report-g18">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 横浜翠嵐
+横浜市神奈川区の県立校で、2026年の部員数は20人。「しぶとくつなぐ攻撃」が持ち味のチームだ。2025年春季県大会は2回戦で藤沢翔陵に9-2で敗戦。同年夏季県大会では2回戦で松陽に5-3で勝利したものの、3回戦で立花学園に11-1で敗れている。今大会は第1シードとして2回戦から登場。
+
+### 小田原北
+小田原市の県立校で、旧小田原城北工業高等学校が2026年4月に改称した。2026年の部員数は14人。2025年夏季県大会は大井高校との連合チームとして臨み、1回戦で関東学院に12-0で敗戦。2024年夏季県大会では1回戦で霧が丘に6-4で勝利している。2023年8月には城北工の校名で県立鎌倉高校を7-6で下し、12年ぶりの県大会出場を果たした。今大会は1回戦を突破しての2回戦進出となる。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会。第1シードの横浜翠嵐は2回戦からの登場で、初戦の相手が小田原北。小田原北は1回戦を勝ち上がっての2回戦進出だ。
+
+## 関連動画
+- [【高校野球 神奈川大会開会式】激戦区・神奈川の夏が開幕!甲子園を目指す183校172チームがハマスタに集結! 2026.7.5](https://www.youtube.com/watch?v=lebr9u0gKo8)
+- [【公式】横浜翠嵐高校学校紹介動画!!!~坂編~](https://www.youtube.com/watch?v=atqEbgcKxrg)
+- [翠嵐放送局!! produced by SHBC](https://www.youtube.com/channel/UC7D1zIRLpyssMRmLCSgr7Kw)
+- [バーチャル高校野球公式チャンネル](https://www.youtube.com/@virtual_kokoyakyu)
+
+## ストーリー・見どころ
+第1シードの横浜翠嵐にとって、2回戦は夏の初陣となる一戦。前年夏は3回戦で立花学園に大敗しており、その悔しさを晴らせるかが注目される。しぶとくつなぐ打線で、まずは着実に白星発進を狙う。
+
+対する小田原北は、1回戦を勝ち上がっての挑戦。2023年には城北工の校名で県立鎌倉を破り12年ぶりの県大会出場を掴んだ実績を持つ学校で、部員14人の少数精鋭がシード校相手にどこまで食い下がれるか。小田原球場での接戦の行方に注目したい。
+
+## 出典
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284976.html
+https://www.kyureki.com/koko/92/1810/
+https://www.pen-kanagawa.ed.jp/yokohamasuiran-h/zennichi/seikatsu/bukatu/yakyuu/yakyuu.html
+https://yellz.jp/detail/140061/school/
+https://www.kyureki.com/koko/92/41185/
+https://www.hb-nippon.com/teams/8137
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287343.html
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://kanagawa-hbf.sakura.ne.jp/
+https://baseball-memories.jp/archives/category/kanagawa/area-yokohama/yokohama-suiran
+https://www.instagram.com/odawarakita_baseball/
+https://baseball.omyutech.com/teamGames.action?teamId=12122&cupId=20230006682
+https://sports.yahoo.co.jp/livestream/vk
+</script>
+
+<script type="text/plain" id="report-g19">
+## 両校プロフィール
+### 柏木学園
+神奈川県大和市の柏木学園高等学校。2025年春季大会は3回戦で敗退、同年秋季大会は2回戦で敗退となった。守備強化と「1球の大切さ」を意識した取り組みに力を入れている。
+
+### 柏陽
+神奈川県立柏陽高校(横浜市栄区)。2025年は秋季・春季大会とも公式戦での勝利がなく、今大会での1勝を目標に掲げる。投手陣と守備の安定化をチームテーマとし、ベスト16進出を目指す。2026年度の登録人数は4人。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会。両校ともシード校ではない中での2回戦進出となる。柏陽は7月8日、バッティングパレス相石スタジアムひらつかで行われた1回戦で生田を8-1で下した。柏木学園も2回戦へ駒を進めている。両校の対戦は7月10日9時開始、いせはらサンシャイン・スタジアムで行われる。
+
+## 注目選手
+### 石野絢心(柏木学園・投手)
+- 2025年4月6日の大会2回戦で8奪三振を記録
+
+## ストーリー・見どころ
+1回戦を8-1の快勝で突破した柏陽と、守備強化を掲げて2回戦に臨む柏木学園の一戦。柏陽は投手陣と守備の安定を今大会のテーマに据えており、初戦の得点力をどこまで維持できるかが焦点となる。対する柏木学園はエース石野絢心を中心とした投手力が持ち味で、「1球の大切さ」を掲げてきた守備の集中力が試される一戦になりそうだ。
+
+## 出典
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284507.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+https://www.kanagawa-baseball.com/
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287343.html
+https://kanagawa-hbf.sakura.ne.jp/
+https://baseball.omyutech.com/teamTop.action?teamId=12126
+https://baseball.omyutech.com/teamGames.action?teamId=12235
+https://baseball-memories.jp/archives/category/kanagawa/kawasaki/ikuta
+https://baseball.omyutech.com/CupHomePageHistory.action?gameId=20246249838
+https://www.kyureki.com/koko/92/2775/
+https://www.kyureki.com/koko/92/4419/
+https://baseball.yahoo.co.jp/hsb/teams/21516/top
+https://baseball.yahoo.co.jp/hsb/teams/21591/results/game
+</script>
+
+<script type="text/plain" id="report-g20">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 多摩
+神奈川県立多摩高等学校は3年連続で初戦突破を果たしている。2025年夏の選手権は初戦で新城に35-1と大勝したが、2回戦で光陵に1-5で敗退。秋季県大会は2回戦で東海大相模に0-10のコールド負けを喫した。2026年春季地区予選は初戦で14-1と圧勝したものの、その後の試合で敗れている。
+
+### 厚木北
+神奈川県立厚木北高等学校は昨夏4回戦まで進出した実績を持つ。2025年夏の選手権では2回戦で霧が丘に11-1、3回戦で磯子工に5-1と連勝したが、4回戦で横浜隼人に2-3で敗戦。秋季県大会は2回戦で舞岡に7-8、1点差での敗退だった。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会。172チームが参加する大会で、シード校リストに両校の名はなく、非シード校同士の対戦となる。7月10日、いせはらサンシャイン・スタジアムでの2回戦が両校にとって夏を占う一戦となる。
+
+## 関連動画
+- [【高校野球 神奈川大会開会式】 激戦区・神奈川の夏が開幕！甲子園を目指す183校172チームがハマスタに集結！ 2026.7.5](https://www.youtube.com/watch?v=lebr9u0gKo8)
+
+## ストーリー・見どころ
+多摩は今春も初戦快勝から一歩伸び悩んだ悔しさを抱え、この夏に懸ける。秋のコールド負けを乗り越え、初戦突破の伝統を今年も繋げられるか注目される。
+
+厚木北は昨秋、舞岡戦での1点差負けが悔やまれる敗退だった。昨夏は4回戦まで駒を進めており、そこで得た勢いを持ち味の変則右腕を軸に取り戻せれば、今大会でも上位進出の可能性を秘めている。両校とも非シードから勝ち上がる立場だけに、いせはらサンシャイン・スタジアムでの一戦は目が離せない。
+
+## 出典
+https://www.tamadou.jp/baseball/5572/
+https://www.tamadou.jp/baseball/
+https://baseball.omyutech.com/teamMember.action?teamId=12210
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1283578.html
+https://baseball.yahoo.co.jp/hsb/teams/21495/results/game
+https://www.pen-kanagawa.ed.jp/atsugikita-h/seikatsu/bukatu/yakyu.html
+https://kanagawa-hbf.sakura.ne.jp/2026/?result-hard_=prefecture-summer
+https://www.youtube.com/watch?v=lebr9u0gKo8
+</script>
+
+<script type="text/plain" id="report-g21">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+### 横浜商業
+横浜市立横浜商業高等学校、通称「Y校」。1923年夏、神奈川県勢として初めて甲子園に出場した古豪で、春のセンバツに9回、夏の選手権に7回出場している。最高成績は1983年の春夏連続準優勝で、優勝経験はない。1997年春を最後に甲子園から遠ざかっており、出場のないまま約29年が経過した。投手陣の良さで知られる伝統校で、2026年は春季県大会にも出場。第108回大会ではノーシードで横浜隼人ブロックに入った。
+
+指揮を執るのは近年就任した廣濱監督。
+
+### 荏田
+神奈川県立荏田高等学校の野球部は、選手30名、マネージャー4名の計34名で活動。月・火・木・金・土・日に練習を行う。武器は打撃力で、「自分たちの打撃を見せる」姿勢を掲げてグラウンドに立つ。2025年秋季大会は地区予選を1位で通過し県ベスト16まで進出、2026年春季県大会にも地区予選から出場した。第108回大会ではノーシードで横浜隼人ブロックに入った。
+
+指揮を執るのは佐藤響一監督。学校公式サイトでは、目標として「神奈川県のベスト16クラスのチームに勝利する」ことを掲げている。
+
+## 今大会の状況
+第108回全国高等学校野球選手権神奈川大会は、7月5日に横浜スタジアムで開会式を行い、7月7日に開幕。決勝は7月26日に予定される。172チーム(連合5チームを含む)が参加し、組み合わせ抽選は6月13日に実施された。
+
+2026年春季県大会の成績によるシード校は、第1シードが横浜・横浜創学館・桐光学園・慶応、第2シードが桐蔭学園・相洋・日大藤沢・立花学園、第3シードが鎌倉学園・川和・横浜隼人・横浜清陵・三浦学苑・神奈川工業・橘・藤沢翔陵。横浜商業・荏田はいずれもノーシードで、横浜隼人ブロックに入った。
+
+荏田は7月8日、藤沢市八部野球場で行われた1回戦で第1シードの慶応藤沢と対戦し、7-0で勝利。シード校を初戦で退ける金星を挙げ、2回戦に駒を進めた。
+
+7月10日9時、俣野公園横浜薬大スタジアムで横浜商業と荏田の2回戦が行われる。
+
+## 注目選手
+### 丸山颯太(荏田・投手)
+- エース
+
+### 倉持柊大(荏田・右翼手)
+- チームの主砲
+
+### 宮本祥(荏田・三塁手)
+- チームを率いる主将
+
+## 関連動画
+- [【高校野球 応援】横浜商業 伝統の魂響く!Y校 応援メドレーで夏初戦!](https://www.youtube.com/watch?v=dQnDCEkKuGA)
+- [横浜商 vs 横浜栄 【高校野球 神奈川大会 全打席ハイライト】](https://www.youtube.com/watch?v=P2EJsgT7hQw)
+
+## ストーリー・見どころ
+甲子園に幾度も出場してきた伝統校・横浜商業と、初戦でシード校を仕留めた荏田。横浜隼人ブロックの2回戦は、格式と勢いがぶつかる一戦となる。Y校は1923年夏に神奈川県勢として初めて甲子園の土を踏み、1983年には春夏連続準優勝を果たした名門だが、1997年春を最後に甲子園から遠ざかって久しい。投手陣の良さに定評のあるチームが、伝統の看板を背負って夏の戦いに臨む。
+
+対する荏田は、7月8日の1回戦で第1シードの慶応藤沢を7-0で下し、大会屈指の金星を挙げてこの試合に駒を進めてきた。掲げる武器は打撃力。「自分たちの打撃を見せる」という姿勢のまま、チームを率いるのは佐藤響一監督。学校公式サイトでは「神奈川県のベスト16クラスのチームに勝利する」ことを目標に掲げており、1回戦の完封勝利はその目標へ向けた確かな一歩といえる。
+
+Y校を率いるのは近年就任した廣濱監督。就任後に迎えた昨2025年夏は、1回戦で横浜栄相手に8回一挙4点を許す逆転負け。12年ぶりの初戦敗退を喫し、「私の力不足」と振り返った。その屈辱を味わったのが昨年の7月10日で、ちょうど1年後となる今年の同じ7月10日に、荏田との一戦を迎える。
+
+荏田にとっても、夏の2回戦は簡単には突破できてこなかった舞台だ。2023年は2回戦で武相に1-8、2025年は初戦を勝ち上がったものの2回戦で横浜に0-16と、いずれも壁にぶつかってきた。今年は1回戦から金星スタートという上々の入り。積み上げてきた打撃力を存分に発揮できれば、目標達成にまた一歩近づく。
+
+伝統の再興を期す横浜商業と、組織づくりの成果を試す荏田。どちらのチームにとっても、この一戦が今後を占う大きな意味を持つ。俣野公園横浜薬大スタジアムでの熱戦に注目したい。
+
+## 出典
+https://www.tvk-yokohama.com/koko/
+https://sports.yahoo.co.jp/livestream/vk
+https://data-man.com/kokoyakyu/school/school.php?s_id=03140003
+https://ja.wikipedia.org/wiki/横浜市立横浜商業高等学校
+https://ja.wikipedia.org/wiki/神奈川県立荏田高等学校
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287156.html
+https://www.kanagawa-baseball.com/summer/2026/0710/
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+https://www.pen-kanagawa.ed.jp/eda-h/seikatsu/bukatudou/yakyuubu.html
+https://www.edu.city.yokohama.lg.jp/school/hs/y-shogyo/
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1188752.html
+https://www.daily.co.jp/baseball/2025/07/10/0019210217.shtml
+https://baseball-memories.jp/archives/87884
+https://baseball-memories.jp/archives/87834
+https://baseball-memories.jp/archives/87900
+https://baseball-memories.jp/archives/74317
+https://monthly-charge.com/2025年2月号/20718/
+https://monthly-charge.com/charge/23833
+https://monthly-charge.com/charge-神奈川版/23838/
+</script>
+
+<script type="text/plain" id="report-g22">
+## 放送・配信情報
+**TV放送**
+- [テレビ神奈川(tvk)](https://www.tvk-yokohama.com/koko/) `LIVE`
+**配信**
+- [バーチャル高校野球(スポーツナビ)](https://sports.yahoo.co.jp/livestream/vk) `LIVE`
+
+## 両校プロフィール
+
+### 横須賀大津
+横須賀市の横須賀大津は、2026年に創立120周年を迎える節目のシーズンを戦う。掲げるスローガンは「勝利で恩返し」。オフシーズンから鍛え上げた攻守の粘り強さを武器に、新3年13人・新2年14人(ともにマネージャー3人含む)で新チームを編成した。昨夏2025年は2回戦で三校連合を8-2で下しており、今大会も1回戦を突破して2回戦進出を果たしている。
+
+### 光陵
+横浜市保土ケ谷区の県立・光陵は、キャプテン田代の兄が学生コーチとしてプレイヤーに寄り添う指導を行うのが特色。今大会の目標は昨夏と同じベスト32進出に設定する。2025年夏は立花学園に0-17で敗れているが、7月7日の1回戦では旭を相手に7-4で勝利し、大和スタジアムから2回戦へと駒を進めた。
+
+## 今大会の状況
+172チーム(連合5チーム含む)が参加する第108回全国高等学校野球選手権神奈川大会は、7月7日に開幕。光陵は初戦の旭戦を7-4で制して2回戦進出を決めており、横須賀大津も1回戦を突破。両校の対戦は7月10日11時30分、俣野公園横浜薬大スタジアムで行われる。
+
+## ストーリー・見どころ
+横須賀大津と光陵は、ともに横浜清陵ブロックに属する近隣校同士。光陵は初戦で旭を7-4で振り切り勢いに乗り、目標に掲げるベスト32進出へ向けて2つ目の白星を狙う。一方の横須賀大津は創立120周年の節目シーズンにふさわしい戦いを、鍛え上げた粘り強い攻守で見せられるか。1回戦を共に突破した両校が、地元同士の一戦でどちらが夏を勝ち進むか注目される。
+
+## 出典
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1283553.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1283554.html
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html
+https://www.kanagawa-baseball.com/summer/2026/
+https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284801.html
+https://kanagawa-hbf.sakura.ne.jp/2026/?result-hard_=prefecture-summer
+https://baseball.omyutech.com/teamTop.action?teamId=12282
+https://baseball.omyutech.com/teamMember.action?teamId=12167
+</script>
+
+<!-- ============ APP ============ -->
+<script>
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function inline(s){
+  s = esc(s);
+  s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s = s.replace(/`([^`]+)`/g, '<span class="tag">$1</span>');
+  return s;
+}
+function youtubeEmbedId(url){
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+function mdToHtml(md){
+  const lines = md.split("\n");
+  let html = "", list = false, table = null, inSources = false, inBroadcast = false, inVideos = false;
+  const closeList = ()=>{ if(list){ html+="</ul>"; list=false; } };
+  const closeTable = ()=>{
+    if(table){
+      let t = '<div class="tablewrap"><table>';
+      table.forEach((cells,i)=>{
+        const tag = i===0 ? "th" : "td";
+        t += "<tr>" + cells.map(c=>`<${tag}>${inline(c)}</${tag}>`).join("") + "</tr>";
+      });
+      html += t + "</table></div>";
+      table = null;
+    }
+  };
+  for(const raw of lines){
+    const line = raw.trimEnd();
+    if(!line.trim()){ closeList(); closeTable(); continue; }
+    if(line.startsWith("|")){
+      closeList();
+      if(/^\|[\s:-]+\|/.test(line.replace(/-/g,"-"))&&/^[\s|:-]+$/.test(line)) continue; // separator row
+      const cells = line.replace(/^\||\|$/g,"").split("|").map(c=>c.trim());
+      if(!table) table = [];
+      table.push(cells);
+      continue;
+    }
+    closeTable();
+    if(line.startsWith("# ")){ closeList(); continue; } // redundant H1 title, if the writer added one — page header already shows it
+    if(line.startsWith("### ")){ closeList(); html+=`<h3>${inline(line.slice(4))}</h3>`; continue; }
+    if(line.startsWith("## ")){
+      closeList();
+      if(inBroadcast){ html += "</div>"; inBroadcast = false; }
+      const t = line.slice(3);
+      inSources = (t === "出典");
+      inBroadcast = (t === "放送・配信情報");
+      inVideos = (t === "関連動画");
+      html += h2t(t);
+      if(inSources) html += '<div class="sources">';
+      if(inBroadcast) html += '<div class="broadcast-box">';
+      continue;
+    }
+    if(line.startsWith("- ")){
+      const item = line.slice(2);
+      if(inVideos){
+        // "[title](url) — note" or "[title](url)" — embed if it's a single YouTube video, else a link card
+        const m = item.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)\s*(?:—\s*(.*))?$/);
+        if(m){
+          const [, title, url, note] = m;
+          const vid = youtubeEmbedId(url);
+          if(vid){
+            html += `<div class="video-embed"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${vid}" title="${inline(title)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="video-caption"><strong>${inline(title)}</strong>${note ? " — " + inline(note) : ""}</p></div>`;
+          } else {
+            html += `<div class="video-link-card"><a href="${url}" target="_blank" rel="noopener">${inline(title)}</a>${note ? `<p>${inline(note)}</p>` : ""}</div>`;
+          }
+          continue;
+        }
+      }
+      if(!list){ html+="<ul>"; list=true; }
+      html+=`<li>${inline(item)}</li>`; continue;
+    }
+    closeList();
+    html+=`<p>${inline(line)}</p>`;
+  }
+  closeList(); closeTable();
+  if(inSources) html += "</div>";
+  if(inBroadcast) html += "</div>";
+  return html;
+}
+
+function headerHtml(){
+  return `<header class="site"><div class="wrap">
+    <div class="site-tag">高校野球 神奈川大会 2026 夏</div>
+    <h1 class="site-title serif"><a href="#/" style="text-decoration:none">今日の一戦</a></h1>
+    <p class="site-sub">第108回全国高等学校野球選手権 神奈川大会 — 全試合日程と、それぞれの物語</p>
+  </div></header>`;
+}
+function footerHtml(){
+  return `<footer class="site"><div class="wrap">
+    <p>日程・結果の出典: 神奈川高校野球ステーション(kanagawa-baseball.com)。各試合の背景情報の出典は試合ページ末尾に記載。</p>
+    <p>本ページは検証用パイロットです。試合開始時刻・会場は変更される場合があります。</p>
+  </div></footer>`;
+}
+
+function calendarHtml(dayKey){
+  const day = dayOf(dayKey) || dayOf(defaultDayKey());
+  let h = headerHtml() + '<main class="wrap">';
+  h += `<nav class="datenav" aria-label="日付">` +
+    DAYS.map(d => `<button aria-selected="${d.key===day.key}" onclick="location.hash='#/day/${d.key}'">${esc(d.label)}</button>`).join("") +
+    `</nav>`;
+  if(day.note) h += `<p class="day-note">${esc(day.note)}</p>`;
+  if(day.kind === "results"){
+    for(const venue of day.venues){
+      h += `<section class="venue"><h2>${esc(venue.v)}</h2>`;
+      for(const g of venue.games){
+        const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes("x");
+        h += `<div class="game-row">
+          <span class="t">${g.t}</span>
+          <span class="card"><span class="${aWin?'win':''}">${esc(g.a)}</span>
+            <span style="color:var(--muted)"> — </span>
+            <span class="${!aWin?'win':''}">${esc(g.b)}</span>
+            ${g.r1?'<span class="badge-r1">1回戦</span>':''}</span>
+          <span class="score">${g.sa} — ${g.sb}</span>
+        </div>`;
+      }
+      h += `</section>`;
+    }
+  } else {
+    let currentVenue = "";
+    for(const g of day.games){
+      if(g.v !== currentVenue){
+        if(currentVenue) h += `</section>`;
+        currentVenue = g.v;
+        h += `<section class="venue"><h2>${esc(g.v)}</h2>`;
+      }
+      const hook = HOOKS[g.id] || "";
+      const hasReport = !!document.getElementById("report-"+g.id);
+      h += `<a class="match-card${PICKS[g.id]?' pick-card':''}" href="#/match/${g.id}">
+        <div class="meta"><span>${g.t}</span><span>${esc(day.round||"")}</span>${PICKS[g.id]?'<span class="pick">★ 注目</span>':''}</div>
+        <div class="mc-teams">
+          <span class="mm" style="background:${teamColor(g.a)}">${esc([...g.a][0])}</span><span class="mc-name">${esc(g.a)}</span>
+          <span class="mc-vs">対</span>
+          <span class="mm" style="background:${teamColor(g.b, g.a)}">${esc([...g.b][0])}</span><span class="mc-name">${esc(g.b)}</span>
+        </div>
+        ${hook?`<p class="hook">${esc(hook)}</p>`:""}
+        <span class="more">${hasReport?"背景・見どころを読む →":"レポート準備中"}</span>
+      </a>`;
+    }
+    if(currentVenue) h += `</section>`;
+  }
+  h += "</main>" + footerHtml();
+  return h;
+}
+
+// Monogram colors: muted traditional Japanese tones (伝統色), deep enough for white type.
+// Deterministic pick by school-name hash so a team keeps its color everywhere it appears.
+// 8 tones spread across hue space (藍・海老茶・松葉・桔梗・柿・青碧・鶯・蘇芳) so any
+// two teams' monograms read as clearly different colors even at small sizes.
+const MONO_COLORS = ["#2B4B6F","#7A3B32","#48683F","#5B549A","#B4652F","#1F6E68","#757A38","#96374F"];
+function teamColorIdx(name){
+  let h = 0;
+  for(const ch of name) h = (h * 31 + ch.codePointAt(0)) >>> 0;
+  return h % MONO_COLORS.length;
+}
+function teamColor(name, avoidName){
+  let idx = teamColorIdx(name);
+  // Same-match collision: two schools can hash to the same tone — shift the
+  // second one so the matchup always reads as two distinct sides.
+  if(avoidName && idx === teamColorIdx(avoidName)) idx = (idx + 3) % MONO_COLORS.length;
+  return MONO_COLORS[idx];
+}
+function monoHtml(name, avoidName){
+  return `<span class="mono" style="background:${teamColor(name, avoidName)}">${esc([...name][0])}</span>`;
+}
+
+// Seed assignments are fixed tournament facts (spring-2026 results), exact names only —
+// 日大 (g2) is NOT 日大藤沢, so no fuzzy matching.
+const SEEDS = {
+  1: ["横浜","横浜創学館","桐光学園","慶応"],
+  2: ["桐蔭学園","相洋","日大藤沢","立花学園"],
+  3: ["鎌倉学園","川和","横浜隼人","横浜清陵","三浦学苑","神奈川工業","橘","藤沢翔陵"],
+};
+function seedBadgeHtml(name){
+  for(const k of [1,2,3]) if(SEEDS[k].includes(name)) return `<span class="seed-badge s${k}">第${k}シード</span>`;
+  return `<span class="seed-badge ns">ノーシード</span>`;
+}
+
+// Minimal line icons per section title, stroke inherits --green-ink via CSS.
+const SECTION_ICONS = {
+  "放送・配信情報": '<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 3l4 4 4-4"/></svg>',
+  "両校プロフィール": '<svg viewBox="0 0 24 24"><path d="M6 3v18"/><path d="M6 4h13l-3 4 3 4H6"/></svg>',
+  "過去の対戦成績": '<svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5V9H8"/><path d="M12 8v4.5l3 2.5"/></svg>',
+  "今大会の状況": '<svg viewBox="0 0 24 24"><path d="M8 3h8v5a4 4 0 0 1-8 0V3z"/><path d="M8 5H5a3 3 0 0 0 3 3.5"/><path d="M16 5h3a3 3 0 0 1-3 3.5"/><path d="M12 12v4"/><path d="M9 20h6"/><path d="M10 16h4v4h-4z"/></svg>',
+  "注目選手": '<svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/></svg>',
+  "関連動画": '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 9.5l5 2.5-5 2.5z"/></svg>',
+  "ストーリー・見どころ": '<svg viewBox="0 0 24 24"><path d="M11 4l1.5 4.2L16.7 10l-4.2 1.5L11 15.7 9.5 11.5 5.3 10l4.2-1.8z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>',
+  "出典": '<svg viewBox="0 0 24 24"><path d="M9.5 14.5l5-5"/><path d="M10.5 7l1.5-1.5a4 4 0 0 1 5.6 5.6L16 12.7"/><path d="M13.5 17l-1.5 1.5a4 4 0 0 1-5.6-5.6L8 11.3"/></svg>',
+  "みんなの声": '<svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H4l2.3-2.9A8 8 0 1 1 21 12z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h4.5"/></svg>',
+};
+function h2t(title){
+  return `<h2>${SECTION_ICONS[title]||""}<span>${inline(title)}</span></h2>`;
+}
+
+function sectionsOf(md){
+  return md.split(/(?=^## )/m).map(raw => {
+    const m = raw.match(/^## ([^\n]+)\n?/);
+    return { title: m ? m[1].trim() : null, body: m ? raw.slice(m[0].length) : raw, raw };
+  });
+}
+
+// Pull the player's CURRENT grade out of profile bullets ("2年生右腕", "3年生。…").
+// Guards against the traps seen in real data: past references (中学3年時 / 在学時は2年生),
+// roster counts (部員34名(1年生14名…)), and speculation (順当なら今年3年生).
+function gradeOf(bullets){
+  for(const b of bullets){
+    for(const seg of b.split(/[。]/)){
+      if(/部員|[0-9０-９]+名|在学時|当時|時代|中学|昨|順当なら|と思われる|とみられる|計算になる|にあたる/.test(seg)) continue;
+      // A grade mentioned alongside a PAST year ("2025年夏2回戦で1年生ながら…") is that
+      // season's grade, not the current one — skip. 2026 is this tournament's year.
+      const y = seg.match(/(?:19|20)\d{2}/);
+      if(y && parseInt(y[0], 10) < 2026) continue;
+      const m = seg.match(/(?:高校)?([1-3１-３])年生/);
+      if(m) return "１２３".includes(m[1]) ? "123"["１２３".indexOf(m[1])] + "年" : m[1] + "年";
+    }
+  }
+  return null;
+}
+
+// 注目選手: "### 名前(チーム・ポジション)" blocks -> card grid
+function renderPlayers(sec){
+  const blocks = sec.body.split(/(?=^### )/m).filter(b => b.startsWith("### "));
+  if(!blocks.length) return h2t("注目選手") + mdToHtml(sec.body);
+  const cards = blocks.map(b => {
+    const head = b.match(/^### ([^\n]+)/)[1];
+    const hm = head.match(/^(.+?)[(（]([^)）]*)[)）]\s*$/);
+    const name = hm ? hm[1].trim() : head.trim();
+    const meta = hm ? hm[2].split(/[・/／]/).map(s=>s.trim()).filter(Boolean) : [];
+    const bullets = [...b.matchAll(/^- ([^\n]+)$/gm)].map(m=>m[1]);
+    // Name-only entries (no profile bullets at all) carry nothing a reader can use —
+    // skip the card. School-name-only headings ("### 浅野") fall out the same way.
+    if(!bullets.length) return "";
+    const grade = gradeOf(bullets);
+    if(grade && !meta.some(t=>/[1-3１-３]年/.test(t))) meta.push(grade);
+    const dot = meta.length ? `<i class="dot" style="background:${teamColor(meta[0])}"></i>` : "";
+    return `<div class="player-card">
+      <p class="pl-name">${dot}${inline(name)}</p>
+      ${meta.length?`<div class="pl-meta">${meta.map(t=>`<span>${esc(t)}</span>`).join("")}</div>`:""}
+      <ul>${bullets.map(t=>`<li>${inline(t)}</li>`).join("")}</ul>
+    </div>`;
+  }).filter(Boolean).join("");
+  if(!cards) return ""; // every entry was name-only — hide the whole section
+  return h2t("注目選手") + `<div class="player-grid">${cards}</div>`;
+}
+
+// 両校プロフィール: two "### 校名" blocks -> side-by-side cards with monograms
+function renderProfiles(sec){
+  const blocks = sec.body.split(/(?=^### )/m).filter(b => b.startsWith("### "));
+  if(blocks.length < 2) return h2t("両校プロフィール") + mdToHtml(sec.body);
+  const firstName = blocks[0].match(/^### ([^\n]+)/)[1].trim();
+  const cards = blocks.map((b, i) => {
+    const name = b.match(/^### ([^\n]+)/)[1].trim();
+    const rest = b.replace(/^### [^\n]+\n?/, "");
+    return `<div class="profile-card">
+      <div class="p-head">${monoHtml(name, i > 0 ? firstName : null)}<span class="p-name">${esc(name)}</span></div>
+      ${mdToHtml(rest)}
+    </div>`;
+  }).join("");
+  return h2t("両校プロフィール") + `<div class="profile-grid">${cards}</div>`;
+}
+
+function renderSources(sec){
+  const n = (sec.body.match(/^- /gm) || (sec.body.match(/^https?:/gm)) || []).length;
+  return h2t("出典") + `<details class="sources-details"><summary>出典一覧を開く(${n}件)</summary><div class="sources">${mdToHtml(sec.body)}</div></details>`;
+}
+
+function renderStory(sec){
+  let first = true;
+  const parts = sec.body.split(/\n\n+/).map(p => {
+    const h = mdToHtml(p);
+    if(first && h.startsWith("<p>")){ first = false; return h.replace("<p>", '<p class="lead-para">'); }
+    return h;
+  });
+  return h2t("ストーリー・見どころ") + parts.join("").replaceAll("<strong>", '<strong class="mk">');
+}
+
+function renderReport(md){
+  return sectionsOf(md).map(sec => {
+    if(sec.title === "注目選手") return renderPlayers(sec);
+    if(sec.title === "両校プロフィール") return renderProfiles(sec);
+    if(sec.title === "出典") return renderSources(sec);
+    if(sec.title === "ストーリー・見どころ") return renderStory(sec);
+    return mdToHtml(sec.raw);
+  }).join("");
+}
+
+// ---- 口コミ (registration-free, stored in THIS browser's localStorage only) ----
+const COMMENTS_KEY = "koshien-comments-v1";
+function loadComments(){
+  try { return JSON.parse(localStorage.getItem(COMMENTS_KEY)) || {}; } catch(e){ return {}; }
+}
+let COMMENTS = loadComments();
+function saveComments(){
+  try { localStorage.setItem(COMMENTS_KEY, JSON.stringify(COMMENTS)); } catch(e){ /* private mode etc. — keep in-memory */ }
+}
+function fmtTs(ts){
+  const d = new Date(ts);
+  return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,"0")}`;
+}
+function commentListHtml(g){
+  const list = (COMMENTS[g.id] || []).slice().sort((a,b)=>b.ts-a.ts);
+  if(!list.length) return `<div id="c-list"><p class="c-empty">まだ声はありません。最初のひと言をどうぞ。</p></div>`;
+  const items = list.map(c => {
+    const teamTag = c.team
+      ? `<span class="c-team"><i style="background:${teamColor(c.team, c.team===g.b?g.a:null)}"></i>${esc(c.team)}を応援</span>`
+      : "";
+    return `<div class="comment-item">
+      <div class="c-head">
+        <span class="c-name">${esc(c.n || "匿名")}</span>${teamTag}<span>${fmtTs(c.ts)}</span>
+        <button class="c-del" title="削除" onclick="delComment('${g.id}',${c.ts})">✕</button>
+      </div>
+      <p class="c-text">${esc(c.t)}</p>
+    </div>`;
+  }).join("");
+  return `<div id="c-list">${items}</div>`;
+}
+function commentsHtml(g){
+  return `<section class="comments-sec">
+    ${h2t("みんなの声")}
+    <div class="comment-form">
+      <div class="team-pick">
+        <label><input type="radio" name="c-team" value="${esc(g.a)}"><span style="--tc:${teamColor(g.a)}">${esc(g.a)}を応援</span></label>
+        <label><input type="radio" name="c-team" value="${esc(g.b)}"><span style="--tc:${teamColor(g.b, g.a)}">${esc(g.b)}を応援</span></label>
+        <label><input type="radio" name="c-team" value="" checked><span>観るだけ</span></label>
+      </div>
+      <textarea id="c-text" maxlength="300" placeholder="この試合への一言をどうぞ(応援・予想・現地情報など)"></textarea>
+      <div class="c-row">
+        <input type="text" id="c-name" maxlength="20" placeholder="ニックネーム(任意)">
+        <button onclick="postComment('${g.id}')">投稿する</button>
+      </div>
+      <p class="c-note">登録不要でそのまま投稿できます。コメントはこのブラウザ内にのみ保存されます(お試し版)。</p>
+    </div>
+    ${commentListHtml(g)}
+  </section>`;
+}
+function postComment(gameId){
+  const hit = findGame(gameId);
+  if(!hit) return;
+  const text = (document.getElementById("c-text").value || "").trim();
+  if(!text) return;
+  const name = (document.getElementById("c-name").value || "").trim();
+  const teamInput = document.querySelector('input[name="c-team"]:checked');
+  const entry = { t: text.slice(0,300), n: name.slice(0,20), team: teamInput ? teamInput.value : "", ts: Date.now() };
+  (COMMENTS[gameId] = COMMENTS[gameId] || []).push(entry);
+  saveComments();
+  document.getElementById("c-text").value = "";
+  document.getElementById("c-list").outerHTML = commentListHtml(hit.g);
+}
+function delComment(gameId, ts){
+  const hit = findGame(gameId);
+  if(!hit) return;
+  COMMENTS[gameId] = (COMMENTS[gameId] || []).filter(c => c.ts !== ts);
+  saveComments();
+  document.getElementById("c-list").outerHTML = commentListHtml(hit.g);
+}
+
+function matchHtml(id){
+  const hit = findGame(id);
+  if(!hit) return calendarHtml(defaultDayKey());
+  const { g, day } = hit;
+  const el = document.getElementById("report-"+id);
+  const body = el ? renderReport(el.textContent.trim())
+    : "<p>この試合のレポートは準備中です。</p>";
+  const hook = HOOKS[id];
+  return `<div class="detail-head"><div class="wrap">
+      <div class="crumb"><a href="#/day/${day.key}">← ${esc(day.label)}の全試合へ</a></div>
+      <div class="round serif">第108回選手権 神奈川大会 ${esc(day.roundLabel || day.round || "")}</div>
+      <div class="matchup">
+        <div class="side">${monoHtml(g.a)}<span class="tname">${esc(g.a)}</span>${seedBadgeHtml(g.a)}</div>
+        <span class="vs-mark">対</span>
+        <div class="side">${monoHtml(g.b, g.a)}<span class="tname">${esc(g.b)}</span>${seedBadgeHtml(g.b)}</div>
+      </div>
+      <div class="info"><span>${esc(day.label)} ${g.t} 開始</span><span>${esc(g.v)}</span>${PICKS[id]?'<span class="pick-badge">★ 注目</span>':""}</div>
+    </div></div>
+    ${hook?`<div class="lead-hook"><div class="inner"><p class="eyebrow">見どころ</p><p>${esc(hook)}</p></div></div>`:""}
+    <article class="report">${body}
+      ${commentsHtml(g)}
+      <a class="backlink" href="#/day/${day.key}">← ${esc(day.label)}の全試合一覧へ戻る</a>
+    </article>` + footerHtml();
+}
+
+function render(){
+  const hash = location.hash || `#/day/${defaultDayKey()}`;
+  const app = document.getElementById("app");
+  let m;
+  if((m = hash.match(/^#\/match\/(g\d+)/))){
+    app.innerHTML = matchHtml(m[1]);
+  } else if((m = hash.match(/^#\/day\/(\d{4})/)) && dayOf(m[1])){
+    app.innerHTML = calendarHtml(m[1]);
+  } else {
+    app.innerHTML = calendarHtml(defaultDayKey());
+  }
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", render);
+render();
+</script>
