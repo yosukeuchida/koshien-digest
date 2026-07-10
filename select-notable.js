@@ -7,6 +7,7 @@ export const meta = {
 
 const A = typeof args === 'string' ? JSON.parse(args) : (args || {})
 if (!Array.isArray(A.games) || !A.games.length) throw new Error('args.games required — node build-select-args.js で生成する')
+if (!A.maxPick || !A.tournament) throw new Error('args.maxPick/tournament required — build-select-args.js で生成する')
 
 const SCHEMA = {
   type: 'object',
@@ -28,6 +29,9 @@ const SCHEMA = {
 
 const result = await agent(`高校野球観戦ガイドの編集者として、${A.tournament} ${A.dayLabel}(${A.round})の全${A.games.length}カードから、深掘り記事を作る価値のある「注目試合」を最大${A.maxPick}試合選んでください。
 
+判断材料は下記のカード一覧のみ。あなたの学習知識にある学校の評判・過去実績を判断に使わない・選定理由(reason)に書かないこと。基準2〜4も材料から読み取れる範囲でのみ適用する。
+シード校一覧(この大会の全シード): ${A.seedText || '(情報なし)'}
+
 選定基準(優先順):
 1. シード校の登場(特に初戦・シード校同士)
 2. 下剋上の芽(ノーシードが前戦で大勝・シード校を追い詰めた実績等)
@@ -43,5 +47,6 @@ ${A.games.map((g) => `- ${g.id}: ${g.a}${g.seedA ? `(第${g.seedA}シード)` : 
   { label: 'select-notable', phase: 'Select', model: 'sonnet', schema: SCHEMA })
 
 const valid = (result.picks || []).filter((p) => A.games.some((g) => g.id === p.id)).slice(0, A.maxPick)
+if (!valid.length) throw new Error('有効な選定が0件(モデルが実在しないidのみ返した可能性) — 再実行すること')
 log(`選定: ${valid.length}/${A.games.length}試合`)
 return { picks: valid }

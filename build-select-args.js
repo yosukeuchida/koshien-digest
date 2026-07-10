@@ -40,5 +40,6 @@ const games = day.games.map((g) => ({
   pastMatchup: (pairs[[g.a, g.b].sort().join('|')] || {}).headToHead || null,
 }));
 const maxPick = Math.max(1, Math.min(6, Math.round(games.length * 0.25)));
-process.stdout.write(JSON.stringify({ tournament: config.name, dayLabel: day.label, round: day.round, maxPick, games }, null, 1));
+const seedText = Object.entries(config.seeds).map(([k, names]) => `第${k}シード: ${names.join('・')}`).join(' / ');
+process.stdout.write(JSON.stringify({ tournament: config.name, seedText, dayLabel: day.label, round: day.round, maxPick, games }, null, 1));
 console.error(`games: ${games.length}, maxPick: ${maxPick}`);
