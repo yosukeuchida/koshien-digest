@@ -1,4 +1,4 @@
-<title>今日の一戦 — 夏の神奈川 観戦ガイド</title>
+<title>今日の一戦 — 高校野球 観戦ガイド</title>
 <style>
 :root{
   --bg:#F3F5EF; --surface:#FFFFFF; --ink:#1B2420; --muted:#5F6E64;
@@ -59,6 +59,12 @@ h1.site-title{
   background:var(--green); color:#F3F5EF; border-color:var(--green); font-weight:600;
 }
 .day-note{font-size:12.5px; color:var(--muted); margin:0 0 14px}
+
+/* ---- tournament group heading ---- */
+.tournament-head{
+  font-size:15px; font-weight:700; letter-spacing:.08em; margin:26px 0 4px;
+  padding:6px 10px; background:var(--chip-bg); border-radius:4px;
+}
 
 /* ---- venue groups ---- */
 .venue{margin:26px 0}
@@ -385,23 +391,33 @@ footer.site p{margin:4px 0}
 
 <!-- ============ DATA ============ -->
 <script>
-// 日程データ(結果日 kind:"results" と 予定日 kind:"cards" の配列)。出典: kanagawa-baseball.com
+// 日程データ: 日付ごとに大会別セクション(kind:"results" / kind:"cards")を持つ統合ビュー
 const DAYS = /*__DAYS__*/;
-// カレンダー面の1行フック(各試合レポートから抽出)
+// 大会メタデータ(slug -> {name, tname, seeds})
+const TOURNAMENTS = /*__TOURNAMENTS__*/;
+// カレンダー面の1行フック(キー: `<slug>--<gid>`)
 const HOOKS = /*__HOOKS__*/;
-// 編集部注目マーク
+// 編集部注目マーク(キー: `<slug>--<gid>`)
 const PICKS = /*__PICKS__*/;
 
-function dayOf(key){ return DAYS.find(d => d.key === key); }
-function defaultDayKey(){
-  const cards = DAYS.filter(d => d.kind === "cards");
-  return (cards.length ? cards[cards.length - 1] : DAYS[DAYS.length - 1]).key;
+function dayOf(date){ return DAYS.find(d => d.date === date); }
+function defaultDate(){
+  const withCards = DAYS.filter(d => d.sections.some(s => s.kind === "cards"));
+  return (withCards.length ? withCards[withCards.length-1] : DAYS[DAYS.length-1]).date;
 }
-function findGame(id){
+// 旧キー(0711等)→日付の後方互換(神奈川2026のMMDD形式)
+function legacyDayDate(key){
+  const m = key.match(/^(\d{2})(\d{2})$/);
+  return m ? `2026-${m[1]}-${m[2]}` : null;
+}
+function gkey(slug, gid){ return slug + "--" + gid; }
+function findGame(slug, gid){
   for(const d of DAYS){
-    if(d.kind !== "cards") continue;
-    const g = d.games.find(x => x.id === id);
-    if(g) return { g, day: d };
+    for(const sec of d.sections){
+      if(sec.kind !== "cards" || sec.slug !== slug) continue;
+      const g = sec.games.find(x => x.id === gid);
+      if(g) return { g, day: d, sec };
+    }
   }
   return null;
 }
@@ -496,9 +512,9 @@ function mdToHtml(md){
 
 function headerHtml(){
   return `<header class="site"><div class="wrap">
-    <div class="site-tag">高校野球 神奈川大会 2026 夏</div>
+    <div class="site-tag">高校野球 2026 夏</div>
     <h1 class="site-title serif"><a href="#/" style="text-decoration:none">今日の一戦</a></h1>
-    <p class="site-sub">第108回全国高等学校野球選手権 神奈川大会 — 全試合日程と、それぞれの物語</p>
+    <p class="site-sub">高校野球 観戦ガイド — 全試合日程と、それぞれの物語</p>
   </div></header>`;
 }
 function footerHtml(){
@@ -508,51 +524,71 @@ function footerHtml(){
   </div></footer>`;
 }
 
-function calendarHtml(dayKey){
-  const day = dayOf(dayKey) || dayOf(defaultDayKey());
+let FILTER = "all"; // 大会絞り込み(hashには入れない)
+function setFilter(f){ FILTER = f; render(); }
+
+function calendarHtml(date){
+  const day = dayOf(date) || dayOf(defaultDate());
   let h = headerHtml() + '<main class="wrap">';
   h += `<nav class="datenav" aria-label="日付">` +
-    DAYS.map(d => `<button aria-selected="${d.key===day.key}" onclick="location.hash='#/day/${d.key}'">${esc(d.label)}</button>`).join("") +
+    DAYS.map(d => `<button aria-selected="${d.date===day.date}" onclick="location.hash='#/day/${d.date}'">${esc(d.label)}</button>`).join("") +
     `</nav>`;
-  if(day.note) h += `<p class="day-note">${esc(day.note)}</p>`;
-  if(day.kind === "results"){
-    for(const venue of day.venues){
-      h += `<section class="venue"><h2>${esc(venue.v)}</h2>`;
-      for(const g of venue.games){
-        const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes("x");
-        h += `<div class="game-row">
-          <span class="t">${g.t}</span>
-          <span class="card"><span class="${aWin?'win':''}">${esc(g.a)}</span>
-            <span style="color:var(--muted)"> — </span>
-            <span class="${!aWin?'win':''}">${esc(g.b)}</span>
-            ${g.r1?'<span class="badge-r1">1回戦</span>':''}</span>
-          <span class="score">${g.sa} — ${g.sb}</span>
-        </div>`;
+  const slugsList = Object.keys(TOURNAMENTS);
+  if(slugsList.length > 1){
+    h += `<nav class="datenav" aria-label="大会">` +
+      `<button aria-selected="${FILTER==="all"}" onclick="setFilter('all')">すべて</button>` +
+      slugsList.map(s => `<button aria-selected="${FILTER===s}" onclick="setFilter('${s}')">${esc(TOURNAMENTS[s].tname)}</button>`).join("") +
+      `</nav>`;
+  }
+  for(const sec of day.sections){
+    if(FILTER !== "all" && sec.slug !== FILTER) continue;
+    h += `<h2 class="tournament-head">⚾ ${esc(sec.tname)}・${esc(sec.round || "")}</h2>`;
+    if(sec.note) h += `<p class="day-note">${esc(sec.note)}</p>`;
+    if(sec.kind === "results"){
+      for(const venue of sec.venues){
+        h += `<section class="venue"><h2>${esc(venue.v)}</h2>`;
+        for(const g of venue.games){
+          const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes("x");
+          h += `<div class="game-row">
+            <span class="t">${g.t}</span>
+            <span class="card"><span class="${aWin?'win':''}">${esc(g.a)}</span>
+              <span style="color:var(--muted)"> — </span>
+              <span class="${!aWin?'win':''}">${esc(g.b)}</span>
+              ${g.r1?'<span class="badge-r1">1回戦</span>':''}</span>
+            <span class="score">${g.sa} — ${g.sb}</span>
+          </div>`;
+        }
+        h += `</section>`;
       }
-      h += `</section>`;
-    }
-  } else {
-    let currentVenue = "";
-    for(const g of day.games){
-      if(g.v !== currentVenue){
-        if(currentVenue) h += `</section>`;
-        currentVenue = g.v;
-        h += `<section class="venue"><h2>${esc(g.v)}</h2>`;
+    } else {
+      let currentVenue = "";
+      for(const g of sec.games){
+        if(g.v !== currentVenue){
+          if(currentVenue) h += `</section>`;
+          currentVenue = g.v;
+          h += `<section class="venue"><h2>${esc(g.v)}</h2>`;
+        }
+        const key = gkey(sec.slug, g.id);
+        const hasReport = !!document.getElementById("report-"+key);
+        if(!hasReport){
+          h += `<div class="game-row"><span class="t">${g.t}</span>
+            <span class="card">${esc(g.a)} <span style="color:var(--muted)">対</span> ${esc(g.b)}</span></div>`;
+          continue;
+        }
+        const hook = HOOKS[key] || "";
+        h += `<a class="match-card${PICKS[key]?' pick-card':''}" href="#/match/${sec.slug}/${g.id}">
+          <div class="meta"><span>${g.t}</span><span>${esc(sec.round||"")}</span>${PICKS[key]?'<span class="pick">★ 注目</span>':''}</div>
+          <div class="mc-teams">
+            <span class="mm" style="background:${teamColor(g.a)}">${esc([...g.a][0])}</span><span class="mc-name">${esc(g.a)}</span>
+            <span class="mc-vs">対</span>
+            <span class="mm" style="background:${teamColor(g.b, g.a)}">${esc([...g.b][0])}</span><span class="mc-name">${esc(g.b)}</span>
+          </div>
+          ${hook?`<p class="hook">${esc(hook)}</p>`:""}
+          <span class="more">背景・見どころを読む →</span>
+        </a>`;
       }
-      const hook = HOOKS[g.id] || "";
-      const hasReport = !!document.getElementById("report-"+g.id);
-      h += `<a class="match-card${PICKS[g.id]?' pick-card':''}" href="#/match/${g.id}">
-        <div class="meta"><span>${g.t}</span><span>${esc(day.round||"")}</span>${PICKS[g.id]?'<span class="pick">★ 注目</span>':''}</div>
-        <div class="mc-teams">
-          <span class="mm" style="background:${teamColor(g.a)}">${esc([...g.a][0])}</span><span class="mc-name">${esc(g.a)}</span>
-          <span class="mc-vs">対</span>
-          <span class="mm" style="background:${teamColor(g.b, g.a)}">${esc([...g.b][0])}</span><span class="mc-name">${esc(g.b)}</span>
-        </div>
-        ${hook?`<p class="hook">${esc(hook)}</p>`:""}
-        <span class="more">${hasReport?"背景・見どころを読む →":"レポート準備中"}</span>
-      </a>`;
+      if(currentVenue) h += `</section>`;
     }
-    if(currentVenue) h += `</section>`;
   }
   h += "</main>" + footerHtml();
   return h;
@@ -579,15 +615,11 @@ function monoHtml(name, avoidName){
   return `<span class="mono" style="background:${teamColor(name, avoidName)}">${esc([...name][0])}</span>`;
 }
 
-// Seed assignments are fixed tournament facts (spring-2026 results), exact names only —
-// 日大 (g2) is NOT 日大藤沢, so no fuzzy matching.
-const SEEDS = {
-  1: ["横浜","横浜創学館","桐光学園","慶応"],
-  2: ["桐蔭学園","相洋","日大藤沢","立花学園"],
-  3: ["鎌倉学園","川和","横浜隼人","横浜清陵","三浦学苑","神奈川工業","橘","藤沢翔陵"],
-};
-function seedBadgeHtml(name){
-  for(const k of [1,2,3]) if(SEEDS[k].includes(name)) return `<span class="seed-badge s${k}">第${k}シード</span>`;
+// Seed assignments are fixed tournament facts, exact names only —
+// 日大 is NOT 日大藤沢, so no fuzzy matching. Seeds live in each tournament's config.
+function seedBadgeHtml(slug, name){
+  const seeds = (TOURNAMENTS[slug] || {}).seeds || {};
+  for(const k of Object.keys(seeds)) if(seeds[k].includes(name)) return `<span class="seed-badge s${k}">第${k}シード</span>`;
   return `<span class="seed-badge ns">ノーシード</span>`;
 }
 
@@ -712,8 +744,8 @@ function fmtTs(ts){
   const d = new Date(ts);
   return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,"0")}`;
 }
-function commentListHtml(g){
-  const list = (COMMENTS[g.id] || []).slice().sort((a,b)=>b.ts-a.ts);
+function commentListHtml(slug, g){
+  const list = (COMMENTS[gkey(slug, g.id)] || []).slice().sort((a,b)=>b.ts-a.ts);
   if(!list.length) return `<div id="c-list"><p class="c-empty">まだ声はありません。最初のひと言をどうぞ。</p></div>`;
   const items = list.map(c => {
     const teamTag = c.team
@@ -722,14 +754,14 @@ function commentListHtml(g){
     return `<div class="comment-item">
       <div class="c-head">
         <span class="c-name">${esc(c.n || "匿名")}</span>${teamTag}<span>${fmtTs(c.ts)}</span>
-        <button class="c-del" title="削除" onclick="delComment('${g.id}',${c.ts})">✕</button>
+        <button class="c-del" title="削除" onclick="delComment('${slug}','${g.id}',${c.ts})">✕</button>
       </div>
       <p class="c-text">${esc(c.t)}</p>
     </div>`;
   }).join("");
   return `<div id="c-list">${items}</div>`;
 }
-function commentsHtml(g){
+function commentsHtml(slug, g){
   return `<section class="comments-sec">
     ${h2t("みんなの声")}
     <div class="comment-form">
@@ -741,69 +773,76 @@ function commentsHtml(g){
       <textarea id="c-text" maxlength="300" placeholder="この試合への一言をどうぞ(応援・予想・現地情報など)"></textarea>
       <div class="c-row">
         <input type="text" id="c-name" maxlength="20" placeholder="ニックネーム(任意)">
-        <button onclick="postComment('${g.id}')">投稿する</button>
+        <button onclick="postComment('${slug}','${g.id}')">投稿する</button>
       </div>
       <p class="c-note">登録不要でそのまま投稿できます。コメントはこのブラウザ内にのみ保存されます(お試し版)。</p>
     </div>
-    ${commentListHtml(g)}
+    ${commentListHtml(slug, g)}
   </section>`;
 }
-function postComment(gameId){
-  const hit = findGame(gameId);
+function postComment(slug, gameId){
+  const hit = findGame(slug, gameId);
   if(!hit) return;
   const text = (document.getElementById("c-text").value || "").trim();
   if(!text) return;
   const name = (document.getElementById("c-name").value || "").trim();
   const teamInput = document.querySelector('input[name="c-team"]:checked');
   const entry = { t: text.slice(0,300), n: name.slice(0,20), team: teamInput ? teamInput.value : "", ts: Date.now() };
-  (COMMENTS[gameId] = COMMENTS[gameId] || []).push(entry);
+  const key = gkey(slug, gameId);
+  (COMMENTS[key] = COMMENTS[key] || []).push(entry);
   saveComments();
   document.getElementById("c-text").value = "";
-  document.getElementById("c-list").outerHTML = commentListHtml(hit.g);
+  document.getElementById("c-list").outerHTML = commentListHtml(slug, hit.g);
 }
-function delComment(gameId, ts){
-  const hit = findGame(gameId);
+function delComment(slug, gameId, ts){
+  const hit = findGame(slug, gameId);
   if(!hit) return;
-  COMMENTS[gameId] = (COMMENTS[gameId] || []).filter(c => c.ts !== ts);
+  const key = gkey(slug, gameId);
+  COMMENTS[key] = (COMMENTS[key] || []).filter(c => c.ts !== ts);
   saveComments();
-  document.getElementById("c-list").outerHTML = commentListHtml(hit.g);
+  document.getElementById("c-list").outerHTML = commentListHtml(slug, hit.g);
 }
 
-function matchHtml(id){
-  const hit = findGame(id);
-  if(!hit) return calendarHtml(defaultDayKey());
-  const { g, day } = hit;
-  const el = document.getElementById("report-"+id);
+function matchHtml(slug, gid){
+  const hit = findGame(slug, gid);
+  if(!hit) return calendarHtml(defaultDate());
+  const { g, day, sec } = hit;
+  const key = gkey(slug, gid);
+  const el = document.getElementById("report-"+key);
   const body = el ? renderReport(el.textContent.trim())
     : "<p>この試合のレポートは準備中です。</p>";
-  const hook = HOOKS[id];
+  const hook = HOOKS[key];
   return `<div class="detail-head"><div class="wrap">
-      <div class="crumb"><a href="#/day/${day.key}">← ${esc(day.label)}の全試合へ</a></div>
-      <div class="round serif">第108回選手権 神奈川大会 ${esc(day.roundLabel || day.round || "")}</div>
+      <div class="crumb"><a href="#/day/${day.date}">← ${esc(day.label)}の全試合へ</a></div>
+      <div class="round serif">${esc(TOURNAMENTS[slug].tname)}大会 ${esc(sec.roundLabel || sec.round || "")}</div>
       <div class="matchup">
-        <div class="side">${monoHtml(g.a)}<span class="tname">${esc(g.a)}</span>${seedBadgeHtml(g.a)}</div>
+        <div class="side">${monoHtml(g.a)}<span class="tname">${esc(g.a)}</span>${seedBadgeHtml(slug, g.a)}</div>
         <span class="vs-mark">対</span>
-        <div class="side">${monoHtml(g.b, g.a)}<span class="tname">${esc(g.b)}</span>${seedBadgeHtml(g.b)}</div>
+        <div class="side">${monoHtml(g.b, g.a)}<span class="tname">${esc(g.b)}</span>${seedBadgeHtml(slug, g.b)}</div>
       </div>
-      <div class="info"><span>${esc(day.label)} ${g.t} 開始</span><span>${esc(g.v)}</span>${PICKS[id]?'<span class="pick-badge">★ 注目</span>':""}</div>
+      <div class="info"><span>${esc(day.label)} ${g.t} 開始</span><span>${esc(g.v)}</span>${PICKS[key]?'<span class="pick-badge">★ 注目</span>':""}</div>
     </div></div>
     ${hook?`<div class="lead-hook"><div class="inner"><p class="eyebrow">見どころ</p><p>${esc(hook)}</p></div></div>`:""}
     <article class="report">${body}
-      ${commentsHtml(g)}
-      <a class="backlink" href="#/day/${day.key}">← ${esc(day.label)}の全試合一覧へ戻る</a>
+      ${commentsHtml(slug, g)}
+      <a class="backlink" href="#/day/${day.date}">← ${esc(day.label)}の全試合一覧へ戻る</a>
     </article>` + footerHtml();
 }
 
 function render(){
-  const hash = location.hash || `#/day/${defaultDayKey()}`;
+  const hash = location.hash || `#/day/${defaultDate()}`;
   const app = document.getElementById("app");
   let m;
-  if((m = hash.match(/^#\/match\/(g\d+)/))){
-    app.innerHTML = matchHtml(m[1]);
-  } else if((m = hash.match(/^#\/day\/(\d{4})/)) && dayOf(m[1])){
+  if((m = hash.match(/^#\/match\/([a-z0-9-]+)\/(g\d+)/))){
+    app.innerHTML = matchHtml(m[1], m[2]);
+  } else if((m = hash.match(/^#\/match\/(g\d+)/))){
+    app.innerHTML = matchHtml("kanagawa-2026", m[1]);   // 後方互換: 旧 #/match/g45
+  } else if((m = hash.match(/^#\/day\/(\d{4}-\d{2}-\d{2})/)) && dayOf(m[1])){
     app.innerHTML = calendarHtml(m[1]);
+  } else if((m = hash.match(/^#\/day\/(\d{4})/)) && legacyDayDate(m[1]) && dayOf(legacyDayDate(m[1]))){
+    app.innerHTML = calendarHtml(legacyDayDate(m[1]));  // 後方互換: 旧 #/day/0711
   } else {
-    app.innerHTML = calendarHtml(defaultDayKey());
+    app.innerHTML = calendarHtml(defaultDate());
   }
   window.scrollTo(0,0);
 }

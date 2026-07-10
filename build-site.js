@@ -1,13 +1,23 @@
 #!/usr/bin/env node
-// Pure templating: template.html + data.json -> site.html. No LLM calls,
-// no network — this is the step that used to be done by hand-pasting
-// markdown into Edit calls, which is what burned tokens for no reason.
+// Pure templating: template.html + tournaments/<slug>/data.json -> site.html.
+// No LLM calls, no network — this is the step that used to be done by
+// hand-pasting markdown into Edit calls, which is what burned tokens for no reason.
+// All tournaments are merged into one date-first calendar; hooks/picks/reports
+// are namespaced as `<slug>--<gid>` so games never collide across tournaments.
 const fs = require('fs');
 const path = require('path');
+const { listSlugs, loadConfig, loadData } = require('./lib/tournaments');
 
 const dir = __dirname;
 const template = fs.readFileSync(path.join(dir, 'template.html'), 'utf8');
-const data = JSON.parse(fs.readFileSync(path.join(dir, 'data.json'), 'utf8'));
+
+const slugs = listSlugs();
+if (!slugs.length) {
+  console.error('tournaments/ に大会が無い');
+  process.exit(1);
+}
+const tournaments = {}; // slug -> {config, data}
+for (const s of slugs) tournaments[s] = { config: loadConfig(s), data: loadData(s) };
 
 function escForScriptTag(s) {
   return s.replace(/<\/script>/gi, '<\\/script>');
@@ -177,13 +187,46 @@ function simplifyBroadcastSection(md) {
     .join('');
 }
 
-let out = template;
-out = out.replace('/*__DAYS__*/', JSON.stringify(data.days));
-out = out.replace('/*__HOOKS__*/', JSON.stringify(data.hooks));
-out = out.replace('/*__PICKS__*/', JSON.stringify(data.picks));
+// 統合DAYS: 日付ごとに大会別セクションを持つ(日付ファースト統合ビュー)
+const byDate = new Map(); // 'YYYY-MM-DD' -> {date, label, sections:[]}
+for (const [s, t] of Object.entries(tournaments)) {
+  for (const day of t.data.days) {
+    const date = day.date;
+    if (!byDate.has(date)) byDate.set(date, { date, label: day.label, sections: [] });
+    byDate.get(date).sections.push({
+      slug: s,
+      tname: t.config.displayName || t.config.shortName,
+      kind: day.kind,
+      round: day.round || '',
+      roundLabel: day.roundLabel || '',
+      note: day.note || '',
+      ...(day.kind === 'results' ? { venues: day.venues } : { games: day.games }),
+    });
+  }
+}
+const DAYS = [...byDate.values()].sort((x, y) => x.date.localeCompare(y.date));
 
-const reportScripts = Object.entries(data.reports)
-  .map(([id, md]) => `<script type="text/plain" id="report-${id}">\n${escForScriptTag(simplifyBroadcastSection(stripPlaceholders(stripEditorialNotes(md))))}\n</script>`)
+const TOURNAMENTS = {};
+for (const [s, t] of Object.entries(tournaments)) {
+  TOURNAMENTS[s] = { name: t.config.name, tname: t.config.displayName || t.config.shortName, seeds: t.config.seeds };
+}
+const HOOKS = {};
+const PICKS = {};
+const allReports = [];
+for (const [s, t] of Object.entries(tournaments)) {
+  for (const [gid, v] of Object.entries(t.data.hooks || {})) HOOKS[`${s}--${gid}`] = v;
+  for (const [gid, v] of Object.entries(t.data.picks || {})) PICKS[`${s}--${gid}`] = v;
+  for (const [gid, md] of Object.entries(t.data.reports || {})) allReports.push([`${s}--${gid}`, md]);
+}
+
+let out = template;
+out = out.replace('/*__DAYS__*/', JSON.stringify(DAYS));
+out = out.replace('/*__TOURNAMENTS__*/', JSON.stringify(TOURNAMENTS));
+out = out.replace('/*__HOOKS__*/', JSON.stringify(HOOKS));
+out = out.replace('/*__PICKS__*/', JSON.stringify(PICKS));
+
+const reportScripts = allReports
+  .map(([key, md]) => `<script type="text/plain" id="report-${key}">\n${escForScriptTag(simplifyBroadcastSection(stripPlaceholders(stripEditorialNotes(md))))}\n</script>`)
   .join('\n\n');
 out = out.replace('<!--__REPORTS__-->', reportScripts);
 
@@ -191,8 +234,8 @@ const outPath = process.argv[2] || path.join(dir, 'site.html');
 fs.writeFileSync(outPath, out);
 
 console.log(`Wrote ${outPath}`);
-for (const day of data.days) {
-  const n = day.kind === 'results' ? day.venues.reduce((s, v) => s + v.games.length, 0) : day.games.length;
-  console.log(`  ${day.key} (${day.kind}): ${n} games`);
+for (const d of DAYS) {
+  const n = d.sections.reduce((s, sec) => s + (sec.kind === 'results' ? sec.venues.reduce((a, v) => a + v.games.length, 0) : sec.games.length), 0);
+  console.log(`  ${d.date}: ${n} games (${d.sections.map((s) => s.tname).join('+')})`);
 }
-console.log(`  reports: ${Object.keys(data.reports).length}`);
+console.log(`  reports: ${allReports.length}`);
