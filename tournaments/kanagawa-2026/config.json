@@ -1,0 +1,59 @@
+{
+  "slug": "kanagawa-2026",
+  "name": "第108回全国高等学校野球選手権 神奈川大会",
+  "shortName": "神奈川大会",
+  "displayName": "神奈川",
+  "sport": "baseball",
+  "format": "single-elimination",
+  "year": 2026,
+  "region": "kanagawa",
+  "seeds": {
+    "1": [
+      "横浜",
+      "横浜創学館",
+      "桐光学園",
+      "慶応"
+    ],
+    "2": [
+      "桐蔭学園",
+      "相洋",
+      "日大藤沢",
+      "立花学園"
+    ],
+    "3": [
+      "鎌倉学園",
+      "川和",
+      "横浜隼人",
+      "横浜清陵",
+      "三浦学苑",
+      "神奈川工業",
+      "橘",
+      "藤沢翔陵"
+    ]
+  },
+  "facts": "第108回全国高等学校野球選手権神奈川大会。7月5日(日)横浜スタジアムで開会式、7月7日(火)開幕、決勝は7月26日(日)。172チーム(連合5チーム含む)参加、組み合わせ抽選は6月13日実施。\nシード校(2026年春季県大会の成績による):\n- 第1シード: 横浜・横浜創学館・桐光学園・慶応\n- 第2シード: 桐蔭学園・相洋・日大藤沢・立花学園\n- 第3シード: 鎌倉学園・川和・横浜隼人・横浜清陵・三浦学苑・神奈川工業・橘・藤沢翔陵\nこのシード情報は確定済みであり、検索結果と食い違う場合もこちらを優先すること。",
+  "broadcast": {
+    "streaming": [
+      {
+        "name": "バーチャル高校野球",
+        "url": "https://sports.yahoo.co.jp/livestream/vk",
+        "tag": "LIVE",
+        "scope": "全球場・開会式〜決勝(tvk公式ページで明言)"
+      }
+    ],
+    "tvLiveVenues": {
+      "サーティーフォー保土ケ谷球場": "tvk(テレビ神奈川)",
+      "横浜スタジアム": "tvk(テレビ神奈川)",
+      "相模原ギオンベースボールパーク": "J:COMチャンネル(地デジ11ch)",
+      "バッティングパレス相石スタジアムひらつか": "J:COMチャンネル(地デジ11ch)"
+    },
+    "verifiedAt": "2026-07-14",
+    "sources": [
+      "https://www.tvk-yokohama.com/koko/",
+      "https://www2.myjcom.jp/special/tv/sports/baseball/highschool/sensyuken_chihou/kanagawa/index.shtml"
+    ]
+  },
+  "sources": [
+    "https://www.kanagawa-baseball.com/"
+  ]
+}
