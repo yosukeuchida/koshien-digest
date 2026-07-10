@@ -51,12 +51,20 @@
 
 ## 運用フロー(新しい日を追加する手順)
 
+dayKeyはMMDD形式の文字列("0711"等)。data.jsonの `days[].key` と一致させる
+(`date` はYYYY-MM-DD形式)。
+
 ```
 1. 日程の一次取得(main loop、WebFetchで大会configのsources記載の日付ページ)
    - 終わった日(結果)→ 従来通りmain loopがWebFetchで2回照合し、
-     tournaments/<slug>/data.json の days[] に kind:"results" で直接追記可(スコア・r1フラグ)
+     tournaments/<slug>/data.json の days[] に kind:"results" で直接追記可。構造:
+     {key,label,date,kind:"results",note,venues:[{v,games:[{t,a,b,sa,sb,r1?}]}]}
+     (r1は1回戦フラグ。sa/sbはスコアで、サヨナラ勝ちは "8x" のようにx付き文字列)
    - これからの日(cards)→ **手編集禁止**。同一ページをWebFetchで2回独立に構造化抽出して
      read1.json / read2.json を作り、node ingest-day.js <slug> read1.json read2.json で登録する。
+     各readファイルの構造(ingest-day.jsが検証。dayKeyが取り込み後の days[].key になる):
+     {dayKey,label,date,kind:"cards",round,roundLabel,note,source:{url,fetchedAt},
+      games:[{t,a,b,v}]}
      2回の抽出が食い違ったら3回目を読んで多数決。スクリプトが会場多数決・トーナメント
      整合性(敗退チーム再登場・未消化カードの両校登場・3回戦以降の勝利記録)を機械検証し、
      通らない試合は自動で不掲載にする(2026-07-13の公式サイト未確定枠誤掲載を機械的に落とす層)。
@@ -80,7 +88,8 @@
    node update-school-db.js <slug> <出力ファイル> → 今回の検証済み調査結果を学校DBへ蓄積
    (失敗があれば resumeFromRunId で再実行 → 再merge)
 5. node build-site.js && node content-lint.js → HTML生成+自動検品(引数なしのlintは
-   全大会を検品する。NGなら公開しない)
+   全大会を検品する。NGなら公開しない。選手名衝突→「選手名衝突の自動裁定」セクション、
+   未報告不掲載→report-omissions.js で解消してから再lint)
 6. 代表1〜2記事をmain loopが実際に読む+スクリーンショットで表示確認
 7. HOOKSを新試合分追加(注目試合のみ。picksは手順2で登録済み。main loopが記事から抽出。
    **hookは記事に実際に残っている記述だけから作る** — 校閲で削除された主張をhookが参照し
