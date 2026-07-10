@@ -518,8 +518,16 @@ function headerHtml(){
   </div></header>`;
 }
 function footerHtml(){
+  // 日程・結果の出典は大会configのsources(URL)から生成 — 大会ごとに「大会名=ホスト名」で列挙
+  const srcList = Object.values(TOURNAMENTS)
+    .map(t => {
+      const hosts = (t.sources || []).map(u => { try { return new URL(u).host; } catch(e){ return u; } });
+      return hosts.length ? `${esc(t.tname)}=${hosts.map(esc).join("・")}` : null;
+    })
+    .filter(Boolean)
+    .join("、");
   return `<footer class="site"><div class="wrap">
-    <p>日程・結果の出典: 神奈川高校野球ステーション(kanagawa-baseball.com)。各試合の背景情報の出典は試合ページ末尾に記載。</p>
+    ${srcList ? `<p>日程・結果の出典: ${srcList}。各試合の背景情報の出典は試合ページ末尾に記載。</p>` : `<p>各試合の背景情報の出典は試合ページ末尾に記載。</p>`}
     <p>本ページは検証用パイロットです。試合開始時刻・会場は変更される場合があります。</p>
   </div></footer>`;
 }
@@ -542,7 +550,7 @@ function calendarHtml(date){
   }
   for(const sec of day.sections){
     if(FILTER !== "all" && sec.slug !== FILTER) continue;
-    h += `<h2 class="tournament-head">⚾ ${esc(sec.tname)}・${esc(sec.round || "")}</h2>`;
+    h += `<h2 class="tournament-head">⚾ ${esc(sec.tname)}${sec.round ? "・" + esc(sec.round) : ""}</h2>`;
     if(sec.note) h += `<p class="day-note">${esc(sec.note)}</p>`;
     if(sec.kind === "results"){
       for(const venue of sec.venues){

@@ -208,7 +208,7 @@ const DAYS = [...byDate.values()].sort((x, y) => x.date.localeCompare(y.date));
 
 const TOURNAMENTS = {};
 for (const [s, t] of Object.entries(tournaments)) {
-  TOURNAMENTS[s] = { name: t.config.name, tname: t.config.displayName || t.config.shortName, seeds: t.config.seeds };
+  TOURNAMENTS[s] = { name: t.config.name, tname: t.config.displayName || t.config.shortName, seeds: t.config.seeds, sources: t.config.sources || [] };
 }
 const HOOKS = {};
 const PICKS = {};
