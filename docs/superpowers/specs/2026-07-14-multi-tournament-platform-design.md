@@ -41,7 +41,10 @@ koshien-digest/(リポジトリ)
     kanagawa-2026/
       config.json  ← slug, name, shortName, sport:"baseball", format:"single-elimination",
                       year, region:"kanagawa", seeds, facts(大会共通事実の文字列),
-                      broadcast(streaming/tvLiveVenues/検証日・出典), sources(一次ソースURL)
+                      broadcast(streaming/tvLiveVenues/検証日・出典), sources(一次ソースURL),
+                      trustedSources(地域の高ティア情報源の列挙文字列。例:"kanagawa-baseball.com、
+                      神奈川県高野連公式"。省略すると地域ソースがプロンプトに注入されず収集素材が
+                      痩せるため、新大会セットアップ時に必ず埋めること — 実装時のレビュー指摘で追加)
       data.json    ← days[](現行構造), reports, hooks, picks
     chiba-2026/
       config.json / data.json
