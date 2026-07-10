@@ -9,15 +9,16 @@
 ## 概要
 
 - 「日程+試合背景記事」型サイトを高校野球の大会ごとに生成するパイプライン。運用フロー・設計判断の正本は `README.md` 自身(拡張時は必ずそこから読む)
-- 独立gitリポ、ローカルのみ運用(GitHub remoteなし)。生成物はClaude Artifactとして手動公開
-- 未成年である高校生選手の実名・成績等を扱うため、データ取り扱いに厳格な区分を設けている(下記参照)
+- **GitHub public repo(`yosukeuchida/koshien-digest`)+ Cloudflare Pages(GitHub連携)で公開中**(2026-07-15〜)。`build-site.js` のデフォルト実行で `site.html`(Claude Artifact公開用)と `index.html`(Cloudflare Pages配信用、byte-identicalミラー)を同時生成する。両方をcommit・pushすること
+- 未成年である高校生選手の実名・成績等を扱うため、データ取り扱いに厳格な区分を設けている(下記参照)。**掲載記事内の実名は既公知情報(新聞・学校公式・大会公式等)の集約であり、完全公開(検索インデックス対象)の方針で合意済み**(2026-07-15)
 
 ## この L2 固有の制約
 
-- **学校DB(`schools/`)・対戦成績(`pairs.json`)・Workflow中間生成物(`baseline-*.json`/`new-*-output.json`/`new-*-by-id.json`/`final-*-reports.json`等)は `../koshien-digest-data/` に保存し、本リポジトリのgit管理外**(2026-07-10 L2昇格時に決定)。未成年選手の実名を含む構造化データベースをgit履歴に残さないための兄弟ディレクトリ分離。理由の詳細はセッションログ参照
-- `data.json` / `site.html` は観戦ガイドとして公開する成果物そのもの(Artifactとして共有する内容と同一)のためgit管理下に置く
+- **学校DB(`schools/`)・対戦成績(`pairs.json`)・ゲラ(`proof/`)・台帳(`omissions.json`/`disambiguations.json`)・Workflow中間生成物(`baseline-*.json`/`new-*-output.json`/`new-*-by-id.json`/`final-*-reports.json`等)は `../koshien-digest-data/` に保存し、本リポジトリのgit管理外**(2026-07-10 L2昇格時に決定、public化後も維持)。未成年選手の実名を含む構造化データベース(素材段階のraw dataや裁定過程)をgit履歴に残さないための兄弟ディレクトリ分離。**公開方針は「校閲済みの完成記事(site.html/index.html)のみ公開、素材・裁定ログ・学校DBは非公開」の二層構造**であり、素材段階まで公開する方針ではない
+- `data.json` / `site.html` / `index.html` は観戦ガイドとして公開する成果物そのもの(Artifact・Cloudflare Pagesで共有する内容と同一)のためgit管理下に置く
 - スクレイピング・情報収集は対象サイトの利用規約・robots.txtを遵守する
 - 新しい大会日を追加する際は必ず `README.md` の「運用フロー」セクションから読む
+- GitHub push前は pre-push-checker、コード変更を含むcommit前は secret-scanner を実行する(L0/L1のpersonalドメイン共通ルール)
 
 ## L2 単独 clone Fallback ルール
 
