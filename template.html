@@ -380,10 +380,38 @@ footer.site{
   font-size:12px; color:var(--muted);
 }
 footer.site p{margin:4px 0}
-@media (max-width:560px){
+/* ---- mobile (index.htmlのviewportメタ、またはArtifactラッパー経由で発火) ---- */
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  header.site .wrap{padding-top:20px; padding-bottom:14px}
   h1.site-title{font-size:24px}
-  .detail-head h1{font-size:24px}
-  .game-row{flex-wrap:wrap}
+  .datenav{
+    flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    margin-left:-16px; margin-right:-16px; padding:2px 16px 8px; scrollbar-width:none;
+  }
+  .datenav::-webkit-scrollbar{display:none}
+  .datenav button{flex-shrink:0; white-space:nowrap; padding:7px 14px}
+  .game-row{flex-wrap:wrap; row-gap:2px}
+  .game-row .score{margin-left:auto}
+  .match-card{padding:14px 14px 12px}
+  .mc-teams{gap:7px}
+  .mc-teams .mc-name{font-size:17px}
+  .detail-head .wrap{padding-top:22px; padding-bottom:40px}
+  .detail-head .crumb{margin-bottom:14px}
+  .matchup{gap:10px}
+  .matchup .mono{width:58px; height:58px; font-size:26px}
+  .matchup .side{gap:8px}
+  .detail-head .info{gap:8px 14px; font-size:12.5px}
+  .lead-hook{padding:0 14px; margin-top:-22px}
+  .lead-hook .inner{padding:18px 18px 16px}
+  .lead-hook p:not(.eyebrow){font-size:16px; line-height:1.9}
+  article.report{padding:8px 16px 50px}
+  article.report h2{margin:36px 0 10px}
+  .profile-card{padding:16px 14px}
+  .player-card{padding:14px 14px}
+  .comment-form{padding:14px 14px}
+  .comment-form input[type="text"]{flex:1; width:auto; min-width:0}
+  article.report table{min-width:420px}
 }
 </style>
 

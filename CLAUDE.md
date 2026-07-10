@@ -9,7 +9,7 @@
 ## 概要
 
 - 「日程+試合背景記事」型サイトを高校野球の大会ごとに生成するパイプライン。運用フロー・設計判断の正本は `README.md` 自身(拡張時は必ずそこから読む)
-- **GitHub public repo(`yosukeuchida/koshien-digest`)+ Cloudflare Pages(GitHub連携)で公開中**(2026-07-15〜)。`build-site.js` のデフォルト実行で `site.html`(Claude Artifact公開用)と `index.html`(Cloudflare Pages配信用、byte-identicalミラー)を同時生成する。両方をcommit・pushすること
+- **GitHub public repo(`yosukeuchida/koshien-digest`)+ Cloudflare Pages(GitHub連携)で公開中**(2026-07-15〜)。`build-site.js` のデフォルト実行で `site.html`(Claude Artifact公開用。Artifact側がdocument骨格を付与するため素のHTML)と `index.html`(Cloudflare Pages配信用。doctype+viewportメタ付きラッパーを付与 — これが無いとスマホがPC表示になる、2026-07-11修正)を同時生成する。両方をcommit・pushすること
 - 未成年である高校生選手の実名・成績等を扱うため、データ取り扱いに厳格な区分を設けている(下記参照)。**掲載記事内の実名は既公知情報(新聞・学校公式・大会公式等)の集約であり、完全公開(検索インデックス対象)の方針で合意済み**(2026-07-15)
 
 ## この L2 固有の制約

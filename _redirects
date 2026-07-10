@@ -1,0 +1,3 @@
+# Cloudflare Pages: site.html は Artifact 用の素のHTML(viewportメタ無し)なので、
+# Pages 上では viewport 付きラッパーの index.html(=/)へ寄せる
+/site.html / 301

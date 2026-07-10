@@ -242,13 +242,36 @@ const outPath = process.argv[2] || path.join(dir, 'site.html');
 fs.writeFileSync(outPath, out);
 console.log(`Wrote ${outPath}`);
 
-// index.html is a byte-identical copy for Cloudflare Pages (GitHub連携), which serves the
-// build output directory's index.html by default. site.html stays the canonical name used
-// by Claude Artifact and every script/doc in this repo; only default-path builds also mirror it.
+// site.html stays "content-only" (no doctype/<head>) because Claude Artifact wraps files in
+// its own document skeleton at publish time — shipping our own <html>/<head> would nest tags.
+// index.html is served RAW by Cloudflare Pages (GitHub連携), so it needs a real shell: above
+// all <meta name="viewport">, without which mobile browsers render on a virtual ~980px
+// viewport (PC表示) and every @media query in template.html stays dead (2026-07-11 修正).
+function wrapStandalone(html) {
+  const marker = '<div id="app"></div>';
+  const i = html.indexOf(marker);
+  if (i === -1) throw new Error('template marker <div id="app"></div> not found');
+  return [
+    '<!doctype html>',
+    '<html lang="ja">',
+    '<head>',
+    '<meta charset="utf-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    '<meta name="theme-color" content="#F3F5EF" media="(prefers-color-scheme: light)">',
+    '<meta name="theme-color" content="#0E1512" media="(prefers-color-scheme: dark)">',
+    html.slice(0, i).trimEnd(),
+    '</head>',
+    '<body>',
+    html.slice(i),
+    '</body>',
+    '</html>',
+    '',
+  ].join('\n');
+}
 if (!process.argv[2]) {
   const indexPath = path.join(dir, 'index.html');
-  fs.writeFileSync(indexPath, out);
-  console.log(`Wrote ${indexPath} (Cloudflare Pages mirror)`);
+  fs.writeFileSync(indexPath, wrapStandalone(out));
+  console.log(`Wrote ${indexPath} (Cloudflare Pages用: doctype+viewport付きラッパー)`);
 }
 for (const d of DAYS) {
   const n = d.sections.reduce((s, sec) => s + (sec.kind === 'results' ? sec.venues.reduce((a, v) => a + v.games.length, 0) : sec.games.length), 0);

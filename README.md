@@ -346,7 +346,13 @@ content-lint.js が「同一選手名が複数校に出現」を検出したら(
   実名等PIIを含む**)、`proof/<slug>/`(ゲラ)、`omissions.json`・`disambiguations.json`
   (全大会共有台帳)、`golden/`(移行検証用旧HTML)、Workflow中間生成物(`baseline-*.json`/
   `new-*-output.json`/`new-*-by-id.json`/`final-*-reports.json`等)。消さないこと
-- `site.html` — 生成物(Artifact公開対象。全大会統合の1ファイル)
+- `site.html` — 生成物(Artifact公開対象。全大会統合の1ファイル。Artifactが骨格を付与する
+  前提の素のHTML — doctype/viewportメタは持たない)
+- `index.html` — 生成物(Cloudflare Pages配信用。site.htmlと同内容に doctype+`<head>`+
+  viewportメタのラッパーを付与。**viewportが無いとスマホが仮想幅980pxのPC表示になる**ため、
+  Pagesで直接配信するこちらには必須。2026-07-11にスマホPC表示問題の根治として導入)
+- `_redirects` — Cloudflare Pagesのリダイレクト定義(`/site.html` → `/`。viewport無し版が
+  Pages上で直接開かれるのを防ぐ)
 
 ## 主な既知の制約・注意
 
