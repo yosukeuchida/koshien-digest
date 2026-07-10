@@ -4,12 +4,28 @@
 神奈川大会22試合のパイロット(全Fable)→モデル使い分けパイプライン化→品質ルールの蓄積、
 という経緯で成立した。**このREADMEが運用の正本**。拡張時(新しい日・他県)は必ずここから読む。
 
+## 無人運用原則(2026-07-14、ユーザー方針)
+
+**人間確認をゲートに置かない**(人間確認前提だとサイト拡大ができないため)。不確実な情報が
+見つかったときの解決順序は常に:
+1. 多方面のソースから自動調査して確定を試みる(調査エージェント)
+2. 確定できなければ**その情報自体を載せない**(自動削除。「誤りを載せるくらいなら書かない」)
+3. 人間へのエスカレーションは仕組みの故障時(スクリプトのエラー等)のみ
+
+このため各チェックは「⚠警告して人間に委ねる」ではなく「✗ブロック→自動裁定フロー→
+解決 or 自動削除」で閉じるように設計する。実例: 選手名の複数校出現(下記 disambiguate)。
+
 ## 運用フロー(新しい日を追加する手順)
 
 ```
 1. 日程・結果の一次取得(main loop、WebFetchで kanagawa-baseball.com の日付ページ)
    - 終わった日 → data.json days[] に kind:"results" で追加(スコア・r1フラグ)
-   - これからの日 → kind:"cards" で追加(id連番 g23〜, round, date, games)
+   - これからの日(cards)→ **手編集禁止**。同一ページをWebFetchで2回独立に構造化抽出して
+     read1.json / read2.json を作り、node ingest-day.js read1.json read2.json で登録する。
+     2回の抽出が食い違ったら3回目を読んで多数決。スクリプトが会場多数決・トーナメット
+     整合性(敗退チーム再登場・未消化カードの両校登場・3回戦以降の勝利記録)を機械検証し、
+     通らない試合は自動で不掲載にする(2026-07-13の公式サイト未確定枠誤掲載を機械的に落とす層)。
+     id採番も自動。出典URL+取得日時が day.sources に記録される
 2. node build-args.js <dayKey>                → Workflow args を自動生成
    (前戦結果+学校DB(schools/, pairs.json)の検証済みブロックを自動注入。
     stderr の facts-agent skippable で収集スキップ数を確認)
@@ -77,6 +93,34 @@
    スキップさせる。校閲未実施(`checkers:0`、通常試合止まり)のブロックは「未検証ヒント」
    (`g.schoolAHint`/`g.schoolBHint`/`g.h2hHint`)として渡し、pipeline.jsは引き続き
    自力で収集・確認する(一度の収集ミスが無検証のまま後続の全記事へ伝播するのを防ぐ)
+
+## 選手名衝突の自動裁定(disambiguate、2026-07-14)
+
+content-lint.js が「同一選手名が複数校に出現」を検出したら(✗ブロック)、人間の目視ではなく
+以下の自動裁定フローで解決する(無人運用原則):
+
+```
+1. node build-disambiguate-args.js > args.json   ← 衝突と各記事の該当セクションを抽出
+2. Workflow({scriptPath: disambiguate.js, args}) ← 衝突1件につきSonnet 1体がWeb調査で裁定
+   distinct(同姓の別人が両校に実在) / misattributed(一方は誤帰属) / unresolved(確認不能)
+3. node apply-disambiguation.js <出力ファイル>    ← 裁定を自動適用:
+   distinct      → 裁定台帳(../koshien-digest-data/disambiguations.json)に記録、以後lint通過
+   misattributed → 誤帰属側の記事から該当選手セクションを自動削除
+   unresolved    → 全出現箇所から自動削除(誤りを載せるくらいなら書かない)
+4. node build-site.js && node content-lint.js    ← 再ビルド+再検品
+```
+
+## 日程取り込みの無人化(ingest-day.js、2026-07-14)
+
+日程・カードの取り込みは全防御の**上流**にあり、ここで誤るとその誤りが「確定情報」として
+全記事に信頼されて流れる(main loopの手編集は単一障害点だった)。ingest-day.js は
+「信頼できるソースを信じる」方針を維持したまま、**転送の忠実性**だけを機械保証する:
+- 同一ページの独立2〜3回読み(WebFetchの読み取りミス・転記ミスは読み同士の食い違いとして表面化)
+- 過半数一致した試合だけ自動採用、不一致は自動で不掲載(人間確認に回さない)
+- トーナメット整合性検査(この大会形式専用の追加ゲート): 敗退チームの再登場・未消化カードの
+  両校登場・3回戦以降で非1回戦勝利記録なし → 不掲載。公式ページの未確定枠プレースホルダー
+  (2026-07-13実発生)を機械的に落とす
+- 出典URL+取得日時を day.sources に記録(疑義発生時に「ソースの誤りか取り込みミスか」を即切り分け)
 
 ## モデル・役割分担(トークン最適化の設計)
 
@@ -163,6 +207,9 @@
 - `merge-results.js` — Workflow出力(タスクの.outputファイルそのままでも可)→ data.json統合。
   空レポートは`RETRY NEEDED`として列挙
 - `update-school-db.js` — Workflow出力 → schools/ + pairs.json へ検証済み調査結果を蓄積
+- `ingest-day.js` — 日程取り込みの無人化(独立2〜3回読みの多数決+トーナメット整合性検査+出典記録)
+- `build-disambiguate-args.js` / `disambiguate.js` / `apply-disambiguation.js` — 選手名衝突の
+  自動裁定フロー(Web調査で別人/誤帰属/裁定不能を判定 → 台帳記録 or 自動削除)
 - `schools/` / `pairs.json` — 学校DB(上記セクション参照)。**未成年選手の実名等PIIを含むため
   `../koshien-digest-data/` に保存し、koshien-digest自体のgit管理外**(兄弟ディレクトリ分離、
   2026-07-10 L2昇格時に決定)。中間生成物(`baseline-*.json`/`new-*-output.json`/

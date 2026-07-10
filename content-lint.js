@@ -225,12 +225,24 @@ for (const day of data.days) {
     }
   }
 }
+// 裁定台帳(2026-07-14、無人運用方針): 同姓の別人と調査エージェントが裁定済みの組み合わせは
+// disambiguations.json に記録され、以後このチェックを通過する。台帳に無い衝突は公開ブロック
+// (error)とし、人間の目視ではなく node build-disambiguate-args.js → Workflow(disambiguate.js)
+// → node apply-disambiguation.js の自動裁定フローで解決する(裁定不能なら該当選手を自動削除)
+const DISAMB_PATH = path.join(__dirname, '..', 'koshien-digest-data', 'disambiguations.json');
+const disambiguations = fs.existsSync(DISAMB_PATH) ? JSON.parse(fs.readFileSync(DISAMB_PATH, 'utf8')) : [];
+function isResolvedDistinct(name, schools) {
+  return disambiguations.some(
+    (e) => e.name === name && e.verdict === 'distinct' && schools.every((s) => (e.schools || []).includes(s))
+  );
+}
 for (const [name, bySchool] of playerSchool) {
   if (bySchool.size < 2) continue;
-  // 公開はブロックしない(⚠警告)。同姓(「青木」等の一般的な苗字)が別人として複数校に
-  // 存在するのは普通にあり得るため、断定的なerrorにはできない。ただし人間の確認は要る
+  const schools = [...bySchool.keys()];
+  if (isResolvedDistinct(name, schools)) continue;
+  violations++;
   const detail = [...bySchool.entries()].map(([s, gids]) => `${s}(${[...gids].join(',')})`).join(' / ');
-  console.log(`⚠ [選手名が複数校に出現・要確認] ${name}: ${detail}`);
+  console.log(`✗ [選手名が複数校に出現・裁定未了] ${name}: ${detail} — 自動裁定フロー(disambiguate)を実行すること`);
 }
 
 // (2) ある試合の記事が、両校(g.a/g.b)以外の実在校との対戦結果を、既知の確定結果と
