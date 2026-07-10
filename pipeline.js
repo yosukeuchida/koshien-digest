@@ -33,21 +33,10 @@ for (const g of A.games) {
   if (!g.round || !g.date) {
     throw new Error(`game ${g.id || '(no id)'} is missing round/date — required to ground research and prevent round confusion`)
   }
+  if (!g.tournamentName || !g.tournamentFacts) {
+    throw new Error(`game ${g.id || '(no id)'} is missing tournamentName/tournamentFacts — build-args.js で生成すること`)
+  }
 }
-
-// Tournament-wide facts, identical for all 22 games, verified during the 2026-07-09 pilot
-// (all-Fable, cross-checked against kanagawa-baseball.com / カナロコ). Injected as fixed
-// ground truth into every prompt instead of letting each game's Haiku call re-derive it —
-// re-deriving it 22 times independently is both wasted tokens and a repeated hallucination
-// risk (e.g. "戸越学園" appeared as a fabricated 1st-seed school in testing; the real list is
-// below). If the tournament facts actually change (unlikely mid-tournament), update this block
-// once rather than trusting per-game research to get it right.
-const TOURNAMENT_FACTS = `第108回全国高等学校野球選手権神奈川大会。7月5日(日)横浜スタジアムで開会式、7月7日(火)開幕、決勝は7月26日(日)。172チーム(連合5チーム含む)参加、組み合わせ抽選は6月13日実施。
-シード校(2026年春季県大会の成績による):
-- 第1シード: 横浜・横浜創学館・桐光学園・慶応
-- 第2シード: 桐蔭学園・相洋・日大藤沢・立花学園
-- 第3シード: 鎌倉学園・川和・横浜隼人・横浜清陵・三浦学苑・神奈川工業・橘・藤沢翔陵
-このシード情報は確定済みであり、検索結果と食い違う場合もこちらを優先すること。`
 
 // Source-trust tiers, defined in code so the fact-checker doesn't get to improvise its own
 // idea of "this blog looks reliable". Unknown domains default to LOW. Introduced 2026-07-10:
@@ -75,11 +64,11 @@ function gameHeader(g) {
   const confusable = g.confusableNames
     ? `\n注意: 「${g.confusableNames}」は${g.a}・${g.b}と紛らわしい別校名。出典の記述がどちらの学校のものか、正式校名の完全一致で必ず確認すること。`
     : ''
-  return `【確定情報・これは変更できない前提です】対象試合: ${g.date} ${g.t}開始 ${g.v} 第108回全国高等学校野球選手権神奈川大会 ${g.round}「${g.a} vs ${g.b}」。${status}
+  return `【確定情報・これは変更できない前提です】対象試合: ${g.date} ${g.t}開始 ${g.v} ${g.tournamentName} ${g.round}「${g.a} vs ${g.b}」。${status}
 注意: 両校の過去の対戦成績を調べる際、この試合自体(${g.date}の${g.round})を「既に終わった過去の対戦」として結果付きで報告しないこと。似た名前の別の試合・別の年度・別の回戦・別の学校(「◯◯」と「県立◯◯」「◯◯学園」等の類似名)と混同しないよう、年度・大会名・正式な校名を必ず確認してから記載すること。${confusable}
 
 【大会共通の確定情報】
-${TOURNAMENT_FACTS}${g.known ? `
+${g.tournamentFacts}${g.known ? `
 
 【両校の今大会これまでの結果(サイト運営側が一次ソースで確認済み・再調査不要・この内容をそのまま信頼してよい)】
 ${g.known}` : ''}`
