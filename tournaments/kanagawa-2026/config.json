@@ -53,6 +53,7 @@
       "https://www2.myjcom.jp/special/tv/sports/baseball/highschool/sensyuken_chihou/kanagawa/index.shtml"
     ]
   },
+  "trustedSources": "kanagawa-baseball.com、神奈川県高野連公式",
   "sources": [
     "https://www.kanagawa-baseball.com/"
   ]

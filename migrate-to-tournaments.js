@@ -29,6 +29,7 @@ const config = {
   seeds: data.tournament.seeds,
   facts: FACTS,
   broadcast: { streaming: broadcast.streaming, tvLiveVenues: broadcast.tvLiveVenues, verifiedAt: broadcast.verifiedAt, sources: broadcast.sources },
+  trustedSources: 'kanagawa-baseball.com、神奈川県高野連公式',
   sources: ['https://www.kanagawa-baseball.com/'],
 };
 

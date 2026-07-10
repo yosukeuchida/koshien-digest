@@ -42,7 +42,7 @@ for (const g of A.games) {
 // idea of "this blog looks reliable". Unknown domains default to LOW. Introduced 2026-07-10:
 // low-tier claims need an independent second source or they get deleted from the article.
 const SOURCE_TIERS = `出典の信頼度ティア:
-- 高: 学校公式サイト(ed.jp等)、新聞社(kanaloco.jp / asahi.com / mainichi.jp / yomiuri.co.jp / nikkansports.com / sponichi.co.jp / hochi.news 等)、NHK(nhk.or.jp)、バーチャル高校野球(vk.sportsbull.jp)、高校野球ドットコム(hb-nippon.com)、kanagawa-baseball.com、神奈川県高野連公式
+- 高: 学校公式サイト(ed.jp等)、新聞社(kanaloco.jp / asahi.com / mainichi.jp / yomiuri.co.jp / nikkansports.com / sponichi.co.jp / hochi.news 等)、NHK(nhk.or.jp)、バーチャル高校野球(vk.sportsbull.jp)、高校野球ドットコム(hb-nippon.com)
 - 中: Wikipedia(ja.wikipedia.org)。原則採用可だが、出場回数等の数字は可能なら高ティアでも確認する
 - 低(単独では採用不可): 個人ブログ(ameblo.jp / hatenablog / livedoorブログ / note.com / FC2等)、まとめサイト、掲示板(5ch等)、SNS(X/Twitter・Instagram・Facebook)、YouTubeの概要欄・コメント
 - 上記のどれにも該当しない未知のドメインは「低」として扱う
@@ -53,7 +53,12 @@ const SOURCE_TIERS = `出典の信頼度ティア:
 // sources in the first place. Recent-results-centric concise articles are fully servable
 // from these domains alone.
 const HIGH_TIER_ONLY = `使用してよい情報源(これ以外のサイト・ブログ・SNSの情報は、たとえ見つけても採用しない・書かない):
-学校公式サイト(ed.jp等)、新聞社(kanaloco.jp / asahi.com / mainichi.jp / yomiuri.co.jp / nikkansports.com / sponichi.co.jp / hochi.news 等)、NHK(nhk.or.jp)、バーチャル高校野球(vk.sportsbull.jp)、高校野球ドットコム(hb-nippon.com)、kanagawa-baseball.com、神奈川県高野連公式`
+学校公式サイト(ed.jp等)、新聞社(kanaloco.jp / asahi.com / mainichi.jp / yomiuri.co.jp / nikkansports.com / sponichi.co.jp / hochi.news 等)、NHK(nhk.or.jp)、バーチャル高校野球(vk.sportsbull.jp)、高校野球ドットコム(hb-nippon.com)`
+
+// 大会固有の地域高ティア情報源(地方紙・県高野連公式等)はconfig.trustedSources →
+// build-args.jsがg.trustedSourcesとして注入する。SOURCE_TIERS/HIGH_TIER_ONLYの
+// 使用箇所で直後の行に追記される(コード直書きだと大会展開のたびに定数を書き換える
+// ことになり、千葉展開の前提で2026-07-14にconfig駆動化)
 
 function gameHeader(g) {
   const status = g.played ? 'この試合は既に終了しています。' : 'この試合はまだ行われていません(未実施・結果未確定)。'
@@ -126,10 +131,12 @@ function factsPrompt(g) {
 ${hints.join('\n')}`
     : ''
   const sourceRule = g.notable
-    ? '出典の選び方: 信頼度の高い情報源(学校公式サイト・新聞社・NHK・バーチャル高校野球・高校野球ドットコム等の専門サイト)を優先する。個人ブログ・SNSにしか見つからない情報は、その事実の末尾に「(出典は個人ブログ)」等と情報源の種類を明記する。'
+    ? `出典の選び方: 信頼度の高い情報源(学校公式サイト・新聞社・NHK・バーチャル高校野球・高校野球ドットコム等の専門サイト)を優先する。個人ブログ・SNSにしか見つからない情報は、その事実の末尾に「(出典は個人ブログ)」等と情報源の種類を明記する。${g.trustedSources ? `
+この大会の地域高ティア情報源(信頼度の高い情報源と同格に扱う): ${g.trustedSources}` : ''}`
     : `出典の制限(この試合は簡潔版のため厳格運用):
 ${HIGH_TIER_ONLY}
-学年・スコア・出場回数・順位などの数字は、上記の情報源に明示的に書かれている場合のみ記載する。明示が見つからなければその数字は書かない(項目ごと省略してよい)。`
+${g.trustedSources ? `この大会の地域高ティア情報源(上記と同格に扱う): ${g.trustedSources}
+` : ''}学年・スコア・出場回数・順位などの数字は、上記の情報源に明示的に書かれている場合のみ記載する。明示が見つからなければその数字は書かない(項目ごと省略してよい)。`
   return `${gameHeader(g)}
 
 高校野球の試合背景リサーチャーとして、上記の試合についてWebSearch/WebFetchで事実を収集してください。
@@ -199,7 +206,8 @@ function mediaPrompt(g) {
     : `
 選手情報の出典制限(この試合は簡潔版のため厳格運用):
 ${HIGH_TIER_ONLY}
-学年・成績などの数字は上記の情報源に明示的に書かれている場合のみ記載する。明示が見つからなければその選手・項目は載せない。`
+${g.trustedSources ? `この大会の地域高ティア情報源(上記と同格に扱う): ${g.trustedSources}
+` : ''}学年・成績などの数字は上記の情報源に明示的に書かれている場合のみ記載する。明示が見つからなければその選手・項目は載せない。`
   const cachedPlayers = [...(((g.schoolA && g.schoolA.players) || [])), ...(((g.schoolB && g.schoolB.players) || []))]
   const cachedNote = cachedPlayers.length
     ? `
@@ -406,7 +414,8 @@ function factCheckPrompt(g, facts, report) {
 5. どの出典でも確認できなかった主張は削除(delete)、出典と食い違う主張は修正(fix)と判定する
 
 ${SOURCE_TIERS}
-
+${g.trustedSources ? `この大会の地域高ティア情報源(上記の「高」と同格に扱う): ${g.trustedSources}
+` : ''}
 判定ルール:
 - ヘッダの【確定情報】【大会共通の確定情報】【両校の今大会これまでの結果】と一致する記述は検証済みなので裏取り不要
 - 文体上のつなぎ・主観的な見どころ表現(「好勝負が期待される」等)・放送/配信/動画リンクは検証対象外(別工程で照合済み)

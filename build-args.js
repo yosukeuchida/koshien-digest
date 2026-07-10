@@ -140,6 +140,7 @@ const games = day.games.map((g) => {
     tournament: config.slug,
     tournamentName: config.name,
     tournamentFacts: config.facts,
+    trustedSources: config.trustedSources || '',
     ...(known.length ? { known: known.join('\n') } : {}),
     ...(confusableNames ? { confusableNames } : {}),
     ...(isVerified(schoolA) ? { schoolA } : schoolA ? { schoolAHint: schoolA } : {}),
