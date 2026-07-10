@@ -2,7 +2,7 @@ export const meta = {
   name: 'koshien-digest-pipeline',
   description: 'Facts+Media (Haiku, parallel) -> Story (Fable, notable only) -> Write (Sonnet) -> Verify (Haiku) -> FactCheck x2 (Sonnet, notable only, union of findings) -> Revise if needed (Sonnet)',
   phases: [
-    { title: 'Facts+Media', detail: 'Haiku gathers school profiles/records + video/player-stats, in parallel (school-DB cached blocks injected; broadcast comes from broadcast.json, not research)', model: 'haiku' },
+    { title: 'Facts+Media', detail: 'Haiku gathers school profiles/records + video/player-stats, in parallel (school-DB cached blocks injected; broadcast comes from config.broadcast, not research)', model: 'haiku' },
     { title: 'Story', detail: 'Fable digs for non-obvious historical/player connections, notable games only', model: 'fable' },
     { title: 'Write', detail: 'Sonnet writes the final report from facts + media + story', model: 'sonnet' },
     { title: 'Verify', detail: 'Haiku checks the report against all material for unsupported claims', model: 'haiku' },
@@ -165,7 +165,7 @@ const MEDIA_SCHEMA = {
   properties: {
     broadcastInfo: {
       type: 'string',
-      description: '常に空文字("")。放送・配信情報は検証済みの確定情報(broadcast.json)から別途注入されるため、調査・記入しない',
+      description: '常に空文字("")。放送・配信情報は検証済みの確定情報(config.broadcast)から別途注入されるため、調査・記入しない',
     },
     videoLinks: {
       type: 'array',
@@ -225,7 +225,7 @@ ${g.trustedSources ? `この大会の地域高ティア情報源(上記と同格
 // Merge cached school-DB players/videos into freshly fetched media. Fetched entries win on
 // name/url collision (they may carry newer this-tournament stats); cached fill the gaps.
 // broadcastInfo is ALWAYS overwritten with the deterministic table output (g.broadcast,
-// built by build-args.js from broadcast.json) — the agent is told not to research it.
+// built by build-args.js from config.broadcast) — the agent is told not to research it.
 function assembleMedia(g, media) {
   const m = media || { broadcastInfo: '', videoLinks: [], playerProfiles: [] }
   if (g.broadcast) m.broadcastInfo = g.broadcast
