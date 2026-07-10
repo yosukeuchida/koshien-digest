@@ -17,7 +17,15 @@ if (!slugs.length) {
   process.exit(1);
 }
 const tournaments = {}; // slug -> {config, data}
-for (const s of slugs) tournaments[s] = { config: loadConfig(s), data: loadData(s) };
+for (const s of slugs) {
+  // templateのルートregex(#/match/[a-z0-9-]+/...)とonclick属性が前提とする文字種をビルド時に強制。
+  // 違反slugはビルドは通るのにリンクが無言で壊れる+属性インジェクション余地があるためfail-fast。
+  if (!/^[a-z0-9-]+$/.test(s)) {
+    console.error(`slug "${s}" は英小文字・数字・ハイフンのみ許可(ルーティング規約)`);
+    process.exit(1);
+  }
+  tournaments[s] = { config: loadConfig(s), data: loadData(s) };
+}
 
 function escForScriptTag(s) {
   return s.replace(/<\/script>/gi, '<\\/script>');

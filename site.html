@@ -3061,8 +3061,10 @@ function calendarHtml(date){
       slugsList.map(s => `<button aria-selected="${FILTER===s}" onclick="setFilter('${s}')">${esc(TOURNAMENTS[s].tname)}</button>`).join("") +
       `</nav>`;
   }
+  let shown = 0;
   for(const sec of day.sections){
     if(FILTER !== "all" && sec.slug !== FILTER) continue;
+    shown++;
     h += `<h2 class="tournament-head">⚾ ${esc(sec.tname)}${sec.round ? "・" + esc(sec.round) : ""}</h2>`;
     if(sec.note) h += `<p class="day-note">${esc(sec.note)}</p>`;
     if(sec.kind === "results"){
@@ -3111,6 +3113,8 @@ function calendarHtml(date){
       if(currentVenue) h += `</section>`;
     }
   }
+  // フィルタ適用後に表示セクションが0件の日(その大会の試合が無い日)のempty-state
+  if(!shown) h += `<p class="day-note">この日に${esc((TOURNAMENTS[FILTER] || {}).tname || "")}の試合はありません。</p>`;
   h += "</main>" + footerHtml();
   return h;
 }
@@ -3258,6 +3262,19 @@ function loadComments(){
   try { return JSON.parse(localStorage.getItem(COMMENTS_KEY)) || {}; } catch(e){ return {}; }
 }
 let COMMENTS = loadComments();
+// 一度だけの移行: slug名前空間化前の旧キー("g45"等)を "kanagawa-2026--g45" へ移し替える。
+// パイロット閲覧者が旧site.htmlで投稿したコメントが不可視になるのを防ぐ(移行済みなら何もしない)。
+(function migrateLegacyComments(){
+  let moved = false;
+  for(const k of Object.keys(COMMENTS)){
+    if(!/^g\d+$/.test(k)) continue;
+    const nk = "kanagawa-2026--" + k;
+    COMMENTS[nk] = (COMMENTS[nk] || []).concat(COMMENTS[k]);
+    delete COMMENTS[k];
+    moved = true;
+  }
+  if(moved) saveComments();
+})();
 function saveComments(){
   try { localStorage.setItem(COMMENTS_KEY, JSON.stringify(COMMENTS)); } catch(e){ /* private mode etc. — keep in-memory */ }
 }
