@@ -13,19 +13,22 @@
 //      researched+fact-checked once is never re-researched in later rounds.
 //
 // Usage:
-//   node build-args.js <dayKey> [--notable g23,g27]   > /tmp/args.json
+//   node build-args.js <slug> <dayKey> [--notable g23,g27]   > /tmp/args.json
 //   (--notable omitted: falls back to data.json picks for that day)
 const fs = require('fs');
 const path = require('path');
+const { resolveSlug, loadConfig, loadData, dataPaths } = require('./lib/tournaments');
 
-const dayKey = process.argv[2];
+const slug = process.argv[2];
+const dayKey = process.argv[3];
 const notableFlag = (process.argv.find((a) => a.startsWith('--notable')) || '').split('=')[1] || '';
 if (!dayKey) {
-  console.error('usage: node build-args.js <dayKey> [--notable=g23,g27]');
+  console.error('usage: node build-args.js <slug> <dayKey> [--notable=g23,g27]');
   process.exit(1);
 }
 
-const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data.json'), 'utf8'));
+const config = loadConfig(resolveSlug(slug));
+const data = loadData(config.slug);
 const day = data.days.find((d) => d.key === dayKey);
 if (!day || day.kind !== 'cards') {
   console.error(`day ${dayKey} not found or not a cards day. cards days: ${data.days.filter((d) => d.kind === 'cards').map((d) => d.key).join(', ')}`);
@@ -79,10 +82,10 @@ const notable = new Set(
   notableFlag ? notableFlag.split(',').map((s) => s.trim()) : day.games.filter((g) => data.picks[g.id]).map((g) => g.id)
 );
 
-// Broadcast section: generated deterministically from broadcast.json (Phase 3, 2026-07-10).
+// Broadcast section: generated deterministically from config.broadcast (Phase 3, 2026-07-10).
 // The media agent used to re-research this per game, and it was this pipeline's noisiest
 // error source (fabricated `LIVE` tags on tvk news-digest coverage, caught by FactCheck).
-const BROADCAST = JSON.parse(fs.readFileSync(path.join(__dirname, 'broadcast.json'), 'utf8'));
+const BROADCAST = config.broadcast;
 function broadcastFor(venue) {
   const lines = [];
   const tv = BROADCAST.tvLiveVenues[venue];
@@ -98,9 +101,7 @@ function broadcastFor(venue) {
 
 // School DB lookup: verified blocks from a previous run (written by update-school-db.js)
 // PII(未成年選手の実名等)を含むためgit管理外の兄弟ディレクトリに保存する
-const DATA_DIR = path.join(__dirname, '..', 'koshien-digest-data');
-const SCHOOLS_DIR = path.join(DATA_DIR, 'schools');
-const PAIRS_PATH = path.join(DATA_DIR, 'pairs.json');
+const { schoolsDir: SCHOOLS_DIR, pairsPath: PAIRS_PATH } = dataPaths(config);
 const pairs = fs.existsSync(PAIRS_PATH) ? JSON.parse(fs.readFileSync(PAIRS_PATH, 'utf8')) : {};
 function schoolBlock(name) {
   const file = path.join(SCHOOLS_DIR, name.replace(/\//g, '_') + '.json');
@@ -136,6 +137,9 @@ const games = day.games.map((g) => {
     played: false,
     notable: notable.has(g.id),
     broadcast: broadcastFor(g.v),
+    tournament: config.slug,
+    tournamentName: config.name,
+    tournamentFacts: config.facts,
     ...(known.length ? { known: known.join('\n') } : {}),
     ...(confusableNames ? { confusableNames } : {}),
     ...(isVerified(schoolA) ? { schoolA } : schoolA ? { schoolAHint: schoolA } : {}),
