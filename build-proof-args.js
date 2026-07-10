@@ -28,6 +28,30 @@ const seedText = Object.entries(seeds)
   .map(([k, names]) => `第${k}シード: ${names.join('・')}`)
   .join(' / ');
 
+// 紛らわしい校名(2026-07-14追加、案2)。build-args.jsと同じロジック。ゲラ校閲でも
+// 「この記事の実績が実は別の似た名前の学校のもの」という誤帰属(g44で実発生)を
+// 見抜く手がかりとして明示する
+const allSchoolNames = new Set();
+for (const d of data.days) {
+  if (d.kind === 'results') {
+    for (const v of d.venues) for (const g of v.games) { allSchoolNames.add(g.a); allSchoolNames.add(g.b); }
+  } else if (d.kind === 'cards') {
+    for (const g of d.games) { allSchoolNames.add(g.a); allSchoolNames.add(g.b); }
+  }
+}
+function confusableWith(name) {
+  const hits = [...allSchoolNames].filter(
+    (s) => s !== name && s.length >= 2 && name.length >= 2 && (s.includes(name) || name.includes(s))
+  );
+  // build-args.jsと同じ理由(「横浜」等の地名系校名で候補が20件超になり信号が埋もれる)で
+  // 長さが近い順に上位6件に絞る(2026-07-14)
+  return hits.sort((x, y) => Math.abs(x.length - name.length) - Math.abs(y.length - name.length)).slice(0, 6);
+}
+function confusableNamesFor(a, b) {
+  const names = [...new Set([...confusableWith(a), ...confusableWith(b)])].filter((n) => n !== a && n !== b);
+  return names.length ? names.join('・') : null;
+}
+
 // 各校の確定済み結果(results日)を known として束ねる(build-args.js と同じ情報源)
 const resultLines = {};
 for (const day of data.days) {
@@ -53,6 +77,7 @@ for (const day of data.days) {
     // 「確定結果に無い=データ欠落」と誤解した校閲の偽陽性と、逆に「1回戦免除校を
     // 1回戦突破と書く」記事側の実誤り(15試合で実発生)の両方をこれで判定可能にする
     const byes = [g.a, g.b].filter((t) => !resultLines[t]);
+    const confusableNames = confusableNamesFor(g.a, g.b);
     const galley = [
       '--- 確定情報(サイト運営側が一次ソースで検証済み・これが正) ---',
       `試合: ${day.date} ${g.t} ${g.v} ${day.round || ''}「${g.a} vs ${g.b}」(未実施の予告記事)`,
@@ -60,6 +85,9 @@ for (const day of data.days) {
       known ? `両校のこれまでの確定結果(今大会の全試合結果を網羅済み):\n${known}` : '(両校とも今大会はまだ試合をしていない)',
       byes.length
         ? `1回戦免除(不戦)で2回戦から登場する学校: ${byes.join('・')} — この学校の「今大会1回戦を突破した」という記述は誤り。逆に、この学校にとって2回戦を「初戦」と書くのは正しい`
+        : '',
+      confusableNames
+        ? `紛らわしい校名(部分文字列関係にある別校): ${confusableNames} — 記事中の実績・選手・スコアがこれら別校のものと混同されていないか特に確認すること`
         : '',
       '',
       '--- 見出しフック(カレンダー面の1行) ---',

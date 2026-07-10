@@ -107,7 +107,9 @@ for (const day of data.days) {
       // 今大会の年(cardsの日の日付から導出)以外の年度・「昨夏」等に言及する文は、過去の
       // 対戦成績の記述なので照合対象外(同じ相手校名でも別試合のスコア)
       const curYear = (day.date || '').slice(0, 4) || '2026';
-      const historicRe = new RegExp(`20(?!${curYear.slice(2)})\\d{2}年|昨夏|昨年|前年|一昨年|過去`);
+      // 「春季」「秋季」は年号が今大会と同じでも別大会(季節違い)なので対象外にする
+      // (g20・g49で「2026年春季大会」等が今大会の結果として誤照合された実例、2026-07-14)
+      const historicRe = new RegExp(`20(?!${curYear.slice(2)})\\d{2}年|昨夏|昨年|前年|一昨年|過去|春季|秋季`);
       // 「1回戦でXにa-b、2回戦でYにc-d」のように1文で複数試合を回顧する書き方が頻発するため、
       // 読点(、)でも分割してチェック単位を狭める(2026-07-13追加)。文単位のままだと、後半の
       // 試合のスコアが前半の対戦相手名と誤って照合され、内容は正しいのに誤検知が多発した
@@ -186,6 +188,98 @@ for (const [gid, hook] of Object.entries(data.hooks || {})) {
       violations++;
       console.log(`✗ [HOOK数字が記事に無い] ${gid}: HOOK内の「${m[0]}」が記事本文に存在しない`);
       console.log(`  HOOK: ${hook.slice(0, 60)}…`);
+    }
+  }
+}
+
+// コーパス横断チェック(2026-07-14追加、案1): 1ゲラ単位の検証(proof.js)や1試合単位の
+// スコア照合(上記)では、記事間をまたぐ「誤帰属」(ある学校の実績が別の似た名前の学校に
+// 丸ごと付け替わる)を検出できない。g44で「茅ケ崎」の1回戦快勝が「茅ケ崎西浜」に丸ごと
+// 誤帰属した実例(2026-07-14発覚)を受けて追加。全記事を横断してチェックする。
+
+// (1) 選手名が複数の異なる校名の下に出現していないか(同一人物が2校に所属するのは
+// あり得ないため、これは高確率で誤帰属)
+const playerSchool = new Map(); // name -> Map(school -> Set(gid))
+for (const day of data.days) {
+  if (day.kind !== 'cards') continue;
+  for (const g of day.games) {
+    const md = data.reports[g.id];
+    if (!md) continue;
+    const m0 = md.match(/^## 注目選手\s*$/m);
+    if (!m0) continue;
+    const rest = md.slice(m0.index + m0[0].length);
+    const next = rest.search(/^## /m);
+    const block = next === -1 ? rest : rest.slice(0, next);
+    for (const part of block.split(/^### /m).filter(Boolean)) {
+      const nl = part.indexOf('\n');
+      const head = (nl === -1 ? part : part.slice(0, nl)).trim();
+      const hm = head.match(/^(.+?)[(（](.+?)[)）]/);
+      if (!hm) continue;
+      const name = hm[1].trim();
+      const school = hm[2].split(/[・･]/)[0].trim();
+      if (!name || !school) continue;
+      if (!playerSchool.has(name)) playerSchool.set(name, new Map());
+      const bySchool = playerSchool.get(name);
+      if (!bySchool.has(school)) bySchool.set(school, new Set());
+      bySchool.get(school).add(g.id);
+    }
+  }
+}
+for (const [name, bySchool] of playerSchool) {
+  if (bySchool.size < 2) continue;
+  // 公開はブロックしない(⚠警告)。同姓(「青木」等の一般的な苗字)が別人として複数校に
+  // 存在するのは普通にあり得るため、断定的なerrorにはできない。ただし人間の確認は要る
+  const detail = [...bySchool.entries()].map(([s, gids]) => `${s}(${[...gids].join(',')})`).join(' / ');
+  console.log(`⚠ [選手名が複数校に出現・要確認] ${name}: ${detail}`);
+}
+
+// (2) ある試合の記事が、両校(g.a/g.b)以外の実在校との対戦結果を、既知の確定結果と
+// 食い違う形で(=実際にはその結果は別の学校のものなのに)引用していないか。
+// 既存の「結果スコア矛盾」チェックは cg.a/cg.b が確定結果の当事者と一致する場合しか
+// 検査しないため、丸ごと架空/誤帰属の対戦相手+スコアはノーチェックだった。
+const byOpponent = new Map(); // 対戦相手名 -> [{team, score}]
+for (const rg of resultGames) {
+  const score = [scoreNum(rg.sa), scoreNum(rg.sb)].sort((x, y) => x - y).join('-');
+  if (!byOpponent.has(rg.b)) byOpponent.set(rg.b, []);
+  byOpponent.get(rg.b).push({ team: rg.a, score });
+  if (!byOpponent.has(rg.a)) byOpponent.set(rg.a, []);
+  byOpponent.get(rg.a).push({ team: rg.b, score });
+}
+const opponentNames = [...byOpponent.keys()].sort((a, b) => b.length - a.length);
+for (const day of data.days) {
+  if (day.kind !== 'cards') continue;
+  const curYear = (day.date || '').slice(0, 4) || '2026';
+  const historicRe = new RegExp(`20(?!${curYear.slice(2)})\\d{2}年|昨夏|昨年|前年|一昨年|過去|春季|秋季`);
+  for (const g of day.games) {
+    const md = data.reports[g.id];
+    if (!md) continue;
+    for (const sentence of md.split(/[。、\n]/)) {
+      if (historicRe.test(sentence)) continue;
+      const scores = [...sentence.matchAll(/(\d{1,3})\s*[-−–—]\s*(\d{1,3})/g)];
+      if (!scores.length) continue;
+      let matchedName = null;
+      for (const name of opponentNames) {
+        // 両校自身の話(既存チェックの対象)、および両校名との部分文字列関係(「横浜」⊂
+        // 「横浜創学館」、「青葉総合」⊂「青葉総合ほか6校連合」等、同一チームの別表記の
+        // 可能性が高い)は誤検知の主因だったため除外する(2026-07-14、初回運用で発覚)
+        if (name === g.a || name === g.b) continue;
+        if ([g.a, g.b].some((own) => own.includes(name) || name.includes(own))) continue;
+        if (sentence.includes(name)) { matchedName = name; break; } // 最長一致1件のみ(部分文字列連鎖を回避)
+      }
+      if (!matchedName) continue;
+      for (const m of scores) {
+        const got = [parseInt(m[1], 10), parseInt(m[2], 10)].sort((x, y) => x - y).join('-');
+        const entries = byOpponent.get(matchedName).filter((e) => e.score === got);
+        if (!entries.length) continue; // このスコア自体が誰の結果にも存在しない→対象外(推測ノイズ回避)
+        // 連合チーム(「青葉総合ほか6校連合」等)は構成校の一つの短い名前(「青葉総合」)で
+        // 記事に登場するため、完全一致だけでなく部分文字列関係も自校とみなす
+        const isOwn = (t) => t === g.a || t === g.b || g.a.includes(t) || t.includes(g.a) || g.b.includes(t) || t.includes(g.b);
+        if (entries.some((e) => isOwn(e.team))) continue; // 自校の結果として正しく一致
+        const actual = [...new Set(entries.map((e) => e.team))].join('/');
+        violations++;
+        const ctx = sentence.trim().slice(0, 60);
+        console.log(`✗ [結果の誤帰属疑い] ${g.id}: 「${ctx}…」の${matchedName}戦${m[0]}は実際には${actual}の結果(${g.a}/${g.b}のものではない)`);
+      }
     }
   }
 }

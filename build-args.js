@@ -50,6 +50,31 @@ function knownResultsFor(school) {
   return lines;
 }
 
+// 紛らわしい校名の自動検出(2026-07-14追加、案2): 「鶴見」⊂「鶴見大付」「鶴見総合」、
+// 「茅ケ崎」⊂「茅ケ崎西浜」「茅ケ崎北陵」のような部分文字列関係にある校名ペアは、
+// このパイプライン最大の事故類型(校名混同・g36/g44で実発生)の温床。事後に校閲で
+// 見つけるのではなく、収集・執筆・校閲の全プロンプトに事前注入して発生源を狙い撃つ。
+const allSchoolNames = new Set();
+for (const d of data.days) {
+  if (d.kind === 'results') {
+    for (const v of d.venues) for (const g of v.games) { allSchoolNames.add(g.a); allSchoolNames.add(g.b); }
+  } else if (d.kind === 'cards') {
+    for (const g of d.games) { allSchoolNames.add(g.a); allSchoolNames.add(g.b); }
+  }
+}
+function confusableWith(name) {
+  const hits = [...allSchoolNames].filter(
+    (s) => s !== name && s.length >= 2 && name.length >= 2 && (s.includes(name) || name.includes(s))
+  );
+  // 「横浜」のような短い地名系の校名は候補が20件超になり得て信号が埋もれるため、
+  // 長さが近い(=より紛らわしい)順に上位6件だけ残す(2026-07-14、実運用で発覚)
+  return hits.sort((x, y) => Math.abs(x.length - name.length) - Math.abs(y.length - name.length)).slice(0, 6);
+}
+function confusableNamesFor(a, b) {
+  const names = [...new Set([...confusableWith(a), ...confusableWith(b)])].filter((n) => n !== a && n !== b);
+  return names.length ? names.join('・') : null;
+}
+
 const notable = new Set(
   notableFlag ? notableFlag.split(',').map((s) => s.trim()) : day.games.filter((g) => data.picks[g.id]).map((g) => g.id)
 );
@@ -83,12 +108,23 @@ function schoolBlock(name) {
   const s = JSON.parse(fs.readFileSync(file, 'utf8'));
   return { profile: s.profile, players: s.players || [], videos: s.videos || [], sources: s.sources || [], factChecked: s.factChecked || null };
 }
+// 信頼度別の学校DB注入(2026-07-14追加、案3): checkers>=1(Web裏取り校閲済み)のブロックだけを
+// 「検証済み・再調査不要」(g.schoolA/g.schoolB)として注入し収集をスキップさせる。checkers:0
+// (通常試合止まりで一度もFactCheckを受けていない)ブロックは「未検証ヒント」(g.schoolAHint/
+// g.schoolBHint)として渡し、pipeline.jsは引き続き自力で収集・確認する。checkers:0のまま
+// ground truth扱いされると、一度の収集ミスが後続の全記事に無検証で伝播するため
+// (g44の茅ケ崎西浜誤帰属はこの経路とは別だが、同種のリスクを構造的に塞ぐ)。
+function isVerified(block) {
+  return !!(block && block.factChecked && block.factChecked.checkers >= 1);
+}
 
 const games = day.games.map((g) => {
   const known = [...knownResultsFor(g.a), ...knownResultsFor(g.b)];
   const schoolA = schoolBlock(g.a);
   const schoolB = schoolBlock(g.b);
   const pair = pairs[[g.a, g.b].sort().join('|')];
+  const pairVerified = !!(pair && pair.factChecked && pair.factChecked.checkers >= 1);
+  const confusableNames = confusableNamesFor(g.a, g.b);
   return {
     id: g.id,
     a: g.a,
@@ -101,17 +137,27 @@ const games = day.games.map((g) => {
     notable: notable.has(g.id),
     broadcast: broadcastFor(g.v),
     ...(known.length ? { known: known.join('\n') } : {}),
-    ...(schoolA ? { schoolA } : {}),
-    ...(schoolB ? { schoolB } : {}),
+    ...(confusableNames ? { confusableNames } : {}),
+    ...(isVerified(schoolA) ? { schoolA } : schoolA ? { schoolAHint: schoolA } : {}),
+    ...(isVerified(schoolB) ? { schoolB } : schoolB ? { schoolBHint: schoolB } : {}),
     // pairs.json にエントリがあれば「調査済み」— 記録が無かった場合も負のキャッシュとして
-    // 注入し、毎回の再調査を防ぐ(執筆ルール上、記録なしはセクション省略になる)
-    ...(pair ? { h2h: pair.headToHead || '対戦記録なし(過去に調査済み。該当セクションは記事では省略)' } : {}),
+    // 注入し、毎回の再調査を防ぐ(執筆ルール上、記録なしはセクション省略になる)。
+    // ただしground truth扱いはcheckers>=1のみ、それ以外はヒントとして渡す
+    ...(pair
+      ? pairVerified
+        ? { h2h: pair.headToHead || '対戦記録なし(過去に調査済み。該当セクションは記事では省略)' }
+        : pair.headToHead
+          ? { h2hHint: pair.headToHead }
+          : {}
+      : {}),
   };
 });
 
 process.stdout.write(JSON.stringify({ games }, null, 1) + '\n');
 const cachedSchools = games.filter((g) => g.schoolA).length + games.filter((g) => g.schoolB).length;
+const hintSchools = games.filter((g) => g.schoolAHint).length + games.filter((g) => g.schoolBHint).length;
 const fullCache = games.filter((g) => g.schoolA && g.schoolB && g.h2h).length;
+const withConfusable = games.filter((g) => g.confusableNames).length;
 console.error(
-  `games: ${games.length}, notable: ${[...notable].join(',') || '(none)'}, with known results: ${games.filter((g) => g.known).length}, cached schools: ${cachedSchools}/${games.length * 2}, facts-agent skippable: ${fullCache}`
+  `games: ${games.length}, notable: ${[...notable].join(',') || '(none)'}, with known results: ${games.filter((g) => g.known).length}, verified school blocks: ${cachedSchools}/${games.length * 2}, unverified hints: ${hintSchools}, facts-agent skippable: ${fullCache}, confusable-name warnings: ${withConfusable}`
 );
