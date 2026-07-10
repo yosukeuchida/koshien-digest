@@ -1,0 +1,47 @@
+{
+  "slug": "chiba-2026",
+  "name": "第108回全国高等学校野球選手権 千葉大会",
+  "shortName": "千葉大会",
+  "displayName": "千葉",
+  "sport": "baseball",
+  "format": "single-elimination",
+  "year": 2026,
+  "region": "chiba",
+  "seeds": {
+    "A": ["専大松戸", "東京学館浦安", "拓大紅陵", "八千代松陰"],
+    "B": ["千葉黎明", "千葉学芸", "千葉明徳", "市立船橋"],
+    "C": ["東海大浦安", "千葉商業", "千葉商大付", "市立松戸", "光英VERITAS", "中央学院", "市原中央", "志学館"]
+  },
+  "facts": "第108回全国高等学校野球選手権千葉大会。7月4日(土)ZOZOマリンスタジアムで開会式(式典のみ・試合なし)、試合は7月9日(木)開始、決勝は7月26日(日)10:00 ZOZOマリンスタジアム(準決勝は7月24日 ZOZOマリンスタジアム)。165校148チーム(連合24校7チーム)参加、組み合わせ抽選は6月11日実施。試合開始時刻は1回戦〜準決勝: 第1試合8:45/第2試合11:15/第3試合13:45。4回戦以降の日程は3回戦終了後に高野連が発表。\nシード校(2026年春季千葉県大会の成績による16校、公式組み合わせのA/B/C印):\n- Aシード: 専大松戸・東京学館浦安・拓大紅陵・八千代松陰\n- Bシード: 千葉黎明・千葉学芸・千葉明徳・市立船橋\n- Cシード: 東海大浦安・千葉商業・千葉商大付・市立松戸・光英VERITAS・中央学院・市原中央・志学館\nこのシード情報は確定済みであり、検索結果と食い違う場合もこちらを優先すること。",
+  "broadcast": {
+    "streaming": [
+      {
+        "name": "バーチャル高校野球",
+        "url": "https://sports.yahoo.co.jp/livestream/vk",
+        "tag": "LIVE",
+        "scope": "全球場・全試合(チバテレの球場別LIVE配信がバーチャル高校野球プレイヤーで提供される)"
+      },
+      {
+        "name": "チバテレ 球場別LIVE配信",
+        "url": "https://www.chiba-tv.com/baseball/2026/summer/",
+        "tag": "LIVE",
+        "scope": "全会場・全試合(chiba-tv.com内の球場別配信ページ)"
+      }
+    ],
+    "tvLiveVenues": {
+      "柏の葉公園野球場": "J:COMチャンネル(地デジ11ch)"
+    },
+    "verifiedAt": "2026-07-10",
+    "sources": [
+      "https://www.chiba-tv.com/baseball/2026/summer/",
+      "https://www2.myjcom.jp/special/tv/sports/baseball/highschool/sensyuken_chihou/chiba/index.shtml",
+      "https://newsreleases.jcom.co.jp/news/20260610_20808.html"
+    ],
+    "_tvNote": "J:COMは柏の葉公園野球場の全試合を地デジ11chで生中継(7/9〜7/20 9:00-17:30、22試合。J:COM/いちはらケーブルテレビ/ケーブルネット296エリア、J:COMオンデマンド配信対応)。チバテレの地上波中継は日ごとに対象球場が変わる(例: 7/10は県総合SC野球場)ため固定ルール化できず、tvLiveVenuesには載せない(誤りを載せるくらいなら書かない)— 配信は全球場カバーのためstreaming側で案内する。NHKの決勝中継有無は未確認"
+  },
+  "trustedSources": "chbf.or.jp(千葉県高野連公式)、chibanippo.co.jp(千葉日報)、chiba-tv.com(チバテレ)",
+  "sources": [
+    "https://baseball.yahoo.co.jp/hsb_summer_local/competitions/116/13",
+    "https://chbf.or.jp/"
+  ]
+}
