@@ -240,8 +240,16 @@ out = out.replace('<!--__REPORTS__-->', reportScripts);
 
 const outPath = process.argv[2] || path.join(dir, 'site.html');
 fs.writeFileSync(outPath, out);
-
 console.log(`Wrote ${outPath}`);
+
+// index.html is a byte-identical copy for Cloudflare Pages (GitHub連携), which serves the
+// build output directory's index.html by default. site.html stays the canonical name used
+// by Claude Artifact and every script/doc in this repo; only default-path builds also mirror it.
+if (!process.argv[2]) {
+  const indexPath = path.join(dir, 'index.html');
+  fs.writeFileSync(indexPath, out);
+  console.log(`Wrote ${indexPath} (Cloudflare Pages mirror)`);
+}
 for (const d of DAYS) {
   const n = d.sections.reduce((s, sec) => s + (sec.kind === 'results' ? sec.venues.reduce((a, v) => a + v.games.length, 0) : sec.games.length), 0);
   console.log(`  ${d.date}: ${n} games (${d.sections.map((s) => s.tname).join('+')})`);
