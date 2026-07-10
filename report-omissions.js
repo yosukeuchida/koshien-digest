@@ -4,12 +4,14 @@
 // 報告する。本スクリプトは未報告分の一覧表示と、報告済みフラグの一括更新を行う。
 //
 // Usage:
-//   node report-omissions.js                  → 未報告の不掲載判断を一覧表示
+//   node report-omissions.js                  → 未報告の不掲載判断を一覧表示(全大会分)
 //   node report-omissions.js --mark-reported  → ユーザーへの報告完了後、全件にreported:trueを立てる
 const fs = require('fs');
 const path = require('path');
+const { DATA_ROOT } = require('./lib/tournaments');
 
-const OMISSIONS_PATH = path.join(__dirname, '..', 'koshien-digest-data', 'omissions.json');
+// 台帳は全大会共有の単一ファイル(各エントリのtournamentフィールドで大会を識別する)
+const OMISSIONS_PATH = path.join(DATA_ROOT, 'omissions.json');
 const ledger = fs.existsSync(OMISSIONS_PATH) ? JSON.parse(fs.readFileSync(OMISSIONS_PATH, 'utf8')) : [];
 const pending = ledger.filter((e) => !e.reported);
 
@@ -28,5 +30,5 @@ if (!pending.length) {
   console.log('未報告の不掲載判断はない');
 } else {
   console.log(`未報告の不掲載判断: ${pending.length}件(ユーザーへ報告後、--mark-reported を実行)`);
-  for (const e of pending) console.log(`- [${e.dayKey} / ${e.date}] ${e.detail}(判断日: ${e.decidedAt})`);
+  for (const e of pending) console.log(`- [${e.tournament || '(不明)'}][${e.dayKey} / ${e.date}] ${e.detail}(判断日: ${e.decidedAt})`);
 }

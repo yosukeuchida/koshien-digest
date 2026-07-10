@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Generates the Workflow args for pipeline.js from data.json — no more hand-building the
+// Generates the Workflow args for pipeline.js from tournaments/<slug>/data.json — no more hand-building the
 // args blob. Two jobs beyond convenience:
 //   1. Injects each school's ALREADY-VERIFIED results from our own calendar data as ground
 //      truth (g.known). This kills the recurring bug class where a research agent confuses
@@ -7,14 +7,14 @@
 //      or misattributes an earlier round's score — and saves the tokens agents were spending
 //      re-searching results we already have first-hand.
 //   2. Carries round/date/played so prompts stay grounded (see pipeline.js gameHeader).
-//   3. Injects verified school-DB blocks (schools/<校名>.json, pairs.json) as
+//   3. Injects verified school-DB blocks (schools/<region>/<校名>.json, pairs/<region>.json) as
 //      g.schoolA / g.schoolB / g.h2h — pipeline.js then skips collection for those and
 //      FactCheck skips re-verifying them. This is the O(schools) cost structure: a school
 //      researched+fact-checked once is never re-researched in later rounds.
 //
 // Usage:
-//   node build-args.js <slug> <dayKey> [--notable g23,g27]   > /tmp/args.json
-//   (--notable omitted: falls back to data.json picks for that day)
+//   node build-args.js <slug> <dayKey> [--notable=g23,g27]   > /tmp/args.json
+//   (--notable omitted: falls back to the tournament's picks for that day)
 const fs = require('fs');
 const path = require('path');
 const { resolveSlug, loadConfig, loadData, dataPaths } = require('./lib/tournaments');

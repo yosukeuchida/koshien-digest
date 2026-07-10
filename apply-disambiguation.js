@@ -4,16 +4,17 @@
 //   misattributed → 誤帰属側の記事から該当選手のセクションを削除
 //   unresolved    → 全ての出現箇所から該当選手のセクションを削除(誤りを載せるくらいなら書かない)
 // 削除後は node build-site.js && node content-lint.js を再実行すること。
-// Usage: node apply-disambiguation.js <verdicts.json>
+// Usage: node apply-disambiguation.js <slug> <verdicts.json>
 //   <verdicts.json>: disambiguate.js の出力({verdicts:[...]}) or Workflowタスクの.outputファイル
 const fs = require('fs');
-const path = require('path');
+const { resolveSlug, loadConfig, loadData, saveData, dataPaths } = require('./lib/tournaments');
 
-const vPath = process.argv[2];
+const vPath = process.argv[3];
 if (!vPath) {
-  console.error('usage: node apply-disambiguation.js <verdicts.json>');
+  console.error('usage: node apply-disambiguation.js <slug> <verdicts.json>');
   process.exit(1);
 }
+const config = loadConfig(resolveSlug(process.argv[2]));
 let payload = JSON.parse(fs.readFileSync(vPath, 'utf8'));
 if (payload.result) payload = payload.result; // Workflow .output ラッパ対応
 const verdicts = payload.verdicts || [];
@@ -22,9 +23,8 @@ if (!verdicts.length) {
   process.exit(1);
 }
 
-const dataPath = path.join(__dirname, 'data.json');
-const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-const DISAMB_PATH = path.join(__dirname, '..', 'koshien-digest-data', 'disambiguations.json');
+const data = loadData(config.slug);
+const DISAMB_PATH = dataPaths(config).disambiguationsPath;
 const ledger = fs.existsSync(DISAMB_PATH) ? JSON.parse(fs.readFileSync(DISAMB_PATH, 'utf8')) : [];
 const today = new Date().toLocaleDateString('sv-SE');
 
@@ -62,7 +62,7 @@ function removePlayerSection(gid, name) {
 for (const v of verdicts) {
   const schools = [...new Set(v.entries.map((e) => e.school))];
   if (v.status === 'distinct') {
-    ledger.push({ name: v.name, schools, verdict: 'distinct', evidence: v.evidence || [], reasoning: v.reasoning || '', date: today });
+    ledger.push({ tournament: config.slug, name: v.name, schools, verdict: 'distinct', evidence: v.evidence || [], reasoning: v.reasoning || '', date: today });
     console.log(`distinct: ${v.name}(${schools.join('・')}) を裁定台帳に記録`);
   } else if (v.status === 'misattributed') {
     for (const e of v.entries) {
@@ -79,5 +79,5 @@ for (const v of verdicts) {
 }
 
 fs.writeFileSync(DISAMB_PATH, JSON.stringify(ledger, null, 2), 'utf8');
-fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8');
+saveData(config.slug, data);
 console.log('次: node build-site.js && node content-lint.js');

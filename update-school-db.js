@@ -6,24 +6,24 @@
 // (O(schools)): build-args.js injects these blocks back into the next run, which then
 // skips collection for known schools and fact-checks only NEW claims.
 //
-// Usage: node update-school-db.js <results.json>
+// Usage: node update-school-db.js <slug> <results.json>
 //   <results.json>: array of {id, a, b, notable?, facts, media, story?, factCheckers?}
 //   (pipeline.js returns this shape; a Workflow task-output file {result: [...]} also works)
 const fs = require('fs');
 const path = require('path');
+const { resolveSlug, loadConfig, dataPaths } = require('./lib/tournaments');
 
-const resultsPath = process.argv[2];
+const resultsPath = process.argv[3];
 if (!resultsPath) {
-  console.error('usage: node update-school-db.js <results.json>');
+  console.error('usage: node update-school-db.js <slug> <results.json>');
   process.exit(1);
 }
+const config = loadConfig(resolveSlug(process.argv[2]));
 let results = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
 if (!Array.isArray(results) && Array.isArray(results.result)) results = results.result;
 
 // PII(未成年選手の実名等)を含むためgit管理外の兄弟ディレクトリに保存する
-const DATA_DIR = path.join(__dirname, '..', 'koshien-digest-data');
-const SCHOOLS_DIR = path.join(DATA_DIR, 'schools');
-const PAIRS_PATH = path.join(DATA_DIR, 'pairs.json');
+const { schoolsDir: SCHOOLS_DIR, pairsPath: PAIRS_PATH } = dataPaths(config);
 if (!fs.existsSync(SCHOOLS_DIR)) fs.mkdirSync(SCHOOLS_DIR, { recursive: true });
 const pairs = fs.existsSync(PAIRS_PATH) ? JSON.parse(fs.readFileSync(PAIRS_PATH, 'utf8')) : {};
 

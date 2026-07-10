@@ -2,28 +2,29 @@
 // 最終ゲラ校閲(proof.js)用のゲラファイル + args を data.json から生成する。
 // 検証単位 = 公開単位: HOOK + 試合メタデータ + 記事本文を1試合1ゲラ(.md)に束ね、
 // ../koshien-digest-data/proof/ に書き出す(argsにはファイルパスだけを載せて軽量に保つ)。
-// Usage: node build-proof-args.js <dayKey> [<dayKey> ...]   > proof-args.json
-//        node build-proof-args.js --all-cards               (レポートのある全cards試合)
+// Usage: node build-proof-args.js <slug> <dayKey> [<dayKey> ...]   > proof-args.json
+//        node build-proof-args.js <slug> --all-cards               (レポートのある全cards試合)
 const fs = require('fs');
 const path = require('path');
+const { resolveSlug, loadConfig, loadData, dataPaths } = require('./lib/tournaments');
 
-const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data.json'), 'utf8'));
-const PROOF_DIR = path.join(__dirname, '..', 'koshien-digest-data', 'proof');
-fs.mkdirSync(PROOF_DIR, { recursive: true });
-
-const argv = process.argv.slice(2);
+const argv = process.argv.slice(3);
 if (!argv.length) {
-  console.error('usage: node build-proof-args.js <dayKey> [...] | --all-cards [--games=g1,g2]');
+  console.error('usage: node build-proof-args.js <slug> <dayKey> [...] | --all-cards [--games=g1,g2]');
   process.exit(1);
 }
+const config = loadConfig(resolveSlug(process.argv[2]));
+const data = loadData(config.slug);
+const PROOF_DIR = dataPaths(config).proofDir;
+fs.mkdirSync(PROOF_DIR, { recursive: true });
 const allCards = argv.includes('--all-cards');
 const gamesFlag = (argv.find((a) => a.startsWith('--games=')) || '').split('=')[1] || '';
 const gameFilter = gamesFlag ? new Set(gamesFlag.split(',').map((s) => s.trim())) : null;
 const keys = new Set(argv.filter((a) => a !== '--all-cards' && !a.startsWith('--games=')));
 
-// シード一覧(tournament.seeds)。記事が非シード校を「第Nシード」と誤記する事故(g18で実発生)を
+// シード一覧(config.seeds)。記事が非シード校を「第Nシード」と誤記する事故(g18で実発生)を
 // 校閲エージェントが検出できるよう、ゲラの確定情報に含める
-const seeds = data.tournament.seeds || {};
+const seeds = config.seeds || {};
 const seedText = Object.entries(seeds)
   .map(([k, names]) => `第${k}シード: ${names.join('・')}`)
   .join(' / ');
@@ -80,6 +81,7 @@ for (const day of data.days) {
     const confusableNames = confusableNamesFor(g.a, g.b);
     const galley = [
       '--- 確定情報(サイト運営側が一次ソースで検証済み・これが正) ---',
+      `大会: ${config.name}`,
       `試合: ${day.date} ${g.t} ${g.v} ${day.round || ''}「${g.a} vs ${g.b}」(未実施の予告記事)`,
       `シード校一覧(ここに無い学校は全てノーシード): ${seedText}`,
       known ? `両校のこれまでの確定結果(今大会の全試合結果を網羅済み):\n${known}` : '(両校とも今大会はまだ試合をしていない)',

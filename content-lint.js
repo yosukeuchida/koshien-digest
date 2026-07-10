@@ -57,6 +57,12 @@ function lintTournament(slug) {
   for (const m of html.matchAll(reportRe)) {
     reports[m[1]] = m[2];
   }
+  // site.html未反映ガード(2026-07-14レビュー申し送り): data.jsonに記事があるのにsite.htmlに
+  // 1件も埋まっていない場合、build-site.jsの実行漏れ(=旧世代のsite.htmlを検品している)を疑う
+  if (!Object.keys(reports).length && Object.keys(data.reports || {}).length) {
+    violations++;
+    console.log(`✗ [site.html未反映] ${slug}: 記事${Object.keys(data.reports).length}件がsite.htmlに存在しない(build-site.js未実行?)`);
+  }
 
   for (const check of CHECKS) {
     for (const [gid, md] of Object.entries(reports)) {
@@ -174,7 +180,7 @@ function lintTournament(slug) {
       const want = broadcastFor(g.v).trim();
       if (got !== want) {
         violations++;
-        console.log(`✗ [放送セクション不一致] ${g.id} (${g.v}): broadcast.json の決定的生成と食い違い`);
+        console.log(`✗ [放送セクション不一致] ${g.id} (${g.v}): config.broadcast の決定的生成と食い違い`);
         console.log(`  記事: ${JSON.stringify(got.slice(0, 80))}`);
         console.log(`  期待: ${JSON.stringify(want.slice(0, 80))}`);
       }

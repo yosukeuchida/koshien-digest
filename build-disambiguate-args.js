@@ -2,12 +2,13 @@
 // 選手名衝突の自動裁定(disambiguate.js)用のargsを生成する(2026-07-14、無人運用方針)。
 // content-lint.jsと同じロジックで「同一選手名が複数校に出現」する衝突を抽出し、
 // 各出現箇所の記事コンテキスト(注目選手セクションの該当ブロック)を添えて出力する。
-// Usage: node build-disambiguate-args.js > disambiguate-args.json
+// Usage: node build-disambiguate-args.js <slug> > disambiguate-args.json
 const fs = require('fs');
-const path = require('path');
+const { resolveSlug, loadConfig, loadData, dataPaths } = require('./lib/tournaments');
 
-const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data.json'), 'utf8'));
-const DISAMB_PATH = path.join(__dirname, '..', 'koshien-digest-data', 'disambiguations.json');
+const config = loadConfig(resolveSlug(process.argv[2]));
+const data = loadData(config.slug);
+const DISAMB_PATH = dataPaths(config).disambiguationsPath;
 const disambiguations = fs.existsSync(DISAMB_PATH) ? JSON.parse(fs.readFileSync(DISAMB_PATH, 'utf8')) : [];
 
 const occurrences = new Map(); // name -> [{gid, school, section}]
@@ -37,7 +38,11 @@ for (const day of data.days) {
 
 function isResolvedDistinct(name, schools) {
   return disambiguations.some(
-    (e) => e.name === name && e.verdict === 'distinct' && schools.every((s) => (e.schools || []).includes(s))
+    (e) =>
+      e.name === name &&
+      e.verdict === 'distinct' &&
+      (e.tournament === config.slug || !e.tournament) &&
+      schools.every((s) => (e.schools || []).includes(s))
   );
 }
 
