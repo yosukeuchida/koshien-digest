@@ -128,6 +128,68 @@ for (const day of data.days) {
   }
 }
 
+// 放送・配信セクションの完全一致チェック(2026-07-14追加): 各記事の「## 放送・配信情報」が
+// broadcast.json からの決定的生成(build-args.js の broadcastFor と同一ロジック)と逐語一致するかを
+// 全記事に対して照合する。broadcast.json のルール変更時に公開済み記事が古いまま残る回帰
+// (0710全22試合が旧世代のLLM調査由来の放送情報のまま残っていた実例)を、以後は機械検出する。
+const BROADCAST = JSON.parse(fs.readFileSync(path.join(__dirname, 'broadcast.json'), 'utf8'));
+function broadcastFor(venue) {
+  const lines = [];
+  const tv = BROADCAST.tvLiveVenues[venue];
+  if (tv) {
+    lines.push('**TV放送**');
+    lines.push(`- ${tv} \`LIVE\``);
+    lines.push('');
+  }
+  lines.push('**配信**');
+  for (const s of BROADCAST.streaming) lines.push(`- [${s.name}](${s.url}) \`${s.tag}\``);
+  return lines.join('\n');
+}
+for (const day of data.days) {
+  if (day.kind !== 'cards') continue;
+  for (const g of day.games) {
+    const md = data.reports[g.id];
+    if (!md) continue;
+    const marker = '## 放送・配信情報\n';
+    const idx = md.indexOf(marker);
+    if (idx === -1) {
+      violations++;
+      console.log(`✗ [放送セクション欠落] ${g.id} (${g.v})`);
+      continue;
+    }
+    const rest = md.slice(idx + marker.length);
+    const next = rest.search(/\n## /);
+    const got = (next === -1 ? rest : rest.slice(0, next)).trim();
+    const want = broadcastFor(g.v).trim();
+    if (got !== want) {
+      violations++;
+      console.log(`✗ [放送セクション不一致] ${g.id} (${g.v}): broadcast.json の決定的生成と食い違い`);
+      console.log(`  記事: ${JSON.stringify(got.slice(0, 80))}`);
+      console.log(`  期待: ${JSON.stringify(want.slice(0, 80))}`);
+    }
+  }
+}
+
+// HOOK↔記事本文の数字照合(2026-07-14追加): カレンダー面の1行フック(hooks)に現れる数字列は、
+// 対応する記事本文にも同じ数字列が存在しなければならない。HOOKはmain loopが記事を要約して
+// 書くため4層防御の外にあり、学年・スコア・記録の記憶混同がノーチェックで通過し得る
+// (g45で「3年生」を「2年生」と書いた実例)。数字の逐語存在チェックで大半を機械検出する。
+// 既知の限界: 「2年生→3年生」型の誤りは記事中に別文脈の同じ数字があれば素通りする。
+// 意味レベルの矛盾は最終ゲラ校閲(proof.js)が担う。
+for (const [gid, hook] of Object.entries(data.hooks || {})) {
+  const md = data.reports[gid];
+  if (!md) continue;
+  // 記事側の「1,000」「2,000」等のカンマ区切りは正規化してから照合する(g49で偽陽性の実例)
+  const mdNorm = md.replace(/(\d)[,，](\d)/g, '$1$2');
+  for (const m of hook.matchAll(/\d+/g)) {
+    if (!mdNorm.includes(m[0])) {
+      violations++;
+      console.log(`✗ [HOOK数字が記事に無い] ${gid}: HOOK内の「${m[0]}」が記事本文に存在しない`);
+      console.log(`  HOOK: ${hook.slice(0, 60)}…`);
+    }
+  }
+}
+
 // 警告のみ(公開は止めない): cardsの日でレポートが無い試合
 for (const day of data.days) {
   if (day.kind !== 'cards') continue;
