@@ -108,7 +108,11 @@ for (const day of data.days) {
       // 対戦成績の記述なので照合対象外(同じ相手校名でも別試合のスコア)
       const curYear = (day.date || '').slice(0, 4) || '2026';
       const historicRe = new RegExp(`20(?!${curYear.slice(2)})\\d{2}年|昨夏|昨年|前年|一昨年|過去`);
-      for (const sentence of md.split(/[。\n]/)) {
+      // 「1回戦でXにa-b、2回戦でYにc-d」のように1文で複数試合を回顧する書き方が頻発するため、
+      // 読点(、)でも分割してチェック単位を狭める(2026-07-13追加)。文単位のままだと、後半の
+      // 試合のスコアが前半の対戦相手名と誤って照合され、内容は正しいのに誤検知が多発した
+      // (0713分22件が全て偽陽性だったことで発覚)。
+      for (const sentence of md.split(/[。、\n]/)) {
         if (!sentence.includes(opp)) continue;
         if (historicRe.test(sentence)) continue;
         for (const m of sentence.matchAll(/(\d{1,3})\s*[-−–—]\s*(\d{1,3})/g)) {
