@@ -296,6 +296,18 @@ for (const day of data.days) {
   }
 }
 
+// 不掲載判断の未報告チェック(2026-07-14、ユーザー方針): ingest-day.jsが自動で「掲載しない」と
+// 判断した試合は、必ずユーザーへ別途報告する義務がある(試合はサイトの根幹のため、黙って
+// 落とさない)。報告済みフラグが立つまで毎回⚠で催促する(公開自体はブロックしない —
+// 報告は透明性の義務であって許可待ちのゲートではない)
+const OMISSIONS_PATH = path.join(__dirname, '..', 'koshien-digest-data', 'omissions.json');
+if (fs.existsSync(OMISSIONS_PATH)) {
+  const pendingOmissions = JSON.parse(fs.readFileSync(OMISSIONS_PATH, 'utf8')).filter((e) => !e.reported);
+  for (const e of pendingOmissions) {
+    console.log(`⚠ [不掲載判断・ユーザー未報告] ${e.dayKey}: ${e.detail} — 報告後に node report-omissions.js --mark-reported`);
+  }
+}
+
 // 警告のみ(公開は止めない): cardsの日でレポートが無い試合
 for (const day of data.days) {
   if (day.kind !== 'cards') continue;

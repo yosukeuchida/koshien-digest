@@ -15,6 +15,13 @@
 このため各チェックは「⚠警告して人間に委ねる」ではなく「✗ブロック→自動裁定フロー→
 解決 or 自動削除」で閉じるように設計する。実例: 選手名の複数校出現(下記 disambiguate)。
 
+**例外 — 試合の不掲載判断は報告義務あり(2026-07-14)**: 試合はサイトの根幹をなすため、
+ingest-day.js が「掲載しない」と自動判断した試合は黙って落とさず、必ずユーザーへ別途報告する
+(報告は透明性の義務であって許可待ちのゲートではない — 掲載可否の判断自体は自動のまま)。
+不掲載判断は `../koshien-digest-data/omissions.json` に reported:false で記録され、
+content-lint.js が報告済みになるまで⚠で催促し続ける。報告後に
+`node report-omissions.js --mark-reported` でフラグを立てる。
+
 ## 運用フロー(新しい日を追加する手順)
 
 ```
@@ -208,6 +215,7 @@ content-lint.js が「同一選手名が複数校に出現」を検出したら(
   空レポートは`RETRY NEEDED`として列挙
 - `update-school-db.js` — Workflow出力 → schools/ + pairs.json へ検証済み調査結果を蓄積
 - `ingest-day.js` — 日程取り込みの無人化(独立2〜3回読みの多数決+トーナメット整合性検査+出典記録)
+- `report-omissions.js` — 試合の不掲載判断の報告管理(未報告一覧の表示 / 報告済みフラグ更新)
 - `build-disambiguate-args.js` / `disambiguate.js` / `apply-disambiguation.js` — 選手名衝突の
   自動裁定フロー(Web調査で別人/誤帰属/裁定不能を判定 → 台帳記録 or 自動削除)
 - `schools/` / `pairs.json` — 学校DB(上記セクション参照)。**未成年選手の実名等PIIを含むため
