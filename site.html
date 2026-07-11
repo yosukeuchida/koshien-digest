@@ -151,13 +151,6 @@ h1.site-title{
   margin-bottom:18px;
 }
 .matchup .side{display:flex; flex-direction:column; align-items:center; gap:10px; flex:1; max-width:240px}
-.mono{
-  width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-  font-size:28px; font-weight:600; color:#F6F4EC; letter-spacing:0;
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.35), 0 2px 8px rgba(0,0,0,.25);
-}
-.matchup .mono{width:76px; height:76px; font-size:34px}
 .matchup .tname{
   font-size:clamp(16px,3.4vw,22px); font-weight:600; letter-spacing:.04em; text-align:center; line-height:1.35;
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
@@ -216,7 +209,6 @@ h1.site-title{
   display:flex; align-items:center; gap:12px; margin-bottom:12px;
   padding-bottom:12px; border-bottom:1px solid var(--line);
 }
-.profile-card .mono{width:44px; height:44px; font-size:20px; flex-shrink:0}
 .profile-card .p-name{
   font-size:17px; font-weight:700; letter-spacing:.03em;
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
@@ -329,14 +321,8 @@ article.report .mk{
 /* ---- table zebra ---- */
 article.report tr:nth-child(even) td{background:var(--chip-bg)}
 
-/* ---- calendar card: team monograms + featured cards ---- */
+/* ---- calendar card: team names + featured cards ---- */
 .mc-teams{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:0 0 7px}
-.mc-teams .mm{
-  width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
-  font-size:12.5px; color:#F6F4EC; flex-shrink:0;
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);
-}
 .mc-teams .mc-name{font-size:19px; font-weight:600; letter-spacing:.03em; line-height:1.4}
 .mc-teams .mc-vs{font-size:12px; color:var(--muted); margin:0 2px}
 .match-card.pick-card{border-color:var(--crimson); border-width:1.5px}
@@ -426,7 +412,6 @@ footer.site p{margin:4px 0}
   .detail-head .wrap{padding-top:22px; padding-bottom:40px}
   .detail-head .crumb{margin-bottom:14px}
   .matchup{gap:10px}
-  .matchup .mono{width:58px; height:58px; font-size:26px}
   .matchup .side{gap:8px}
   .detail-head .info{gap:8px 14px; font-size:12.5px}
   .lead-hook{padding:0 14px; margin-top:-22px}
@@ -4983,9 +4968,9 @@ function calendarHtml(date){
     h += `<a class="match-card${PICKS[key]?' pick-card':''}" href="#/match/${sec.slug}/${g.id}">
       <div class="meta"><span>${g.t}</span>${showTag?`<span>${esc(sec.tname)}</span>`:''}<span>${esc(sec.round||"")}</span><span>${esc(venueName)}</span>${PICKS[key]?'<span class="pick">★ 注目</span>':''}</div>
       <div class="mc-teams">
-        <span class="mm" style="background:${teamColor(g.a)}">${esc([...g.a][0])}</span><span class="mc-name">${esc(g.a)}</span>
+        <span class="mc-name">${esc(g.a)}</span>
         <span class="mc-vs">対</span>
-        <span class="mm" style="background:${teamColor(g.b, g.a)}">${esc([...g.b][0])}</span><span class="mc-name">${esc(g.b)}</span>
+        <span class="mc-name">${esc(g.b)}</span>
       </div>
       ${hook?`<p class="hook">${esc(hook)}</p>`:""}
     </a>`;
@@ -4996,7 +4981,8 @@ function calendarHtml(date){
   return h;
 }
 
-// Monogram colors: muted traditional Japanese tones (伝統色), deep enough for white type.
+// Team accent colors (注目選手のドット・口コミの応援チーム表示・投稿フォームのチップで使用):
+// muted traditional Japanese tones (伝統色), deep enough for white type.
 // Deterministic pick by school-name hash so a team keeps its color everywhere it appears.
 // 8 tones spread across hue space (藍・海老茶・松葉・桔梗・柿・青碧・鶯・蘇芳) so any
 // two teams' monograms read as clearly different colors even at small sizes.
@@ -5013,10 +4999,6 @@ function teamColor(name, avoidName){
   if(avoidName && idx === teamColorIdx(avoidName)) idx = (idx + 3) % MONO_COLORS.length;
   return MONO_COLORS[idx];
 }
-function monoHtml(name, avoidName){
-  return `<span class="mono" style="background:${teamColor(name, avoidName)}">${esc([...name][0])}</span>`;
-}
-
 // Seed assignments are fixed tournament facts, exact names only —
 // 日大 is NOT 日大藤沢, so no fuzzy matching. Seeds live in each tournament's config.
 // シードの呼称は大会ごとに異なる: 神奈川=数字(第1シード)、千葉=英字(Aシード)。
@@ -5106,12 +5088,11 @@ function renderPlayers(sec){
 function renderProfiles(sec){
   const blocks = sec.body.split(/(?=^### )/m).filter(b => b.startsWith("### "));
   if(blocks.length < 2) return h2t("両校プロフィール") + mdToHtml(sec.body);
-  const firstName = blocks[0].match(/^### ([^\n]+)/)[1].trim();
-  const cards = blocks.map((b, i) => {
+  const cards = blocks.map((b) => {
     const name = b.match(/^### ([^\n]+)/)[1].trim();
     const rest = b.replace(/^### [^\n]+\n?/, "");
     return `<div class="profile-card">
-      <div class="p-head">${monoHtml(name, i > 0 ? firstName : null)}<span class="p-name">${esc(name)}</span></div>
+      <div class="p-head"><span class="p-name">${esc(name)}</span></div>
       ${mdToHtml(rest)}
     </div>`;
   }).join("");
@@ -5241,9 +5222,9 @@ function matchHtml(slug, gid){
       <div class="crumb"><a href="#/day/${day.date}">← ${esc(day.label)}の全試合へ</a></div>
       <div class="round serif">${esc(TOURNAMENTS[slug].tname)}大会 ${esc(sec.roundLabel || sec.round || "")}</div>
       <div class="matchup">
-        <div class="side">${monoHtml(g.a)}<span class="tname">${esc(g.a)}</span>${seedBadgeHtml(slug, g.a)}</div>
+        <div class="side"><span class="tname">${esc(g.a)}</span>${seedBadgeHtml(slug, g.a)}</div>
         <span class="vs-mark">対</span>
-        <div class="side">${monoHtml(g.b, g.a)}<span class="tname">${esc(g.b)}</span>${seedBadgeHtml(slug, g.b)}</div>
+        <div class="side"><span class="tname">${esc(g.b)}</span>${seedBadgeHtml(slug, g.b)}</div>
       </div>
       <div class="info"><span>${esc(day.label)} ${g.t} 開始</span><span>${esc(g.v)}</span>${PICKS[key]?'<span class="pick-badge">★ 注目</span>':""}</div>
     </div></div>
