@@ -56,8 +56,46 @@ h1.site-title{
 }
 .site-sub{font-size:13px; color:var(--muted); margin:0}
 
-/* ---- date nav ---- */
-.datenav{display:flex; gap:8px; margin:22px 0 6px; flex-wrap:wrap}
+/* ---- date hero (spocale風: 大きな日付+前後送り) ---- */
+.date-hero{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  background:var(--score-bg); color:var(--score-ink); border-radius:6px;
+  margin:22px 0 10px; padding:10px 14px;
+}
+.date-hero .dh-nav{
+  font:inherit; width:36px; height:36px; border-radius:50%; cursor:pointer; flex-shrink:0;
+  border:1px solid rgba(255,255,255,.35); background:transparent; color:inherit;
+  font-size:18px; line-height:1; display:flex; align-items:center; justify-content:center;
+}
+.date-hero .dh-nav:hover{background:rgba(255,255,255,.1)}
+.date-hero .dh-nav:disabled{opacity:.25; cursor:default; background:transparent}
+.date-hero .dh-center{display:flex; align-items:baseline; gap:8px; min-width:0}
+.date-hero .dh-date{font-size:24px; font-weight:700; letter-spacing:.04em; font-variant-numeric:tabular-nums}
+.date-hero .dh-dow{font-size:14px; opacity:.85}
+.date-hero .dh-count{font-size:12.5px; opacity:.75; white-space:nowrap}
+
+/* ---- date strip (曜日+日にちの2段チップ) ---- */
+.datestrip{
+  display:flex; gap:6px; margin:0 0 6px; padding:2px;
+  overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+}
+.datestrip::-webkit-scrollbar{display:none}
+.datestrip button{
+  font:inherit; cursor:pointer; flex-shrink:0; min-width:48px;
+  display:flex; flex-direction:column; align-items:center; gap:0;
+  padding:6px 9px 5px; border:1px solid var(--line); border-radius:6px;
+  background:var(--surface); color:var(--ink);
+}
+.datestrip .dow{font-size:10.5px; color:var(--muted); letter-spacing:.08em; line-height:1.5}
+.datestrip .dow.sat{color:#2B4B6F}
+.datestrip .dow.sun{color:var(--crimson)}
+.datestrip .dnum{font-size:17px; font-weight:700; line-height:1.25; font-variant-numeric:tabular-nums}
+.datestrip button[aria-selected="true"]{background:var(--green); border-color:var(--green)}
+.datestrip button[aria-selected="true"] .dow,
+.datestrip button[aria-selected="true"] .dnum{color:#F3F5EF}
+
+/* ---- tournament filter nav ---- */
+.datenav{display:flex; gap:8px; margin:12px 0 6px; flex-wrap:wrap}
 .datenav button{
   font:inherit; font-size:14px; padding:7px 18px; cursor:pointer;
   border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:3px;
@@ -383,6 +421,10 @@ footer.site p{margin:4px 0}
   }
   .datenav::-webkit-scrollbar{display:none}
   .datenav button{flex-shrink:0; white-space:nowrap; padding:7px 14px}
+  .date-hero{margin-top:16px; padding:8px 10px}
+  .date-hero .dh-date{font-size:21px}
+  .date-hero .dh-nav{width:32px; height:32px}
+  .datestrip{margin-left:-16px; margin-right:-16px; padding:2px 16px}
   .game-row{flex-wrap:wrap; row-gap:2px}
   .game-row .score{margin-left:auto}
   .match-card{padding:14px 14px 12px}
@@ -4865,28 +4907,14 @@ function timeMinutes(t){
   return m ? parseInt(m[1],10)*60 + parseInt(m[2],10) : Infinity;
 }
 
+function dowOf(date){ return "日月火水木金土"[new Date(date + "T00:00:00").getDay()]; }
+
 function calendarHtml(date){
   const day = dayOf(date) || dayOf(defaultDate());
-  let h = headerHtml() + '<main class="wrap">';
-  h += `<nav class="datenav" aria-label="日付">` +
-    DAYS.map(d => `<button aria-selected="${d.date===day.date}" onclick="location.hash='#/day/${d.date}'">${esc(d.label)}</button>`).join("") +
-    `</nav>`;
-  const slugsList = Object.keys(TOURNAMENTS);
-  if(slugsList.length > 1){
-    h += `<nav class="datenav" aria-label="大会">` +
-      `<button aria-selected="${FILTER==="all"}" onclick="setFilter('all')">すべて</button>` +
-      slugsList.map(s => `<button aria-selected="${FILTER===s}" onclick="setFilter('${s}')">${esc(TOURNAMENTS[s].tname)}</button>`).join("") +
-      `</nav>`;
-  }
   const visibleSecs = day.sections.filter(sec => FILTER === "all" || sec.slug === FILTER);
-  // 都道府県(大会)ごとの区切りはやめて時系列1本のリストにするため、会場/開始時刻の注記だけ
-  // 先頭にまとめて出す。複数大会が同時に表示されている時だけ大会名を前置して区別する。
+  // 都道府県(大会)ごとの区切りはやめて時系列1本のリストにする。複数大会が同時に
+  // 表示されている時だけ大会名タグを前置して区別する。
   const showTag = visibleSecs.length > 1;
-  for(const sec of visibleSecs){
-    if(!sec.note) continue;
-    const label = showTag ? `${esc(sec.tname)}${sec.round ? "・" + esc(sec.round) : ""}: ` : "";
-    h += `<p class="day-note">${label}${esc(sec.note)}</p>`;
-  }
   // 全大会・全会場の試合を1本の配列にフラット化してから開始時刻順に並べ替え
   const items = [];
   for(const sec of visibleSecs){
@@ -4899,6 +4927,44 @@ function calendarHtml(date){
     }
   }
   items.sort((x, y) => timeMinutes(x.g.t) - timeMinutes(y.g.t));
+
+  let h = headerHtml() + '<main class="wrap">';
+  // spocale風ヒーロー帯: 大きな日付+曜日+試合数、‹ ›で前後の開催日へ
+  const idx = DAYS.findIndex(d => d.date === day.date);
+  const prev = idx > 0 ? DAYS[idx - 1] : null;
+  const next = idx < DAYS.length - 1 ? DAYS[idx + 1] : null;
+  const m = parseInt(day.date.slice(5, 7), 10), dnum = parseInt(day.date.slice(8), 10);
+  h += `<div class="date-hero">
+    <button class="dh-nav" aria-label="前の開催日へ" ${prev ? `onclick="location.hash='#/day/${prev.date}'"` : "disabled"}>‹</button>
+    <div class="dh-center serif">
+      <span class="dh-date">${m}.${String(dnum).padStart(2, "0")}</span>
+      <span class="dh-dow">[${dowOf(day.date)}]</span>
+      <span class="dh-count">${items.length}試合</span>
+    </div>
+    <button class="dh-nav" aria-label="次の開催日へ" ${next ? `onclick="location.hash='#/day/${next.date}'"` : "disabled"}>›</button>
+  </div>`;
+  // 全日程チップ(曜日+日にちの2段)
+  h += `<nav class="datestrip" aria-label="日付">` +
+    DAYS.map(d => {
+      const dw = dowOf(d.date);
+      const cls = dw === "日" ? " sun" : dw === "土" ? " sat" : "";
+      return `<button aria-selected="${d.date===day.date}" onclick="location.hash='#/day/${d.date}'" aria-label="${esc(d.label)}">
+        <span class="dow${cls}">${dw}</span><span class="dnum">${parseInt(d.date.slice(8), 10)}</span>
+      </button>`;
+    }).join("") +
+    `</nav>`;
+  const slugsList = Object.keys(TOURNAMENTS);
+  if(slugsList.length > 1){
+    h += `<nav class="datenav" aria-label="大会">` +
+      `<button aria-selected="${FILTER==="all"}" onclick="setFilter('all')">すべて</button>` +
+      slugsList.map(s => `<button aria-selected="${FILTER===s}" onclick="setFilter('${s}')">${esc(TOURNAMENTS[s].tname)}</button>`).join("") +
+      `</nav>`;
+  }
+  for(const sec of visibleSecs){
+    if(!sec.note) continue;
+    const label = showTag ? `${esc(sec.tname)}${sec.round ? "・" + esc(sec.round) : ""}: ` : "";
+    h += `<p class="day-note">${label}${esc(sec.note)}</p>`;
+  }
   for(const { sec, venueName, g, kind } of items){
     if(kind === "results"){
       const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes("x");
@@ -5212,6 +5278,9 @@ function render(){
     app.innerHTML = calendarHtml(defaultDate());
   }
   window.scrollTo(0,0);
+  // 日付チップ列: 選択中の日が画面外に隠れないよう中央へスクロール(カレンダー面のみ存在)
+  const sel = document.querySelector('.datestrip button[aria-selected="true"]');
+  if(sel) sel.scrollIntoView({ block: "nearest", inline: "center" });
 }
 window.addEventListener("hashchange", render);
 render();
