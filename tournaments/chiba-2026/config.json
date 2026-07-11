@@ -48,15 +48,21 @@
       }
     ],
     "tvLiveVenues": {
-      "柏の葉公園野球場": "J:COMチャンネル(地デジ11ch)"
+      "柏の葉公園野球場": "J:COMチャンネル(地デジ11ch)",
+      "千葉県総合スポーツセンター野球場": "千葉テレビ(地上波メインチャンネル、8:45〜16:30。以降はチバテレミライチャンネル)"
     },
-    "verifiedAt": "2026-07-10",
+    "verifiedAt": "2026-07-11",
     "sources": [
       "https://www.chiba-tv.com/baseball/2026/summer/",
+      "https://www.chiba-tv.com/timetable/daily?d=2026-07-09",
+      "https://www.chiba-tv.com/timetable/daily?d=2026-07-10",
+      "https://www.chiba-tv.com/timetable/daily?d=2026-07-11",
+      "https://www.chiba-tv.com/timetable/daily?d=2026-07-12",
+      "https://www.chiba-tv.com/timetable/daily?d=2026-07-13",
       "https://www2.myjcom.jp/special/tv/sports/baseball/highschool/sensyuken_chihou/chiba/index.shtml",
       "https://newsreleases.jcom.co.jp/news/20260610_20808.html"
     ],
-    "_tvNote": "J:COMは柏の葉公園野球場の全試合を地デジ11chで生中継(7/9〜7/20 9:00-17:30、22試合。J:COM/いちはらケーブルテレビ/ケーブルネット296エリア、J:COMオンデマンド配信対応)。チバテレの地上波中継は日ごとに対象球場が変わる(例: 7/10は県総合SC野球場)ため固定ルール化できず、tvLiveVenuesには載せない(誤りを載せるくらいなら書かない)— 配信は全球場カバーのためstreaming側で案内する。NHKの決勝中継有無は未確認"
+    "_tvNote": "J:COMは柏の葉公園野球場の全試合を地デジ11chで生中継(7/9〜7/20 9:00-17:30、22試合。J:COM/いちはらケーブルテレビ/ケーブルネット296エリア、J:COMオンデマンド配信対応)。チバテレの地上波中継は「日ごとに対象球場が変わる」という当初の想定が誤りだったと2026-07-11に判明: 番組表(chiba-tv.com/timetable/daily?d=YYYY-MM-DD、番組説明文に【球場】表記あり)で1回戦〜2回戦の5日分(7/9〜7/13)を確認したところ、全日とも千葉県総合スポーツセンター野球場で固定だった。3回戦以降(特に準決勝・決勝はZOZOマリンスタジアム)は別会場に切り替わる可能性が高いため、ラウンドが進んだら番組表を再確認してtvLiveVenuesを更新すること。NHKの決勝中継有無は未確認"
   },
   "trustedSources": "chbf.or.jp(千葉県高野連公式)、chibanippo.co.jp(千葉日報)、chiba-tv.com(チバテレ)",
   "sources": [
