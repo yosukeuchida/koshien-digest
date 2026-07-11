@@ -60,18 +60,6 @@ h1.site-title{
 }
 .day-note{font-size:12.5px; color:var(--muted); margin:0 0 14px}
 
-/* ---- tournament group heading ---- */
-.tournament-head{
-  font-size:15px; font-weight:700; letter-spacing:.08em; margin:26px 0 4px;
-  padding:6px 10px; background:var(--chip-bg); border-radius:4px;
-}
-
-/* ---- venue groups ---- */
-.venue{margin:26px 0}
-.venue h2{
-  font-size:13px; font-weight:600; letter-spacing:.14em; color:var(--muted);
-  margin:0 0 8px; padding-bottom:5px; border-bottom:1px solid var(--line);
-}
 .game-row{
   display:flex; align-items:center; gap:14px; padding:10px 4px;
   border-bottom:1px dotted var(--line); font-variant-numeric:tabular-nums;
@@ -95,7 +83,7 @@ h1.site-title{
 }
 .match-card:hover{border-color:var(--green)}
 .match-card .meta{
-  display:flex; gap:12px; align-items:center; font-size:12px; color:var(--muted);
+  display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12px; color:var(--muted);
   font-variant-numeric:tabular-nums; margin-bottom:6px;
 }
 .pick{
@@ -106,9 +94,6 @@ h1.site-title{
 }
 .match-card h3 .vs{font-size:13px; color:var(--muted); margin:0 8px}
 .match-card .hook{font-size:13.5px; color:var(--muted); margin:0; line-height:1.7}
-.match-card .more{
-  font-size:12.5px; color:var(--green-ink); font-weight:600; margin-top:8px; display:inline-block;
-}
 
 /* ---- detail page ---- */
 .detail-head{
@@ -571,6 +556,12 @@ function footerHtml(){
 let FILTER = "all"; // 大会絞り込み(hashには入れない)
 function setFilter(f){ FILTER = f; render(); }
 
+// "8:45"→525分。時刻未定("未定"等)はソート末尾に回す(Array.sortはstableなので元の順序を維持)。
+function timeMinutes(t){
+  const m = /^(\d{1,2}):(\d{2})$/.exec(t);
+  return m ? parseInt(m[1],10)*60 + parseInt(m[2],10) : Infinity;
+}
+
 function calendarHtml(date){
   const day = dayOf(date) || dayOf(defaultDate());
   let h = headerHtml() + '<main class="wrap">';
@@ -584,60 +575,62 @@ function calendarHtml(date){
       slugsList.map(s => `<button aria-selected="${FILTER===s}" onclick="setFilter('${s}')">${esc(TOURNAMENTS[s].tname)}</button>`).join("") +
       `</nav>`;
   }
-  let shown = 0;
-  for(const sec of day.sections){
-    if(FILTER !== "all" && sec.slug !== FILTER) continue;
-    shown++;
-    h += `<h2 class="tournament-head">⚾ ${esc(sec.tname)}${sec.round ? "・" + esc(sec.round) : ""}</h2>`;
-    if(sec.note) h += `<p class="day-note">${esc(sec.note)}</p>`;
+  const visibleSecs = day.sections.filter(sec => FILTER === "all" || sec.slug === FILTER);
+  // 都道府県(大会)ごとの区切りはやめて時系列1本のリストにするため、会場/開始時刻の注記だけ
+  // 先頭にまとめて出す。複数大会が同時に表示されている時だけ大会名を前置して区別する。
+  const showTag = visibleSecs.length > 1;
+  for(const sec of visibleSecs){
+    if(!sec.note) continue;
+    const label = showTag ? `${esc(sec.tname)}${sec.round ? "・" + esc(sec.round) : ""}: ` : "";
+    h += `<p class="day-note">${label}${esc(sec.note)}</p>`;
+  }
+  // 全大会・全会場の試合を1本の配列にフラット化してから開始時刻順に並べ替え
+  const items = [];
+  for(const sec of visibleSecs){
     if(sec.kind === "results"){
       for(const venue of sec.venues){
-        h += `<section class="venue"><h2>${esc(venue.v)}</h2>`;
-        for(const g of venue.games){
-          const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes("x");
-          h += `<div class="game-row">
-            <span class="t">${g.t}</span>
-            <span class="card"><span class="${aWin?'win':''}">${esc(g.a)}</span>
-              <span style="color:var(--muted)"> — </span>
-              <span class="${!aWin?'win':''}">${esc(g.b)}</span>
-              ${g.r1?'<span class="badge-r1">1回戦</span>':''}</span>
-            <span class="score">${g.sa} — ${g.sb}</span>
-          </div>`;
-        }
-        h += `</section>`;
+        for(const g of venue.games) items.push({ sec, venueName: venue.v, g, kind: "results" });
       }
     } else {
-      let currentVenue = "";
-      for(const g of sec.games){
-        if(g.v !== currentVenue){
-          if(currentVenue) h += `</section>`;
-          currentVenue = g.v;
-          h += `<section class="venue"><h2>${esc(g.v)}</h2>`;
-        }
-        const key = gkey(sec.slug, g.id);
-        const hasReport = !!document.getElementById("report-"+key);
-        if(!hasReport){
-          h += `<div class="game-row"><span class="t">${g.t}</span>
-            <span class="card">${esc(g.a)} <span style="color:var(--muted)">対</span> ${esc(g.b)}</span></div>`;
-          continue;
-        }
-        const hook = HOOKS[key] || "";
-        h += `<a class="match-card${PICKS[key]?' pick-card':''}" href="#/match/${sec.slug}/${g.id}">
-          <div class="meta"><span>${g.t}</span><span>${esc(sec.round||"")}</span>${PICKS[key]?'<span class="pick">★ 注目</span>':''}</div>
-          <div class="mc-teams">
-            <span class="mm" style="background:${teamColor(g.a)}">${esc([...g.a][0])}</span><span class="mc-name">${esc(g.a)}</span>
-            <span class="mc-vs">対</span>
-            <span class="mm" style="background:${teamColor(g.b, g.a)}">${esc([...g.b][0])}</span><span class="mc-name">${esc(g.b)}</span>
-          </div>
-          ${hook?`<p class="hook">${esc(hook)}</p>`:""}
-          <span class="more">背景・見どころを読む →</span>
-        </a>`;
-      }
-      if(currentVenue) h += `</section>`;
+      for(const g of sec.games) items.push({ sec, venueName: g.v, g, kind: "cards" });
     }
   }
-  // フィルタ適用後に表示セクションが0件の日(その大会の試合が無い日)のempty-state
-  if(!shown) h += `<p class="day-note">この日に${esc((TOURNAMENTS[FILTER] || {}).tname || "")}の試合はありません。</p>`;
+  items.sort((x, y) => timeMinutes(x.g.t) - timeMinutes(y.g.t));
+  for(const { sec, venueName, g, kind } of items){
+    if(kind === "results"){
+      const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes("x");
+      h += `<div class="game-row">
+        <span class="t">${g.t}</span>
+        <span class="card"><span class="${aWin?'win':''}">${esc(g.a)}</span>
+          <span style="color:var(--muted)"> — </span>
+          <span class="${!aWin?'win':''}">${esc(g.b)}</span>
+          ${g.r1?'<span class="badge-r1">1回戦</span>':''}
+          ${showTag?`<span class="badge-r1">${esc(sec.tname)}</span>`:''}</span>
+        <span class="score">${g.sa} — ${g.sb}</span>
+      </div>`;
+      continue;
+    }
+    const key = gkey(sec.slug, g.id);
+    const hasReport = !!document.getElementById("report-"+key);
+    if(!hasReport){
+      h += `<div class="game-row"><span class="t">${g.t}</span>
+        <span class="card">${esc(g.a)} <span style="color:var(--muted)">対</span> ${esc(g.b)}
+          ${showTag?`<span class="badge-r1">${esc(sec.tname)}</span>`:''}</span></div>`;
+      continue;
+    }
+    const hook = HOOKS[key] || "";
+    h += `<a class="match-card${PICKS[key]?' pick-card':''}" href="#/match/${sec.slug}/${g.id}">
+      <div class="meta"><span>${g.t}</span>${showTag?`<span>${esc(sec.tname)}</span>`:''}<span>${esc(sec.round||"")}</span><span>${esc(venueName)}</span>${PICKS[key]?'<span class="pick">★ 注目</span>':''}</div>
+      <div class="mc-teams">
+        <span class="mm" style="background:${teamColor(g.a)}">${esc([...g.a][0])}</span><span class="mc-name">${esc(g.a)}</span>
+        <span class="mc-vs">対</span>
+        <span class="mm" style="background:${teamColor(g.b, g.a)}">${esc([...g.b][0])}</span><span class="mc-name">${esc(g.b)}</span>
+      </div>
+      ${hook?`<p class="hook">${esc(hook)}</p>`:""}
+    </a>`;
+  }
+  // フィルタ適用後に試合が0件の日(その大会の試合が無い日)のempty-state
+  if(!items.length) h += `<p class="day-note">この日に${esc((TOURNAMENTS[FILTER] || {}).tname || "")}の試合はありません。</p>`;
   h += "</main>" + footerHtml();
   return h;
 }
