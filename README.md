@@ -99,7 +99,7 @@ dayKeyはMMDD形式の文字列("0711"等)。data.jsonの `days[].key` と一致
 9. Artifact公開
 ```
 
-## 新しい大会の追加手順(2026-07-14新設)
+## 新しい大会の追加手順(2026-07-10新設)
 
 ```
 1. 調査エージェントでconfig案を生成: 大会名(name/shortName/displayName)・シード・
@@ -107,7 +107,14 @@ dayKeyはMMDD形式の文字列("0711"等)。data.jsonの `days[].key` と一致
    Web調査でまとめる → **ユーザーへ報告**(大会セットアップは報告義務。無人運用原則の例外)
 2. tournaments/<slug>/ に config.json と空の data.json を設置:
    {"days":[],"reports":{},"hooks":{},"picks":{}}
-3. 以後は通常の「運用フロー(新しい日を追加する手順)」に従う
+3. 過去大会戦績・甲子園出場歴の台帳を最初から組み込む(2026-07-11導入):
+   - node ingest-records.js <html-file> <region> <year> <春|夏|秋> <sourceUrl> で
+     直近数シーズン分(参照頻度が高い組み合わせ優先)の戦績台帳を作る
+   - node ingest-koshien-history.js <html-file> <region> <sourceUrl> で
+     甲子園出場歴台帳を作る
+   - 千葉・神奈川は台帳照合を後付け導入したため実誤り13件が発覚してから追いついた
+     経緯がある。新規大会では後回しにせず、記事生成前にこの台帳を揃えておくこと
+4. 以後は通常の「運用フロー(新しい日を追加する手順)」に従う
 ```
 
 - slugは**英小文字・数字・ハイフンのみ**(build-site.jsがfail-fast)
