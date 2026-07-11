@@ -4965,11 +4965,6 @@ function calendarHtml(date){
       slugsList.map(s => `<button aria-selected="${FILTER===s}" onclick="setFilter('${s}')">${esc(TOURNAMENTS[s].tname)}</button>`).join("") +
       `</nav>`;
   }
-  for(const sec of visibleSecs){
-    if(!sec.note) continue;
-    const label = showTag ? `${esc(sec.tname)}${sec.round ? "・" + esc(sec.round) : ""}: ` : "";
-    h += `<p class="day-note">${label}${esc(sec.note)}</p>`;
-  }
   // ── 注目ヒーロー: pick済み+フックありの試合を「物語の見出し」付き大カードで先頭に集約。
   //    先頭1枚は全幅、以降は半幅(新聞一面の強弱)。シードバッジは保持シードのみ表示。
   //    ヒーロー掲載は最大5試合: picks値(2以上で手動ブースト可)→ 両校シード強度 → 開始時刻の
