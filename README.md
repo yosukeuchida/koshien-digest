@@ -308,6 +308,11 @@ content-lint.js が「同一選手名が複数校に出現」を検出したら(
 - `build-args.js` — `node build-args.js <slug> <dayKey> [--notable=g23,g27]` → Workflow args生成
   (--notable省略時はその日のpicksへフォールバック。前戦結果+学校DBの検証済みブロック+
   config.facts/broadcast/trustedSources+紛らわしい校名を自動注入。
+  甲子園出場歴・今大会年春季戦績も同じ設計でground truth注入(2026-07-11追加、案B):
+  checkers:0(未検証)の学校だけ対象に、records/のkoshien-history.json・
+  <year>-spring.jsonから該当校のエントリを機械的に文字列化してpipeline.jsのFactsプロンプトへ
+  渡す。「調査するな、この事実を転記しろ」という指示付き。config.broadcastの決定論的注入
+  (LLM任せにしない設計)をこの2カテゴリにも拡張したもの。
   stderr の facts-agent skippable で収集スキップ数を確認)
 - `pipeline.js` — Workflowスクリプト(Haiku facts+media並列 → Fable story → Sonnet write →
   Haiku verify → Sonnet factcheck(notableのみ・Web裏取り) → Sonnet revise)。
@@ -328,15 +333,43 @@ content-lint.js が「同一選手名が複数校に出現」を検出したら(
 - `build-proof-args.js` — `node build-proof-args.js <slug> <dayKey> [...] | --all-cards
   [--games=g1,g2]` → 最終ゲラ校閲用のゲラファイル(`../koshien-digest-data/proof/<slug>/`)+
   軽量args生成
-- `proof.js` — 最終ゲラ校閲Workflow(Haiku×全試合、ゲラ内部の矛盾のみ・Web照合なし)
+- `proof.js` — 最終ゲラ校閲Workflow(Haiku×全試合、ゲラ内部の矛盾のみ・Web照合なし)。
+  チェック観点に時系列検算を含む(2026-07-11追加、案3): 年度・季節付き実績を時系列表に
+  起こし「◯季ぶり」「◯年ぶり」等の間隔主張を検算する
 - `build-site.js` — 全大会のtournaments/を統合してsite.html生成(引数なし)。slug文字種の
   fail-fast検証+違反パターンの機械除去つき
 - `content-lint.js` — `node content-lint.js [slug|--all]`(引数なし・--allは全大会を順に検品)。
   プレースホルダー/編集メモ/初対戦推測/です・ます/フェンス/他競技用語/シード矛盾/
-  確定結果スコア矛盾/放送セクション逐語一致/HOOK数字照合/選手名衝突/未報告不掲載の催促。
-  全チェックは実際の指摘・バグ由来。スコア照合は「相手校名を含む・過去年度に言及しない文」
-  のみ対象(誤検知対策)。導入即日に旧g8記事の校名誤帰属(県相模原の10-0を相模原城山に帰属)を
-  実際に検出した実績あり
+  確定結果スコア矛盾/放送セクション逐語一致/HOOK数字照合/選手名衝突/過去大会戦績の台帳照合/
+  甲子園出場歴の台帳照合/未報告不掲載の催促。全チェックは実際の指摘・バグ由来。
+  スコア照合は「相手校名を含む・過去年度に言及しない文」のみ対象(誤検知対策)。導入即日に
+  旧g8記事の校名誤帰属(県相模原の10-0を相模原城山に帰属)を実際に検出した実績あり。
+  校名の「自校略称」判定は部分文字列一致を使わず明示リスト(NAME_ALIASES/
+  SELF_REFERENCE_GROUPS)で行う(2026-07-11、設計上の教訓): 「横浜」⊂「横浜創学館」は
+  同一校の略称だが「習志野」⊂「日大習志野」「東京学館」⊂「東京学館船橋」等は部分文字列
+  関係にある別の実在校であり、部分一致による自動吸収は後者の真の誤帰属を握りつぶす
+  (g28: 中央学院の相手を「習志野」ではなく「日大習志野」と誤記、g9: 麻溝台の相手を
+  「日大」ではなく「日大藤沢」と誤記、いずれも台帳照合で発見)。新しい別名が見つかったら
+  ヒューリスティックで自動化せず、都度この明示リストに追記する
+- `ingest-records.js` — 過去大会の戦績台帳(ground truth)作成。バーチャル高校野球の大会結果
+  ページHTML(ヘッドレスブラウザで取得)から回戦×対戦×スコアを機械抽出し
+  `../koshien-digest-data/records/<region>/<year>-<season>.json` に保存。content-lint.jsの
+  台帳照合の入力+build-args.jsが今大会年春季戦績のground truth注入に使用。
+  導入契機: g14習志野「2026年春季ベスト8以上」— 収集LLMがトーナメント表を平文で読んで
+  隣接行を混線させた実在しない戦績が公開まで素通りした(2026-07-11発覚)。
+  台帳は記事内で実際に言及される季節×年度の頻度分布を調べ、上位10種類(2026春×2は既存、
+  +2025春/夏/秋(千葉・神奈川)+2024夏(神奈川)の7件を追加取得)で全言及の8割強をカバーする
+  方針とした(残りの一過性言及30種強は対象外。全季節を網羅する台帳化は工数に見合わないため)。
+  この拡張1回で実誤り6件を追加検出(千葉g12/g23、神奈川g5/g11/g12/g40)。
+  シリーズ通算で実誤り13件(千葉7件・神奈川6件、校名混同・季節誤帰属・勝敗方向の反転を含む)
+  を検出・修正した
+- `ingest-koshien-history.js` — 甲子園出場歴の台帳(ground truth)作成。hsbb.jp(やっぱり
+  甲子園)の都道府県別出場校データページから学校名×春夏出場回数×優勝回数を機械抽出し
+  `records/<region>/koshien-history.json` に保存。台帳は「出場歴がある学校」だけを掲載する
+  構成のため、台帳に無い学校への「出場歴はない」は矛盾とみなさない(非対称設計)。
+  `records/koshien-history-exceptions.json`(地域共通)は台帳と記事が食い違うが人手確認の
+  結果「台帳側の限界(直近の出場が未反映/情報源間の計上差)」と判定した例外を記録する
+  (disambiguations.jsonと同じ「検証済み例外の許可リスト」パターン)
 - `golden-test.js` — 多大会移行のゴールデンテスト(旧単一大会site.htmlと新統合site.htmlで
   神奈川52記事の本文逐語一致を機械照合。旧HTMLは `../koshien-digest-data/golden/` に保存)
 - `migrate-to-tournaments.js` — 旧単一大会構造(data.json/broadcast.json直下)→ tournaments/
@@ -344,8 +377,12 @@ content-lint.js が「同一選手名が複数校に出現」を検出したら(
 - `../koshien-digest-data/` — PII等のgit管理外データ(兄弟ディレクトリ分離、2026-07-10
   L2昇格時に決定): `schools/<region>/`・`pairs/<region>.json`(学校DB。**未成年選手の
   実名等PIIを含む**)、`proof/<slug>/`(ゲラ)、`omissions.json`・`disambiguations.json`
-  (全大会共有台帳)、`golden/`(移行検証用旧HTML)、Workflow中間生成物(`baseline-*.json`/
-  `new-*-output.json`/`new-*-by-id.json`/`final-*-reports.json`等)。消さないこと
+  (全大会共有台帳)、`records/<region>/`(過去大会の戦績台帳・甲子園出場歴台帳=ground truth、
+  ingest-records.js/ingest-koshien-history.jsが生成しcontent-lint.js・build-args.jsが使用)、
+  `records/koshien-history-exceptions.json`(甲子園出場歴の人手確認済み例外)、
+  `golden/`(移行検証用旧HTML)、
+  Workflow中間生成物(`baseline-*.json`/`new-*-output.json`/`new-*-by-id.json`/
+  `final-*-reports.json`等)。消さないこと
 - `site.html` — 生成物(Artifact公開対象。全大会統合の1ファイル。Artifactが骨格を付与する
   前提の素のHTML — doctype/viewportメタは持たない)
 - `index.html` — 生成物(Cloudflare Pages配信用。site.htmlと同内容に doctype+`<head>`+

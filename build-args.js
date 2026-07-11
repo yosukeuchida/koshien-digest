@@ -119,6 +119,60 @@ function isVerified(block) {
   return !!(block && block.factChecked && block.factChecked.checkers >= 1);
 }
 
+// 甲子園出場歴・春季戦績の決定論的注入(2026-07-11追加、案B): checkers:0の学校ブロックが
+// トーナメント表を平文で読み違えて実在しない戦績を書いた事故(g14習志野「2026年春季ベスト8
+// 以上」「3回戦で東海大市原望洋を10-0」は全て架空)を受けて、config.broadcastと同じ
+// 「ハルシネーションが起きようのないカテゴリはLLM任せにせず外部台帳から機械注入する」
+// 設計をこの2カテゴリにも適用する。checkers>=1(Web裏取り済み)の学校ブロックはこの注入対象
+// 外(既にg.schoolAとして信頼済みの完全な情報が渡るため、台帳による部分的な上書きは不要
+// かつ情報の後退になり得る)。台帳に載っていない学校は従来通りLLMが自力調査する。
+const { recordsDir: RECORDS_DIR } = dataPaths(config);
+const koshienHistoryPath = path.join(RECORDS_DIR, 'koshien-history.json');
+const koshienHistoryBySchool = new Map();
+if (fs.existsSync(koshienHistoryPath)) {
+  for (const s of JSON.parse(fs.readFileSync(koshienHistoryPath, 'utf8')).schools) koshienHistoryBySchool.set(s.name, s);
+}
+const springLedgerPath = path.join(RECORDS_DIR, `${config.year}-spring.json`);
+let springLedger = null;
+if (fs.existsSync(springLedgerPath)) springLedger = JSON.parse(fs.readFileSync(springLedgerPath, 'utf8'));
+const ROUND_ORDER = { 地区代表決定戦: 0, 代表決定戦: 0, '1回戦': 1, '2回戦': 2, '3回戦': 3, '4回戦': 4, 準々決勝: 5, 準決勝: 6, '3位決定戦': 6.5, 決勝: 7 };
+function springSummaryFor(name) {
+  if (!springLedger) return null;
+  const games = springLedger.games
+    .filter((g) => g.a === name || g.b === name)
+    .sort((x, y) => (ROUND_ORDER[x.round] ?? 9) - (ROUND_ORDER[y.round] ?? 9));
+  if (!games.length) return null;
+  return games
+    .map((g) => {
+      const isA = g.a === name;
+      const opp = isA ? g.b : g.a;
+      const my = isA ? g.sa : g.sb;
+      const oppScore = isA ? g.sb : g.sa;
+      const won = my > oppScore;
+      const stagePrefix = g.stage === '地区予選' ? '地区予選' : '';
+      return `${stagePrefix}${g.round}: ${opp}に${my}-${oppScore}で${won ? '勝利' : '敗退'}${g.note ? `(${g.note})` : ''}`;
+    })
+    .join(' / ');
+}
+function koshienGroundTruthFor(name) {
+  const hist = koshienHistoryBySchool.get(name);
+  const spring = springSummaryFor(name);
+  if (!hist && !spring) return null;
+  const lines = [];
+  if (hist) {
+    lines.push(
+      `甲子園出場歴(hsbb.jp調べ、${hist.spring + hist.summer}回=春${hist.spring}回+夏${hist.summer}回、優勝${hist.titles}回)。` +
+        'このカテゴリは調査不要・この数字をそのまま使うこと。ただし下記の今大会年春季成績で本戦に進んだ' +
+        '事実が確認できる場合、それがこの台帳の集計時点より後の出場である可能性があるため、その分は' +
+        '加算してよい(架空の回数を作らない範囲で)'
+    );
+  } else {
+    lines.push('甲子園出場歴の台帳エントリなし(=hsbb.jpの出場校一覧に無い→出場歴が無い可能性が高いが断定はしない)');
+  }
+  if (spring) lines.push(`${config.year}年春季${config.displayName || config.region}県大会の実際の成績(戦績台帳より、調査不要): ${spring}`);
+  return lines.join('\n');
+}
+
 const games = day.games.map((g) => {
   const known = [...knownResultsFor(g.a), ...knownResultsFor(g.b)];
   const schoolA = schoolBlock(g.a);
@@ -145,6 +199,10 @@ const games = day.games.map((g) => {
     ...(confusableNames ? { confusableNames } : {}),
     ...(isVerified(schoolA) ? { schoolA } : schoolA ? { schoolAHint: schoolA } : {}),
     ...(isVerified(schoolB) ? { schoolB } : schoolB ? { schoolBHint: schoolB } : {}),
+    // checkers>=1の学校は既にschoolA/schoolBとして信頼済みの完全情報が渡るためこの注入は不要。
+    // checkers:0(またはDB自体が無い)学校だけ、甲子園出場歴・今大会年春季戦績のground truthを補う
+    ...(!isVerified(schoolA) && koshienGroundTruthFor(g.a) ? { schoolAKoshien: koshienGroundTruthFor(g.a) } : {}),
+    ...(!isVerified(schoolB) && koshienGroundTruthFor(g.b) ? { schoolBKoshien: koshienGroundTruthFor(g.b) } : {}),
     // pairs.json にエントリがあれば「調査済み」— 記録が無かった場合も負のキャッシュとして
     // 注入し、毎回の再調査を防ぐ(執筆ルール上、記録なしはセクション省略になる)。
     // ただしground truth扱いはcheckers>=1のみ、それ以外はヒントとして渡す

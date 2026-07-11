@@ -130,6 +130,18 @@ function factsPrompt(g) {
 これらは鵜呑みにせず、自分で調査して正しいか確認・修正すること。特に校名・数字・年度が正しいか要確認:
 ${hints.join('\n')}`
     : ''
+  // 甲子園出場歴・今大会年春季戦績のground truth注入(2026-07-11、案B): このカテゴリは
+  // 外部台帳(build-args.jsが注入)から機械的に決まる値のため、収集エージェントが独自に
+  // トーナメント表等を読み直す必要は無い。g14習志野で実際に起きた「表の隣接行を読み違えて
+  // 実在しない春季戦績を書く」事故はこの2カテゴリで起きたため、調査せず転記させる。
+  const koshienGroundTruth = [
+    g.schoolAKoshien ? `「${g.a}」: ${g.schoolAKoshien}` : null,
+    g.schoolBKoshien ? `「${g.b}」: ${g.schoolBKoshien}` : null,
+  ].filter(Boolean)
+  const koshienBlock = koshienGroundTruth.length
+    ? `\n\n【甲子園出場歴・${g.date.slice(0, 4)}年春季戦績のground truth(調査不要、この通り書くこと。自分でトーナメント表等を検索し直して数字を上書きしない)】
+${koshienGroundTruth.join('\n')}`
+    : ''
   const sourceRule = g.notable
     ? `出典の選び方: 信頼度の高い情報源(学校公式サイト・新聞社・NHK・バーチャル高校野球・高校野球ドットコム等の専門サイト)を優先する。個人ブログ・SNSにしか見つからない情報は、その事実の末尾に「(出典は個人ブログ)」等と情報源の種類を明記する。${g.trustedSources ? `
 この大会の地域高ティア情報源(信頼度の高い情報源と同格に扱う): ${g.trustedSources}` : ''}`
@@ -143,7 +155,7 @@ ${g.trustedSources ? `この大会の地域高ティア情報源(上記と同格
 調べる項目: ${items.map((it, i) => `${i + 1}) ${it}`).join(' ')} ${items.length + 1}) 今大会での組み合わせ上の位置づけ(シード校リストは上記「大会共通の確定情報」を、両校の今大会これまでの結果はヘッダの検証済み情報があればそれをそのまま使い、いずれも個別に検索し直さない)${knownNote ? `
 調査不要(検証済みデータを別途採用するため、調べても出力に含めなくてよい): ${knownNote}。該当する出力フィールドは空文字/簡潔でよい。` : ''}
 ${sourceRule}
-厳守: 事実は必ず検索結果に基づくこと。出典不明な情報は書かない。見つからなければ「見つからなかった」と正直に書く(小規模校では普通のこと)。各項目に出典URLを添える。${hintBlock}`
+厳守: 事実は必ず検索結果に基づくこと。出典不明な情報は書かない。見つからなければ「見つからなかった」と正直に書く(小規模校では普通のこと)。各項目に出典URLを添える。${hintBlock}${koshienBlock}`
 }
 
 // Deterministic merge of school-DB blocks over (possibly skipped) fetched facts.
