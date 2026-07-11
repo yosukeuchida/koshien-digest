@@ -113,25 +113,51 @@ h1.site-title{
   padding:1px 6px; border-radius:2px; margin-left:8px; white-space:nowrap;
 }
 
-/* ---- 7/10 match cards ---- */
-.match-card{
-  display:block; text-decoration:none; background:var(--surface);
-  border:1px solid var(--line); border-radius:4px; padding:16px 18px 14px; margin:10px 0;
-  transition:border-color .15s;
+/* ---- section labels (きょうの注目 / 全試合) ---- */
+.sec-label{
+  font-size:13px; font-weight:700; letter-spacing:.22em; color:var(--crimson);
+  margin:30px 0 12px; display:flex; align-items:center; gap:12px;
 }
-.match-card:hover{border-color:var(--green)}
-.match-card .meta{
-  display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; font-size:12px; color:var(--muted);
-  font-variant-numeric:tabular-nums; margin-bottom:6px;
+.sec-label::after{content:""; flex:1; height:1px; background:var(--line)}
+.sec-label.plain{color:var(--green-ink)}
+
+/* ---- featured cards (注目試合ヒーロー: 先頭は全幅、以降は半幅) ---- */
+.feat-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.feat-card{
+  grid-column:span 2; display:block; text-decoration:none; position:relative; overflow:hidden;
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:22px 26px 20px; box-shadow:0 6px 20px rgba(10,25,18,.07); transition:box-shadow .15s;
 }
-.pick{
-  color:var(--crimson); font-weight:700; font-size:11.5px; letter-spacing:.1em;
+.feat-card.half{grid-column:span 1}
+.feat-card:hover{box-shadow:0 9px 26px rgba(10,25,18,.13)}
+.feat-card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--crimson)}
+.feat-card .f-meta{
+  font-size:12px; color:var(--muted); letter-spacing:.05em; margin:0 0 10px;
+  font-variant-numeric:tabular-nums;
 }
-.match-card h3{
-  margin:0 0 6px; font-size:19px; font-weight:600; letter-spacing:.03em; line-height:1.5;
+.feat-card .f-meta b{color:var(--green-ink); font-size:13px; margin-right:8px}
+.feat-card .f-hook{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:19px; line-height:1.75;
+  font-weight:600; margin:0 0 14px; color:var(--ink);
 }
-.match-card h3 .vs{font-size:13px; color:var(--muted); margin:0 8px}
-.match-card .hook{font-size:13.5px; color:var(--muted); margin:0; line-height:1.7}
+.feat-card.half .f-hook{font-size:16px}
+.feat-card .f-match{font-size:15px; font-weight:700; display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.feat-card .f-match .vs{font-size:12px; color:var(--muted); font-weight:400}
+.feat-card .seed-badge{padding:2.5px 10px}
+
+/* ---- all-games compact rows (時系列一覧) ---- */
+.all-row{
+  display:flex; align-items:baseline; gap:12px; padding:11px 4px;
+  border-bottom:1px dotted var(--line); font-variant-numeric:tabular-nums;
+  text-decoration:none; color:inherit;
+}
+a.all-row:hover{background:rgba(30,77,59,.05)}
+.all-row .t{font-size:13px; font-weight:700; color:var(--green-ink); width:44px; flex-shrink:0}
+.all-row .names{font-size:15.5px; font-weight:600; line-height:1.6}
+.all-row .names .vs{font-size:12px; color:var(--muted); margin:0 6px; font-weight:400}
+.all-row .st{color:var(--crimson); font-size:11px; font-weight:700; letter-spacing:.06em; white-space:nowrap}
+.all-row .place{font-size:12px; color:var(--muted); margin-left:auto; text-align:right; flex-shrink:0}
+.all-row .chev{color:var(--muted); font-size:15px; flex-shrink:0}
 
 /* ---- detail page ---- */
 .detail-head{
@@ -321,12 +347,6 @@ article.report .mk{
 /* ---- table zebra ---- */
 article.report tr:nth-child(even) td{background:var(--chip-bg)}
 
-/* ---- calendar card: team names + featured cards ---- */
-.mc-teams{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:0 0 7px}
-.mc-teams .mc-name{font-size:19px; font-weight:600; letter-spacing:.03em; line-height:1.4}
-.mc-teams .mc-vs{font-size:12px; color:var(--muted); margin:0 2px}
-.match-card.pick-card{border-color:var(--crimson); border-width:1.5px}
-.match-card.pick-card:hover{box-shadow:0 3px 14px rgba(165,22,44,.14)}
 article.report{max-width:720px; margin:0 auto; padding:10px 20px 60px}
 article.report h2{
   font-size:16px; font-weight:600; letter-spacing:.1em; color:var(--green-ink);
@@ -406,9 +426,13 @@ footer.site p{margin:4px 0}
   .datestrip{margin-left:-16px; margin-right:-16px; padding:2px 16px}
   .game-row{flex-wrap:wrap; row-gap:2px}
   .game-row .score{margin-left:auto}
-  .match-card{padding:14px 14px 12px}
-  .mc-teams{gap:7px}
-  .mc-teams .mc-name{font-size:17px}
+  .feat-grid{grid-template-columns:1fr}
+  .feat-card, .feat-card.half{grid-column:auto}
+  .feat-card{padding:18px 18px 16px}
+  .feat-card .f-hook, .feat-card.half .f-hook{font-size:16px; line-height:1.8}
+  .all-row{flex-wrap:wrap}
+  .all-row .chev{margin-left:auto}
+  .all-row .place{flex-basis:100%; order:3; padding-left:56px; margin-left:0; margin-top:1px; text-align:left; font-size:11px}
   .detail-head .wrap{padding-top:22px; padding-bottom:40px}
   .detail-head .crumb{margin-bottom:14px}
   .matchup{gap:10px}
@@ -647,6 +671,23 @@ function calendarHtml(date){
     const label = showTag ? `${esc(sec.tname)}${sec.round ? "・" + esc(sec.round) : ""}: ` : "";
     h += `<p class="day-note">${label}${esc(sec.note)}</p>`;
   }
+  // ── 注目ヒーロー: pick済み+フックありの試合を「物語の見出し」付き大カードで先頭に集約。
+  //    先頭1枚は全幅、以降は半幅(新聞一面の強弱)。シードバッジは保持シードのみ表示 ──
+  const featured = items.filter(it =>
+    it.kind === "cards" && PICKS[gkey(it.sec.slug, it.g.id)] && HOOKS[gkey(it.sec.slug, it.g.id)]);
+  if(featured.length){
+    h += `<section><h2 class="sec-label">${day.date === todayStr() ? "きょうの注目" : "この日の注目"}</h2><div class="feat-grid">`;
+    featured.forEach((it, i) => {
+      const key = gkey(it.sec.slug, it.g.id);
+      h += `<a class="feat-card${i > 0 ? " half" : ""}" href="#/match/${it.sec.slug}/${it.g.id}">
+        <p class="f-meta"><b>${it.g.t}</b>${showTag ? esc(it.sec.tname) + "・" : ""}${esc(it.sec.round || "")}　${esc(it.venueName)}</p>
+        <p class="f-hook">${esc(HOOKS[key])}</p>
+        <div class="f-match">${esc(it.g.a)}${calSeedHtml(it.sec.slug, it.g.a)}<span class="vs">対</span>${esc(it.g.b)}${calSeedHtml(it.sec.slug, it.g.b)}</div>
+      </a>`;
+    });
+    h += `</div></section>`;
+    h += `<h2 class="sec-label plain">全試合</h2>`;
+  }
   for(const { sec, venueName, g, kind } of items){
     if(kind === "results"){
       const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes("x");
@@ -663,22 +704,12 @@ function calendarHtml(date){
     }
     const key = gkey(sec.slug, g.id);
     const hasReport = !!document.getElementById("report-"+key);
-    if(!hasReport){
-      h += `<div class="game-row"><span class="t">${g.t}</span>
-        <span class="card">${esc(g.a)} <span style="color:var(--muted)">対</span> ${esc(g.b)}
-          ${showTag?`<span class="badge-r1">${esc(sec.tname)}</span>`:''}</span></div>`;
-      continue;
-    }
-    const hook = HOOKS[key] || "";
-    h += `<a class="match-card${PICKS[key]?' pick-card':''}" href="#/match/${sec.slug}/${g.id}">
-      <div class="meta"><span>${g.t}</span>${showTag?`<span>${esc(sec.tname)}</span>`:''}<span>${esc(sec.round||"")}</span><span>${esc(venueName)}</span>${PICKS[key]?'<span class="pick">★ 注目</span>':''}</div>
-      <div class="mc-teams">
-        <span class="mc-name">${esc(g.a)}</span>
-        <span class="mc-vs">対</span>
-        <span class="mc-name">${esc(g.b)}</span>
-      </div>
-      ${hook?`<p class="hook">${esc(hook)}</p>`:""}
-    </a>`;
+    const inner = `<span class="t">${g.t}</span>
+      <span class="names">${esc(g.a)}<span class="vs">対</span>${esc(g.b)}${PICKS[key]?' <span class="st">★ 注目</span>':''}</span>
+      <span class="place">${showTag?esc(sec.tname)+"・":""}${esc(venueName)}</span>`;
+    h += hasReport
+      ? `<a class="all-row" href="#/match/${sec.slug}/${g.id}">${inner}<span class="chev">›</span></a>`
+      : `<div class="all-row">${inner}</div>`;
   }
   // フィルタ適用後に試合が0件の日(その大会の試合が無い日)のempty-state
   if(!items.length) h += `<p class="day-note">この日に${esc((TOURNAMENTS[FILTER] || {}).tname || "")}の試合はありません。</p>`;
@@ -720,6 +751,20 @@ function seedBadgeHtml(slug, name){
     }
   }
   return `<span class="seed-badge ns">ノーシード</span>`;
+}
+
+// カレンダー面の注目カード用: シードを持つ校だけバッジを出す(白背景では「ノーシード」
+// バッジは全校に付いてノイズになるため省略。詳細ページのseedBadgeHtmlとは使い分け)
+function calSeedHtml(slug, name){
+  const seeds = (TOURNAMENTS[slug] || {}).seeds || {};
+  const keys = Object.keys(seeds);
+  for(let i = 0; i < keys.length; i++){
+    if(seeds[keys[i]].includes(name)){
+      const label = /^\d+$/.test(keys[i]) ? `第${keys[i]}シード` : `${keys[i]}シード`;
+      return `<span class="seed-badge s${Math.min(i + 1, 3)}">${esc(label)}</span>`;
+    }
+  }
+  return "";
 }
 
 // Minimal line icons per section title, stroke inherits --green-ink via CSS.
@@ -956,9 +1001,13 @@ function render(){
     app.innerHTML = calendarHtml(defaultDate());
   }
   window.scrollTo(0,0);
-  // 日付チップ列: 選択中の日が画面外に隠れないよう中央へスクロール(カレンダー面のみ存在)
+  // 日付チップ列: 選択中の日が画面外に隠れないよう中央へスクロール(カレンダー面のみ存在)。
+  // scrollIntoViewはウィンドウ自体まで横スクロールさせる副作用があるため、strip内だけ動かす
   const sel = document.querySelector('.datestrip button[aria-selected="true"]');
-  if(sel) sel.scrollIntoView({ block: "nearest", inline: "center" });
+  if(sel){
+    const nav = sel.parentElement;
+    nav.scrollLeft = sel.offsetLeft - (nav.clientWidth - sel.offsetWidth) / 2;
+  }
 }
 window.addEventListener("hashchange", render);
 render();
