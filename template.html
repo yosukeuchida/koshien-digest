@@ -429,9 +429,17 @@ const HOOKS = /*__HOOKS__*/;
 const PICKS = /*__PICKS__*/;
 
 function dayOf(date){ return DAYS.find(d => d.date === date); }
+// トップページ(#無し)は常に「本日」にフォーカスする。範囲外の日(大会開始前・終了後)は
+// 直近の未来日、それも無ければ最終日にフォールバック(PC/モバイル共通ロジック)。
+function todayStr(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
 function defaultDate(){
-  const withCards = DAYS.filter(d => d.sections.some(s => s.kind === "cards"));
-  return (withCards.length ? withCards[withCards.length-1] : DAYS[DAYS.length-1]).date;
+  const today = todayStr();
+  if(dayOf(today)) return today;
+  const future = DAYS.filter(d => d.date > today);
+  return (future.length ? future[0] : DAYS[DAYS.length-1]).date;
 }
 // 旧キー(0711等)→日付の後方互換(神奈川2026のMMDD形式)
 function legacyDayDate(key){
