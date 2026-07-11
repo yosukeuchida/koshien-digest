@@ -143,6 +143,12 @@ const KNOWN_BROADCAST_SOURCES = [
   { re: /あゆチャンネル/, name: 'あゆチャンネル', url: null, type: 'tv' },
 ];
 
+// A bullet already in the target compact shape: "- [name](url) `LIVE`" or "- name `LIVE`",
+// optionally with a trailing `見逃し` tag. Reports written after the writePrompt update come
+// out looking like this already.
+const COMPACT_BULLET_RE = /^- (?:\[[^\]]+\]\([^)]+\)|[^\n`]+?)\s+`[^`]+`(?:\s*`[^`]+`)?\s*$/;
+const COMPACT_BULLET_PARSE_RE = /^- (?:\[([^\]]+)\]\(([^)]+)\)|([^`]+?))\s*((?:`[^`]+`\s*)+)$/;
+
 // Compress the 放送・配信情報 section from prose ("- **name**: long sentence... URL: https://...")
 // into a spocale-style compact list (name + LIVE/見逃し tags, grouped TV vs streaming).
 // Existing reports were generated with the old prose-style prompt; new ones already come out
@@ -154,6 +160,37 @@ function simplifyBroadcastSection(md) {
     .map((part) => {
       if (!part.startsWith('## 放送・配信情報')) return part;
       const body = part.slice(part.indexOf('\n') + 1);
+      const bulletLines = body.split('\n').filter((l) => l.startsWith('- '));
+      if (bulletLines.length && bulletLines.every((l) => COMPACT_BULLET_RE.test(l))) {
+        // Tier 0: already in the target shape. Canonicalize bullet-by-bullet against the
+        // known-source allowlist (same name/URL cleanup tier 2 does below), but — unlike
+        // tier 2's whole-body sniff — KEEP any bullet whose source isn't in the allowlist
+        // instead of dropping it. Whole-body sniffing silently erased every 千葉 report's
+        // チバテレ listing at build time, because KNOWN_BROADCAST_SOURCES only ever had
+        // 神奈川 broadcasters in it (2026-07-11 bug: the source data had チバテレ all along,
+        // this function just never surfaced it).
+        const tv0 = [];
+        const stream0 = [];
+        for (const line of bulletLines) {
+          const bm = line.match(COMPACT_BULLET_PARSE_RE);
+          if (!bm) continue;
+          const rawName = (bm[1] || bm[3]).trim();
+          const rawUrl = bm[2] || null;
+          const tags = bm[4].trim();
+          const known = KNOWN_BROADCAST_SOURCES.find((src) => src.re.test(rawName));
+          const name = known ? known.name : rawName;
+          const url = known ? known.url : rawUrl;
+          const isTV = known
+            ? known.type === 'tv'
+            : /テレビ|tvk|ケーブル|CATV|チャンネル|ｃｈ|放送/i.test(rawName) && !/配信|バーチャル|ナビ|ブル/i.test(rawName);
+          const label = url ? `[${name}](${url})` : name;
+          (isTV ? tv0 : stream0).push(`- ${label} ${tags}`);
+        }
+        let compact0 = '## 放送・配信情報\n';
+        if (tv0.length) compact0 += `**TV放送**\n${tv0.join('\n')}\n`;
+        if (stream0.length) compact0 += `**配信**\n${stream0.join('\n')}\n`;
+        return compact0.trimEnd() + '\n\n';
+      }
       const bulletRe = /^- \*\*([^*]+)\*\*[:：]\s*(.*)$/gm;
       const tv = [];
       const stream = [];
