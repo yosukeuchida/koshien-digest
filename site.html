@@ -4971,9 +4971,24 @@ function calendarHtml(date){
     h += `<p class="day-note">${label}${esc(sec.note)}</p>`;
   }
   // ── 注目ヒーロー: pick済み+フックありの試合を「物語の見出し」付き大カードで先頭に集約。
-  //    先頭1枚は全幅、以降は半幅(新聞一面の強弱)。シードバッジは保持シードのみ表示 ──
-  const featured = items.filter(it =>
+  //    先頭1枚は全幅、以降は半幅(新聞一面の強弱)。シードバッジは保持シードのみ表示。
+  //    ヒーロー掲載は最大5試合: picks値(2以上で手動ブースト可)→ 両校シード強度 → 開始時刻の
+  //    優先順で選抜し、漏れたpickは全試合リストの★表示に残る ──
+  const FEATURED_MAX = 5;
+  let featured = items.filter(it =>
     it.kind === "cards" && PICKS[gkey(it.sec.slug, it.g.id)] && HOOKS[gkey(it.sec.slug, it.g.id)]);
+  if(featured.length > FEATURED_MAX){
+    featured = featured
+      .map((it, order) => ({
+        it, order,
+        pick: PICKS[gkey(it.sec.slug, it.g.id)] || 0,
+        seed: seedScore(it.sec.slug, it.g.a) + seedScore(it.sec.slug, it.g.b),
+      }))
+      .sort((x, y) => (y.pick - x.pick) || (y.seed - x.seed) || (x.order - y.order))
+      .slice(0, FEATURED_MAX)
+      .sort((x, y) => x.order - y.order) // 表示は時系列に戻す
+      .map((x) => x.it);
+  }
   if(featured.length){
     h += `<section><h2 class="sec-label">${day.date === todayStr() ? "きょうの注目" : "この日の注目"}</h2><div class="feat-grid">`;
     featured.forEach((it, i) => {
@@ -5050,6 +5065,16 @@ function seedBadgeHtml(slug, name){
     }
   }
   return `<span class="seed-badge ns">ノーシード</span>`;
+}
+
+// シード強度スコア: config.seedsのキー順=強い順(先頭が最強)を数値化。非シード校は0
+function seedScore(slug, name){
+  const seeds = (TOURNAMENTS[slug] || {}).seeds || {};
+  const keys = Object.keys(seeds);
+  for(let i = 0; i < keys.length; i++){
+    if(seeds[keys[i]].includes(name)) return keys.length - i;
+  }
+  return 0;
 }
 
 // カレンダー面の注目カード用: シードを持つ校だけバッジを出す(白背景では「ノーシード」
