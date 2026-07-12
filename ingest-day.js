@@ -89,23 +89,33 @@ if (config.format === 'single-elimination') {
   const winners = new Set(); // 勝利記録(全体)
   const nonR1winners = new Set(); // 非1回戦の勝利記録
   const losers = new Set();
+  const recordWin = (g) => {
+    const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes('x');
+    const w = aWin ? g.a : g.b;
+    const l = aWin ? g.b : g.a;
+    winners.add(w);
+    losers.add(l);
+    if (!g.r1) nonR1winners.add(w);
+  };
   for (const d of data.days) {
-    if (d.kind !== 'results') continue;
-    for (const vv of d.venues) {
-      for (const g of vv.games) {
-        const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes('x');
-        const w = aWin ? g.a : g.b;
-        const l = aWin ? g.b : g.a;
-        winners.add(w);
-        losers.add(l);
-        if (!g.r1) nonR1winners.add(w);
+    if (d.kind === 'results') {
+      for (const vv of d.venues) {
+        for (const g of vv.games) recordWin(g);
+      }
+    } else if (d.kind === 'cards') {
+      // cards形式の日にも結果(sa/sb)がmerge-results.jsで直接埋め込まれることがある
+      // (2026-07-13発覚、build-args.js/build-proof-args.jsと同じ設計漏れ)
+      for (const g of d.games) {
+        if (g.sa !== undefined && g.sb !== undefined) recordWin(g);
       }
     }
   }
   const pendingPairs = new Set();
   for (const d of data.days) {
     if (d.kind !== 'cards') continue;
-    for (const g of d.games) pendingPairs.add(pairKey(g));
+    for (const g of d.games) {
+      if (g.sa === undefined || g.sb === undefined) pendingPairs.add(pairKey(g));
+    }
   }
   const roundNum = parseInt((meta.round || '').replace(/[^0-9]/g, ''), 10) || 0;
 
