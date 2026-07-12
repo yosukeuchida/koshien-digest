@@ -35,18 +35,32 @@ if (!day || day.kind !== 'cards') {
   process.exit(1);
 }
 
-// All verified results involving a school, from every results-day in our data
+// All verified results involving a school, from every results-day in our data.
+// cards-day games can also carry sa/sb once that day's matches have finished
+// (added directly onto the existing card, ids/reports untouched) — a cards day
+// with published articles never gets migrated to kind:"results", so this is the
+// only way its final scores feed forward as grounding for later rounds.
 function knownResultsFor(school) {
   const lines = [];
   for (const d of data.days) {
-    if (d.kind !== 'results') continue;
-    for (const v of d.venues) {
-      for (const g of v.games) {
+    if (d.kind === 'results') {
+      for (const v of d.venues) {
+        for (const g of v.games) {
+          if (g.a !== school && g.b !== school) continue;
+          const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes('x');
+          const winner = aWin ? g.a : g.b;
+          const round = g.r1 ? '1回戦' : d.round || '';
+          lines.push(`${d.label}${round ? ' ' + round : ''}: ${g.a} ${g.sa}-${g.sb} ${g.b}(${winner}の勝利、会場: ${v.v})`);
+        }
+      }
+    } else if (d.kind === 'cards') {
+      for (const g of d.games) {
+        if (g.sa === undefined || g.sb === undefined) continue;
         if (g.a !== school && g.b !== school) continue;
         const aWin = parseInt(g.sa) > parseInt(g.sb) || String(g.sa).includes('x');
         const winner = aWin ? g.a : g.b;
         const round = g.r1 ? '1回戦' : d.round || '';
-        lines.push(`${d.label}${round ? ' ' + round : ''}: ${g.a} ${g.sa}-${g.sb} ${g.b}(${winner}の勝利、会場: ${v.v})`);
+        lines.push(`${d.label}${round ? ' ' + round : ''}: ${g.a} ${g.sa}-${g.sb} ${g.b}(${winner}の勝利、会場: ${g.v})`);
       }
     }
   }

@@ -53,13 +53,23 @@ function confusableNamesFor(a, b) {
   return names.length ? names.join('・') : null;
 }
 
-// 各校の確定済み結果(results日)を known として束ねる(build-args.js と同じ情報源)
+// 各校の確定済み結果(results日 + sa/sb付きcards日)を known として束ねる(build-args.js と同じ情報源)。
+// cards日で公開済みの試合が終わっても kind は "results" に移行しない(ids/reports/hooksが
+// 紐づくため)ので、sa/sbが付与されたcardsゲームも同様に拾わないと、以降の回戦のゲラで
+// 「今大会まだ試合をしていない」という誤った確定情報を生成してしまう(2026-07-13発覚)
 const resultLines = {};
 for (const day of data.days) {
-  if (day.kind !== 'results') continue;
-  for (const v of day.venues) {
-    for (const g of v.games) {
-      const line = `${day.label}: ${g.a} ${g.sa}-${g.sb} ${g.b}(会場: ${v.v})`;
+  if (day.kind === 'results') {
+    for (const v of day.venues) {
+      for (const g of v.games) {
+        const line = `${day.label}: ${g.a} ${g.sa}-${g.sb} ${g.b}(会場: ${v.v})`;
+        for (const name of [g.a, g.b]) (resultLines[name] = resultLines[name] || []).push(line);
+      }
+    }
+  } else if (day.kind === 'cards') {
+    for (const g of day.games) {
+      if (g.sa === undefined || g.sb === undefined) continue;
+      const line = `${day.label}: ${g.a} ${g.sa}-${g.sb} ${g.b}(会場: ${g.v})`;
       for (const name of [g.a, g.b]) (resultLines[name] = resultLines[name] || []).push(line);
     }
   }
