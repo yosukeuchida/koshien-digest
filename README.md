@@ -78,7 +78,7 @@ dayKeyはMMDD形式の文字列("0711"等)。data.jsonの `days[].key` と一致
    マージする({"g23": 1} 形式。main loopがEditで反映)
 3. node build-args.js <slug> <dayKey> > args.json(--notable=g23,g27 省略時はその日の
    picksにフォールバック)→ Workflow({scriptPath: pipeline.js, args}) → 記事生成
-   - 深掘り(Fableのstory発掘+Web裏取り校閲)は notable のみ。ただし**現行pipeline.jsは
+   - 深掘り(Opusのstory発掘+Web裏取り校閲)は notable のみ。ただし**現行pipeline.jsは
      渡された全gameに記事を作る**(非notableは簡潔版)。注目試合のみ記事化する運用の場合は
      build-args.js出力のgamesを注目分に絞ってWorkflowに渡す。記事のない試合は
      サイト上カレンダー行のみの表示になる(掲載自体はされる)
@@ -227,7 +227,7 @@ content-lint.js が「同一選手名が複数校に出現」を検出したら(
 | 放送・配信情報 | config.broadcast+build-args.js(LLM不使用) | 実態がルール(例: バーチャル高校野球=全球場、tvk=保土ケ谷/ハマスタのみ)。かつてのパイプライン最頻エラー源をコード化(2026-07-10・Phase 3) |
 | 注目試合の選定 | Sonnet 1体(select-notable.js) | 1日分の全カードを採点し約25%(1〜6試合)を選定。判断材料はargs内のみ(学習知識禁止)、理由はユーザー報告 |
 | ファクト+動画/選手収集(並列) | Haiku | 検索の繰り返し作業。ground truth注入で検索数も削減 |
-| 因縁・ストーリー発掘 | Fable 5(`notable:true`の試合のみ) | 非自明な繋がりの発見だけに最上位モデルを使う |
+| 因縁・ストーリー発掘 | Opus 4.8(`notable:true`の試合のみ) | 非自明な繋がりの発見だけに最上位モデルを使う(Fable 5は従量課金化のため2026-07-12にOpus 4.8へ変更。使える中での最上位モデルをこの1工程だけに充てる方針は不変) |
 | 記事執筆・修正 | Sonnet | 構成・ルールが固まっていれば筆力で十分。通常試合は簡潔版(歴史深掘りなし・見どころ1〜2段落) |
 | 記事↔素材の照合検証 | Haiku | 読み合わせ作業 |
 | Web裏取り校閲 | Sonnet×2体独立(`notable:true`の試合のみ) | 記事中の主張を実Webで再検証。校名照合第一・出典ティア判定・和集合方式(割れたら削除) |
@@ -321,7 +321,7 @@ content-lint.js が「同一選手名が複数校に出現」を検出したら(
   渡す。「調査するな、この事実を転記しろ」という指示付き。config.broadcastの決定論的注入
   (LLM任せにしない設計)をこの2カテゴリにも拡張したもの。
   stderr の facts-agent skippable で収集スキップ数を確認)
-- `pipeline.js` — Workflowスクリプト(Haiku facts+media並列 → Fable story → Sonnet write →
+- `pipeline.js` — Workflowスクリプト(Haiku facts+media並列 → Opus story → Sonnet write →
   Haiku verify → Sonnet factcheck(notableのみ・Web裏取り) → Sonnet revise)。
   gamesの`round`/`date`/`tournamentName`/`tournamentFacts`必須、`known`任意。
   渡された全gameに記事を作る(注目試合のみ記事化する場合はgamesを絞って渡す)

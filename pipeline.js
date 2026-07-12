@@ -1,9 +1,9 @@
 export const meta = {
   name: 'koshien-digest-pipeline',
-  description: 'Facts+Media (Haiku, parallel) -> Story (Fable, notable only) -> Write (Sonnet) -> Verify (Haiku) -> FactCheck x2 (Sonnet, notable only, union of findings) -> Revise if needed (Sonnet)',
+  description: 'Facts+Media (Haiku, parallel) -> Story (Opus, notable only) -> Write (Sonnet) -> Verify (Haiku) -> FactCheck x2 (Sonnet, notable only, union of findings) -> Revise if needed (Sonnet)',
   phases: [
     { title: 'Facts+Media', detail: 'Haiku gathers school profiles/records + video/player-stats, in parallel (school-DB cached blocks injected; broadcast comes from config.broadcast, not research)', model: 'haiku' },
-    { title: 'Story', detail: 'Fable digs for non-obvious historical/player connections, notable games only', model: 'fable' },
+    { title: 'Story', detail: 'Opus digs for non-obvious historical/player connections, notable games only', model: 'opus' },
     { title: 'Write', detail: 'Sonnet writes the final report from facts + media + story', model: 'sonnet' },
     { title: 'Verify', detail: 'Haiku checks the report against all material for unsupported claims', model: 'haiku' },
     { title: 'FactCheck', detail: 'TWO independent Sonnet checkers re-verify claims against the live web; union of findings applies (disagreement = delete), notable games only', model: 'sonnet' },
@@ -388,7 +388,7 @@ ${report}`
 
 // Web-grounded fact-check (2026-07-10), notable games only. Verify (above) only reads the
 // article against the collected material — it cannot catch claims the writer added from model
-// memory, synthesis drift in Fable's story, or material that was wrong to begin with. This
+// memory, synthesis drift in Opus's story, or material that was wrong to begin with. This
 // stage re-verifies each concrete claim against the LIVE web, school-name identity first
 // (the pipeline's worst historical bug class), with source-tier double-checking: low-tier
 // (blog/SNS) claims need an independent second source or they get deleted.
@@ -492,7 +492,7 @@ const results = await pipeline(
     ]).then(([facts, media]) => ({ facts, media })),
   ({ facts, media }, g) =>
     g.notable
-      ? agent(storyPrompt(g, facts, media), { label: `story:${g.id}`, phase: 'Story', model: 'fable' }).then((story) => ({
+      ? agent(storyPrompt(g, facts, media), { label: `story:${g.id}`, phase: 'Story', model: 'opus' }).then((story) => ({
           facts,
           media,
           story,
@@ -557,6 +557,6 @@ const results = await pipeline(
 const ok = results.filter(Boolean)
 const cachedGames = A.games.filter((g) => g.schoolA && g.schoolB && g.h2h).length
 log(
-  `${ok.length}/${A.games.length} games written (${ok.filter((r) => r.hadStory).length} with Fable story-digging, ${ok.filter((r) => r.factCheckers).length} web fact-checked, ${ok.filter((r) => r.revised).length} auto-revised, ${cachedGames} facts-from-cache)`
+  `${ok.length}/${A.games.length} games written (${ok.filter((r) => r.hadStory).length} with Opus story-digging, ${ok.filter((r) => r.factCheckers).length} web fact-checked, ${ok.filter((r) => r.revised).length} auto-revised, ${cachedGames} facts-from-cache)`
 )
 return ok
