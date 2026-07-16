@@ -1436,7 +1436,7 @@
       "kind": "cards",
       "round": "4回戦",
       "roundLabel": "四回戦",
-      "note": "4回戦 16試合 — 球場・開始時刻確定。",
+      "note": "4回戦 16試合 — 全試合終了。太字が勝者。",
       "sources": [
         {
           "url": "https://www.kanagawa-baseball.com/summer/2026/0716/",
@@ -1445,6 +1445,10 @@
         {
           "url": "https://www.kanagawa-baseball.com/summer/2026/0716/",
           "fetchedAt": "2026-07-16"
+        },
+        {
+          "url": "https://www.kanagawa-baseball.com/summer/2026/0716/",
+          "fetchedAt": "2026-07-17"
         }
       ],
       "games": [
@@ -1453,112 +1457,221 @@
           "t": "9:00",
           "a": "横浜",
           "b": "東海大相模",
-          "v": "サーティーフォー保土ケ谷球場"
+          "v": "サーティーフォー保土ケ谷球場",
+          "sa": 8,
+          "sb": 1
         },
         {
           "id": "g78",
           "t": "11:30",
           "a": "市ケ尾",
           "b": "川崎工科",
-          "v": "サーティーフォー保土ケ谷球場"
+          "v": "サーティーフォー保土ケ谷球場",
+          "sa": 5,
+          "sb": 2
         },
         {
           "id": "g79",
           "t": "9:00",
           "a": "慶応",
           "b": "横浜栄",
-          "v": "バッティングパレス相石スタジアムひらつか"
+          "v": "バッティングパレス相石スタジアムひらつか",
+          "sa": 12,
+          "sb": 5
         },
         {
           "id": "g80",
           "t": "11:30",
           "a": "立花学園",
           "b": "県相模原",
-          "v": "バッティングパレス相石スタジアムひらつか"
+          "v": "バッティングパレス相石スタジアムひらつか",
+          "sa": 7,
+          "sb": 6
         },
         {
           "id": "g81",
           "t": "9:00",
           "a": "横浜清陵",
           "b": "多摩",
-          "v": "大和スタジアム"
+          "v": "大和スタジアム",
+          "sa": 10,
+          "sb": 5
         },
         {
           "id": "g82",
           "t": "11:30",
           "a": "横浜商業",
           "b": "新羽",
-          "v": "大和スタジアム"
+          "v": "大和スタジアム",
+          "sa": 12,
+          "sb": 2
         },
         {
           "id": "g83",
           "t": "9:00",
           "a": "桐光学園",
           "b": "横須賀",
-          "v": "相模原ギオンベースボールパーク"
+          "v": "相模原ギオンベースボールパーク",
+          "sa": 15,
+          "sb": 1
         },
         {
           "id": "g84",
           "t": "11:30",
           "a": "日大藤沢",
           "b": "湘南学院",
-          "v": "相模原ギオンベースボールパーク"
+          "v": "相模原ギオンベースボールパーク",
+          "sa": 4,
+          "sb": 2
         },
         {
           "id": "g85",
           "t": "9:00",
           "a": "三浦学苑",
           "b": "麻布大付",
-          "v": "横須賀スタジアム"
+          "v": "横須賀スタジアム",
+          "sa": 4,
+          "sb": 0
         },
         {
           "id": "g86",
           "t": "11:30",
           "a": "川和",
           "b": "横浜商大",
-          "v": "横須賀スタジアム"
+          "v": "横須賀スタジアム",
+          "sa": 4,
+          "sb": 3
         },
         {
           "id": "g87",
           "t": "9:00",
           "a": "鎌倉学園",
           "b": "伊志田",
-          "v": "藤沢市八部野球場"
+          "v": "藤沢市八部野球場",
+          "sa": 7,
+          "sb": 0
         },
         {
           "id": "g88",
           "t": "11:30",
           "a": "磯子工業",
           "b": "平塚江南",
-          "v": "藤沢市八部野球場"
+          "v": "藤沢市八部野球場",
+          "sa": 0,
+          "sb": 8
         },
         {
           "id": "g89",
           "t": "9:00",
           "a": "平塚学園",
           "b": "茅ケ崎北陵",
-          "v": "川崎市等々力球場"
+          "v": "川崎市等々力球場",
+          "sa": 4,
+          "sb": 0
         },
         {
           "id": "g90",
           "t": "11:30",
           "a": "桐蔭学園",
           "b": "藤嶺藤沢",
-          "v": "川崎市等々力球場"
+          "v": "川崎市等々力球場",
+          "sa": 6,
+          "sb": 1
         },
         {
           "id": "g91",
           "t": "9:00",
           "a": "法政二",
           "b": "関東学院",
-          "v": "俣野公園横浜薬大スタジアム"
+          "v": "俣野公園横浜薬大スタジアム",
+          "sa": 3,
+          "sb": 5
         },
         {
           "id": "g92",
           "t": "11:30",
           "a": "藤沢翔陵",
           "b": "向上",
-          "v": "俣野公園横浜薬大スタジアム"
+          "v": "俣野公園横浜薬大スタジアム",
+          "sa": 2,
+          "sb": 3
+        }
+      ]
+    },
+    {
+      "key": "0718",
+      "label": "7月18日(土)",
+      "date": "2026-07-18",
+      "kind": "cards",
+      "round": "5回戦",
+      "roundLabel": "五回戦",
+      "note": "5回戦 8試合 — 各球場 9:00 / 11:30 開始。カードをタップすると試合の背景・見どころを読めます。",
+      "sources": [
+        {
+          "url": "https://www.kanagawa-baseball.com/summer/2026/0718/",
+          "fetchedAt": "2026-07-17"
+        },
+        {
+          "url": "https://www.kanagawa-baseball.com/summer/2026/0718/",
+          "fetchedAt": "2026-07-17"
+        }
+      ],
+      "games": [
+        {
+          "id": "g93",
+          "t": "9:00",
+          "a": "桐光学園",
+          "b": "関東学院",
+          "v": "サーティーフォー保土ケ谷球場"
+        },
+        {
+          "id": "g94",
+          "t": "11:30",
+          "a": "日大藤沢",
+          "b": "向上",
+          "v": "サーティーフォー保土ケ谷球場"
+        },
+        {
+          "id": "g95",
+          "t": "9:00",
+          "a": "平塚学園",
+          "b": "鎌倉学園",
+          "v": "バッティングパレス相石スタジアムひらつか"
+        },
+        {
+          "id": "g96",
+          "t": "11:30",
+          "a": "桐蔭学園",
+          "b": "平塚江南",
+          "v": "バッティングパレス相石スタジアムひらつか"
+        },
+        {
+          "id": "g97",
+          "t": "9:00",
+          "a": "横浜",
+          "b": "三浦学苑",
+          "v": "相模原ギオンベースボールパーク"
+        },
+        {
+          "id": "g98",
+          "t": "11:30",
+          "a": "市ケ尾",
+          "b": "川和",
+          "v": "相模原ギオンベースボールパーク"
+        },
+        {
+          "id": "g99",
+          "t": "9:00",
+          "a": "慶応",
+          "b": "横浜清陵",
+          "v": "川崎市等々力球場"
+        },
+        {
+          "id": "g100",
+          "t": "11:30",
+          "a": "立花学園",
+          "b": "横浜商業",
+          "v": "川崎市等々力球場"
         }
       ]
     }
@@ -1655,7 +1768,15 @@
     "g89": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n### 平塚学園\n2026年春季神奈川県大会は3回戦で敗退したが、2024年度秋季大会では3位に入り関東大会に出場するなど、上位進出を続ける実力校。2023年度は春季・夏季・秋季いずれもベスト16と安定した戦績を残す。八木崇文監督が指揮を執って2026年で19年目。今大会は1回戦で高津・横浜旭陵、2回戦で第1シードの横浜創学館、3回戦で山北を下し4回戦へ進出した。\n\n### 茅ケ崎北陵\n神奈川県立の進学校。2026年春季県大会は2回戦で慶応に4-6のコールドで敗れたが、2025年秋季県大会でベスト16入りし初の県大会本戦出場を果たした。2026年春季県大会は2回戦敗退。部員は34名で1年生が15人と過去5年で最多となり、レギュラー争いが激化する中、今大会は2回戦で藤沢西に8-3、3回戦で柏木学園に勝利し4回戦進出を果たした。\n\n## 今大会の状況\n第108回全国高等学校野球選手権神奈川大会は7月7日に開幕し、決勝は7月26日。172チーム(連合5チーム含む)が出場し、シード校は第1シードの横浜・横浜創学館・桐光学園・慶応をはじめ計16校。平塚学園は2回戦で第1シードの横浜創学館を破って勝ち上がり、茅ケ崎北陵は3回戦の柏木学園戦を制して4回戦進出を決めた。両校ともに勢いに乗った状態で4回戦を迎える。\n\n## 注目選手\n### 山口(平塚学園・投手)\n- 本格派左腕のエース\n\n### 小峰(茅ケ崎北陵・捕手)\n- レギュラー捕手としてチームの中軸を担う\n\n### 浜田(茅ケ崎北陵・遊撃手)\n- レギュラーの遊撃手。守備の要として攻守に活躍\n\n## 関連動画\n- [夏の高校野球神奈川大会2回戦 横浜創学館－平塚学園は4時間半の接戦に](https://www.youtube.com/watch?v=c1-F-2aPWbw) — 平塚学園の2回戦試合動画。接戦の試合展開を確認できる\n\n## ストーリー・見どころ\n第1シードの横浜創学館を撃破した勢いそのままに3回戦の山北戦も1-0で制した平塚学園と、4回戦進出を果たした茅ケ崎北陵。ともに大会中盤で勢いに乗るチーム同士の対戦となる。平塚学園はエース山口を中心とした投手力に加え、渡辺ら主力打者の勝負強さが持ち味。対する茅ケ崎北陵は、レギュラー確定の小峰・浜田を軸にした守備の要で接戦をものにしてきた。ともに接戦を勝ち抜いてきた両校だけに、緊迫した投手戦から目が離せない一戦になりそうだ。\n\n## 出典\nhttps://www.kanagawa-baseball.com/\nhttps://kanagawa-hbf.sakura.ne.jp/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287343.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284468.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288334.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1186238.html\nhttps://news.livedoor.com/article/detail/31797219/\nhttps://baseball-memories.jp/archives/89045\nhttps://player.draft-kaigi.jp/PlayerInfo.php?PlayerId=39679\nhttps://www.hb-nippon.com/teams/1905\nhttps://so-gakukan.ed.jp/school_life/club/s_koushiki/\nhttps://www.hiragaku.ac.jp/hs/club_activities/club_01_baseball/\nhttps://www.hb-nippon.com/articles/14410\nhttps://www.hb-nippon.com/articles/13035\nhttps://www.hb-nippon.com/articles/13033\nhttps://www.kanagawa-baseball.com/sokuho/isehara/2026-0411-0930/\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03140019\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284802.html\nhttps://www.kyureki.com/koko/92/1811/\nhttps://www.kyureki.com/koko/92/1844/\nhttps://www.kyureki.com/player/325595/\nhttps://www.kyureki.com/player/355570/\nhttps://baseball.omyutech.com/playerTop.action?playerId=2870307\nhttps://baseball.omyutech.com/teamMember.action?teamId=12287\nhttps://baseball.omyutech.com/teamMember.action?teamId=12244",
     "g90": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n### 桐蔭学園\n神奈川県の私立校。野球部は1966年創部で、全員全寮制のもと関東圏を中心に県外出身選手も多く集う伝統校だ。甲子園出場は春6回・夏6回の計12回で通算16勝11敗。1971年夏の選手権では初出場で初優勝を飾り、1984年夏3回戦、1988年春ベスト4、1991年夏3回戦、1999年夏ベスト8、2019年春1回戦と、幾度も甲子園の舞台を踏んできた。\n\n指揮を執るのは昨秋に就任した小倉丞太郎監督。桐蔭学園OBで、3年時の1994年春には自らエースとして第66回センバツに出場したが初戦で北陽(大阪)に敗れた経験を持つ。東京学芸大へ進学し主戦投手として活躍、社会人では朝日生命、日立製作所でプレーした後、母校でコーチ・部長を務め監督へ昇格。その采配で臨んだ2026年春季県大会ではベスト8に進出した。今大会は第2シード。\n\n### 藤嶺藤沢\n神奈川県藤沢市の高校。部員103名(高1年33名・高2年34名・高3年36名)を抱える大所帯で、監督は2022年秋就任の菊地幹(就任当時29歳)。「凡事徹底」をチームテーマに掲げ、基本練習の徹底と筋力トレーニングを軸にした体づくりで知られる。\n\n甲子園出場歴は1985年夏の1回(神奈川県優勝で初出場、1回戦で高知商に2-9で敗退)。2026年春季県大会は3回戦で桐光学園に敗れたが、今大会では1回戦4-1上溝南、2回戦16-0保土ヶ谷(5回コールド)、3回戦6-0横須賀学院と3連勝で駆け上がってきた。プロ野球選手も輩出しており、矢澤宏太(2022年日本ハム1位・投手/外野手)、石井貴(1993年西武1位・投手)、代田建紀(1997年近鉄6位・外野手)がOBに名を連ねる。\n\n## 今大会の状況\n第108回全国高等学校野球選手権神奈川大会。第2シードの桐蔭学園は2回戦で大和南に9-0、3回戦で小田原北に12-1と快勝して勝ち上がった。一方ノーシードの藤嶺藤沢は、1回戦で上溝南に4-1、2回戦で保土ヶ谷に16-0の5回コールド、3回戦で横須賀学院に6-0と、こちらも3連勝で駒を進めてきた。両校とも無傷のまま迎える4回戦となる。\n\n## 注目選手\n### 棚原ふう(桐蔭学園・投手)\n- 背番号1\n- 春季県大会で実績を残す\n\n### 三輪瞳太(桐蔭学園・投手)\n- 先発投手として注目される\n\n### 宮本大輝(桐蔭学園・セカンド)\n- 打撃と守備の両面でチームの中盤を支える\n\n### 坂林一牙(桐蔭学園・キャッチャー)\n- リード力に定評\n\n### 市村怜温(桐蔭学園)\n- 背番号19で今大会のメンバー入り\n\n## 関連動画\n- [横浜 vs 桐蔭学園 春季神奈川大会準々決勝 全打席ハイライト](https://www.youtube.com/watch?v=c83EDfIgtgU) — 2026年4月25日の春季神奈川大会準々決勝。桐蔭学園の攻撃面を確認できる一戦\n- [慶應 vs 桐蔭学園 ハイライト(神奈川大会)](https://www.youtube.com/live/KjdwvYV4fvo) — 大接戦を制した桐蔭学園がベスト8進出を決めた試合\n- [桐蔭学園vs慶應義塾 ハイライト(神奈川大会1回戦)](https://www.youtube.com/watch?v=A0RjHg7xMQo) — シーソーゲームとなった好カード\n- [桐蔭学園 vs 三浦学苑](https://www.youtube.com/watch?v=eHI7s-foxHY) — 秋季神奈川大会2回戦での対戦\n- [桐蔭学園 新チーム!伝統のランニング 球場から拍手が湧く!](https://www.youtube.com/watch?v=acFn70l2jT0) — 桐蔭学園新チームの雰囲気と練習内容を伝える映像\n\n## ストーリー・見どころ\n無傷のまま勝ち上がってきた両校がぶつかる4回戦。第2シードの貫禄で得点を積み重ねてきた桐蔭学園と、ノーシードながら3試合で計26得点と勢いに乗る藤嶺藤沢。等々力球場のマウンドで、投打の主導権を握るのはどちらか。\n\n桐蔭学園を率いる小倉丞太郎監督は、自らも母校のエースとしてセンバツのマウンドに立った経験を持つ指導者だ。東京学芸大、社会人野球を経て母校のコーチ・部長を歴任し、昨秋に監督へ就任したばかり。その手腕は早くも春季県大会のベスト8進出という形で結果に表れており、選手として味わった甲子園への思いを、今度は指揮官として選手たちに託す夏となっている。\n\n対する藤嶺藤沢を率いる菊地幹監督は、2022年秋の就任から4年足らずでチームを大きく作り変えてきた。「凡事徹底」を掲げ、筋力トレーニングを軸にした体づくりでチーム全体の平均体重を押し上げ、パワーアップを図ってきたという。父はアパレルブランド・ドクターマーチンの日本法人で社長を務めた経歴の持ち主というビジネスエリートの家系に生まれながら、高校野球の指導現場に飛び込んだ異色の経歴を持つ。その改革の成果は、2回戦・保土ヶ谷戦での16-0コールド勝ちという打撃力にも表れている。\n\n伝統と実績の桐蔭学園、フィジカル強化で勢いをつける藤嶺藤沢。第2シードの貫禄を見せつけるか、それとも下剋上の勢いが上回るか。今大会屈指の好カードとして注目したい一戦だ。\n\n## 出典\nhttps://www.tohrei-fujisawa.ed.jp/school-life/club/base-ball.html\nhttps://baseball.yahoo.co.jp/hsb/teams/19173/results/game\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://hsbb.jp/senshuken/y1985/\nhttps://draft.tokyo/area/kanagawa/torei-fujisawa/\nhttps://www.kyureki.com/koko/92/1839/\nhttps://the-ans.jp/bukatsu/557126/\nhttps://www.baseballchannel.jp/etc/274632/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html\nhttps://apapnews.com/famousmember/2544/\nhttps://www.kyureki.com/koko/92/1816/\nhttps://www.kyureki.com/koko/92/41185/\nhttps://www.kyureki.com/koko/92/6673/\nhttps://www.hb-nippon.com/teams/6597\nhttps://kanagawa-hbf.sakura.ne.jp/\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03140007\nhttps://office-morioka.com/h_baseball/seiseki/toin_gakuen.html\nhttps://baseball.yahoo.co.jp/hsb_summer_local/entryteams/21615/results/game\nhttps://www.pen-kanagawa.ed.jp/yamatominami-h/seikatsu/club/baseball.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287231.html\nhttps://kanagawa.hsbflash.jp/\nhttps://number.bunshun.jp/articles/-/864768?page=1\nhttps://number.bunshun.jp/articles/-/864769?page=4\nhttps://monthly-charge.com/2024%E5%B9%B43%E6%9C%88%E5%8F%B7/16748/",
     "g91": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n## 両校プロフィール\n### 法政二\n1950年代に一時代を築いた神奈川の名門で、甲子園通算19勝9敗の実績を持つ。2025年秋季大会では33年ぶりとなる県大会決勝進出を果たし、力を取り戻しつつある。今大会はノーシードから勝ち上がり、1回戦で森村学園、2回戦で鶴見、3回戦で星槎国際湘南を破って4回戦進出を決めた。\n\n### 関東学院\n神奈川工ブロック所属の実力校。2025年秋季関東大会に出場した経験を持つ(同大会では花咲徳栄に逆転負け)。今大会は2回戦で大船に10-0で勝利。3回戦は金井相手に7-6の接戦を制し、4回戦進出を決めた。\n## 今大会の状況\n第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式を迎え、7月7日に開幕。決勝は7月26日に予定される。シード校は第1シードの横浜・横浜創学館・桐光学園・慶応をはじめ計16校。法政二・関東学院はいずれもシード外で、ともに4回戦進出を決めている。\n## 注目選手\n### 松田早太(法政二・投手・3年)\n- 今大会成績: 1回戦・3回戦の2試合で22奪三振\n- エース右腕。最速143km。1回戦で7奪三振、3回戦で15奪三振を記録。\n\n### 榑松正悟(法政二・外野手・3年)\n- 左打ち右投げの好打者。身長178cm、体重75kg。4番打者として攻撃を牽引。\n\n### 平松克彦(関東学院・投手・3年)\n- 今大会成績: 3回戦で16奪三振完投\n- エース投手。3回戦は177球を投げ抜き、延長10回タイブレークの末に完投勝利を収めた。\n## 関連動画\n- [【注目校特集】法政二高 秋の県大会で準優勝 古豪返上へ!38年ぶり聖地目指す](https://www.youtube.com/watch?v=bS6quBFAz3c) — 法政二高チーム紹介・大会への道\n- [横浜 vs 法政二 昨秋から県内無敗の絶対王者 vs 41年ぶり頂点を狙う古豪!【高校野球 秋季神奈川大会 決勝 全打席ハイライト】](https://www.youtube.com/watch?v=QJmXV0OeT6w) — 2025年秋季決勝での法政二のハイライト・チーム全体の攻守の詳細\n## ストーリー・見どころ\n33年ぶりの県大会決勝進出から一年、古豪復活を目指す法政二が22奪三振のエース松田を擁して勝ち上がる一方、関東学院は延長タイブレークを完投で制した平松の踏ん張りで4回戦に駒を進めた。ともにシード外から勝ち上がってきた両校だけに、勢いと勢いのぶつかり合いとなる一戦だ。\n## 出典\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1188316.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287514.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288897.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1184849.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1089384.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html\nhttps://www.kanagawa-baseball.com/spring/2026/\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://www.hosei2.ed.jp/schoollife/club/club17\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1285429.html\nhttps://www.hb-nippon.com/articles/9153\nhttps://www.draft-kaigi.jp/highschool/high-draftnews/87633/\nhttps://baseball.omyutech.com/teamGames.action?teamId=12222\nhttps://www.tvk-yokohama.com/koko/\nhttps://news.yahoo.co.jp/articles/de1f55ab419398955413c733248c93b1d4875f05",
-    "g92": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n### 藤沢翔陵\n1973年、当時の藤沢商業として夏の甲子園に出場。1回戦は5-2で勝利、2回戦は0-1で惜敗した甲子園経験校である。近年は2021年にベスト4進出を果たしている。2026年春季県大会の成績により、今大会は第3シードに指定された。\n\n指揮を執るのは同校OBで元プロ野球選手の川俣浩明監督。藤沢商業時代にエースとして活躍後、大阪ガスを経て1996年ドラフト3位で千葉ロッテに入団。一軍29登板を経験するも白星には届かず2002年に引退した。建設会社勤務や学校事務職員を経て教員免許を取得し、2008年に母校教員、2010年から監督に就任。就任5年目の夏、ベンチの選手全員が自分を見ていたことに衝撃を受け、指示待ちの野球から「必要最低限のこと以外は言わない」選手主導の野球へと舵を切った。部の方針は「野球に捧げる情熱ある集団であれ」。\n\n### 向上\n今大会はノーシードでの出場。指揮を執るのは平田隆康監督。1974年東京都生まれで、世田谷学園から駒沢大学に進学。大学卒業後は一度企業に就職したが、指導者への思いから退職し、28歳で向上の監督に就任した。以後20年以上にわたって指揮を執り、2014年夏には神奈川大会準優勝、2021年秋には創部初となる関東大会出場を果たしている。「ALL OUT」を部訓に掲げ、「人間的成長なくして技術の進歩なし」を指導方針とする。\n\n## 今大会の状況\n藤沢翔陵は2026年春季県大会の成績により第3シードに指定された。今大会は2回戦で希望ケ丘に4-0、3回戦で鎌倉に12-2で勝利し4回戦に進出した。向上はノーシードながら2回戦で平塚湘風に11-1、3回戦でアレセイアに5-1で勝利し勝ち上がってきた。両校は2026年7月16日、俣野公園横浜薬大スタジアムで11:30開始の4回戦を戦う。\n\n## 注目選手\n### 長谷川陽向(藤沢翔陵・投手・3年)\n- 藤沢翔陵の右腕投手\n- 投手陣の中心として試合を構成する\n\n## 関連動画\n- [藤沢翔陵高校部活TV!](https://www.youtube.com/@TV-cj8on) — 藤沢翔陵高校の公式YouTubeチャンネル。野球部をはじめ各部活動の練習風景や試合レポート、選手インタビューなどを配信\n- [向上高校《 初回の3点と2回表の3点!》東海大相模 7 - 6 向上 第107回全国高校野球選手権神奈川大会 準決勝 2025.7.26](https://www.youtube.com/watch?v=p3QJJBzUNIg) — 2025年度神奈川大会準決勝、向上対東海大相模の試合録画\n\n## ストーリー・見どころ\n第3シードの藤沢翔陵とノーシードながら勝ち上がってきた向上が、4回戦で顔を合わせる。両校とも初戦から着実に得点を重ねて勝ち上がってきており、決して番狂わせの一戦ではなく、実力校同士の正面衝突と言っていい組み合わせだ。\n\nベンチを率いる2人の指揮官の歩みも対照的だ。藤沢翔陵の川俣浩明監督は、母校のエースから大阪ガス、そして千葉ロッテでのプロ生活を経て教壇に立ち、母校の指揮官に収まった元プロ野球選手。一方の向上・平田隆康監督は、一度は企業に就職した後に指導者の道を志し、28歳で監督に就任。以来20年以上をかけてチームを鍛え上げ、2014年夏の準優勝、2021年秋の創部初関東大会出場へと導いてきた。プロの世界を知る指揮官と、地道な積み重ねでチームを強豪に育てた指揮官。それぞれの野球観がベンチからどう表れるかも見どころの一つだ。\n\nマウンドでは右腕・長谷川陽向が、どこまで向上打線を封じ込められるかが鍵を握る。\n\n11:30、俣野公園横浜薬大スタジアムで始まるこの一戦。過去の対戦成績を塗り替えようとする藤沢翔陵と、その勢いをさらに伸ばしたい向上。両校の意地がぶつかり合う4回戦になりそうだ。\n\n## 出典\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1193476.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1193540.html\nhttps://baseball-memories.jp/archives/89079\nhttps://www.kj.kojo.ed.jp/clubs/baseball/\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1191503.html\nhttps://baseball.omyutech.com/playerTop.action?playerId=2746969\nhttps://www.kyureki.com/player/241141/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287514.html\nhttps://www.kanagawa-baseball.com/summer/2026/0711/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288334.html\nhttps://www.hb-nippon.com/teams/1854\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1185917.html\nhttps://www.pen-kanagawa.ed.jp/kamakura-h/seikatsu/bukatu_doukoukai/yakyuu.html\nhttps://www.kanagawa-baseball.com/\nhttps://baseball.omyutech.com/CupHomePageMain.action?cupId=20260013579\nhttps://kanagawa-hbf.sakura.ne.jp/2026/?result-hard_=prefecture-summer\nhttps://www.hb-nippon.com/tournaments/1566\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html\nhttps://sites.google.com/shoryo.ed.jp/baseball/%E3%83%9B%E3%83%BC%E3%83%A0\nhttps://ja.wikipedia.org/wiki/%E8%97%A4%E6%B2%A2%E7%BF%94%E9%99%B5%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1\nhttps://ja.wikipedia.org/wiki/%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E7%AB%8B%E5%B8%8C%E6%9C%9B%E3%82%B1%E4%B8%98%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1\nhttps://news.yahoo.co.jp/articles/b437c369a98c939b66be6f315374dc74d1fc4970\nhttps://monthly-charge.com/charge-%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%89%88/23970\nhttps://sites.google.com/gl.pen-kanagawa.ed.jp/kibogaoka-baseball/%E6%B4%BB%E5%8B%95%E7%B4%B9%E4%BB%8B\nhttps://x.com/chargejapan/status/2069963795967975461\nhttps://baseball-memories.jp/archives/category/kanagawa/area-shonan/fujisawa-shoryo\nhttps://baseball-memories.jp/archives/83536\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1192217.html\nhttps://www.hb-nippon.com/articles/6678\nhttps://monthly-charge.com/2023%E5%B9%B44%E6%9C%88%E5%8F%B7/14308/\nhttps://www.townnews.co.jp/0405/2014/05/16/236510.html"
+    "g92": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n### 藤沢翔陵\n1973年、当時の藤沢商業として夏の甲子園に出場。1回戦は5-2で勝利、2回戦は0-1で惜敗した甲子園経験校である。近年は2021年にベスト4進出を果たしている。2026年春季県大会の成績により、今大会は第3シードに指定された。\n\n指揮を執るのは同校OBで元プロ野球選手の川俣浩明監督。藤沢商業時代にエースとして活躍後、大阪ガスを経て1996年ドラフト3位で千葉ロッテに入団。一軍29登板を経験するも白星には届かず2002年に引退した。建設会社勤務や学校事務職員を経て教員免許を取得し、2008年に母校教員、2010年から監督に就任。就任5年目の夏、ベンチの選手全員が自分を見ていたことに衝撃を受け、指示待ちの野球から「必要最低限のこと以外は言わない」選手主導の野球へと舵を切った。部の方針は「野球に捧げる情熱ある集団であれ」。\n\n### 向上\n今大会はノーシードでの出場。指揮を執るのは平田隆康監督。1974年東京都生まれで、世田谷学園から駒沢大学に進学。大学卒業後は一度企業に就職したが、指導者への思いから退職し、28歳で向上の監督に就任した。以後20年以上にわたって指揮を執り、2014年夏には神奈川大会準優勝、2021年秋には創部初となる関東大会出場を果たしている。「ALL OUT」を部訓に掲げ、「人間的成長なくして技術の進歩なし」を指導方針とする。\n\n## 今大会の状況\n藤沢翔陵は2026年春季県大会の成績により第3シードに指定された。今大会は2回戦で希望ケ丘に4-0、3回戦で鎌倉に12-2で勝利し4回戦に進出した。向上はノーシードながら2回戦で平塚湘風に11-1、3回戦でアレセイアに5-1で勝利し勝ち上がってきた。両校は2026年7月16日、俣野公園横浜薬大スタジアムで11:30開始の4回戦を戦う。\n\n## 注目選手\n### 長谷川陽向(藤沢翔陵・投手・3年)\n- 藤沢翔陵の右腕投手\n- 投手陣の中心として試合を構成する\n\n## 関連動画\n- [藤沢翔陵高校部活TV!](https://www.youtube.com/@TV-cj8on) — 藤沢翔陵高校の公式YouTubeチャンネル。野球部をはじめ各部活動の練習風景や試合レポート、選手インタビューなどを配信\n- [向上高校《 初回の3点と2回表の3点!》東海大相模 7 - 6 向上 第107回全国高校野球選手権神奈川大会 準決勝 2025.7.26](https://www.youtube.com/watch?v=p3QJJBzUNIg) — 2025年度神奈川大会準決勝、向上対東海大相模の試合録画\n\n## ストーリー・見どころ\n第3シードの藤沢翔陵とノーシードながら勝ち上がってきた向上が、4回戦で顔を合わせる。両校とも初戦から着実に得点を重ねて勝ち上がってきており、決して番狂わせの一戦ではなく、実力校同士の正面衝突と言っていい組み合わせだ。\n\nベンチを率いる2人の指揮官の歩みも対照的だ。藤沢翔陵の川俣浩明監督は、母校のエースから大阪ガス、そして千葉ロッテでのプロ生活を経て教壇に立ち、母校の指揮官に収まった元プロ野球選手。一方の向上・平田隆康監督は、一度は企業に就職した後に指導者の道を志し、28歳で監督に就任。以来20年以上をかけてチームを鍛え上げ、2014年夏の準優勝、2021年秋の創部初関東大会出場へと導いてきた。プロの世界を知る指揮官と、地道な積み重ねでチームを強豪に育てた指揮官。それぞれの野球観がベンチからどう表れるかも見どころの一つだ。\n\nマウンドでは右腕・長谷川陽向が、どこまで向上打線を封じ込められるかが鍵を握る。\n\n11:30、俣野公園横浜薬大スタジアムで始まるこの一戦。過去の対戦成績を塗り替えようとする藤沢翔陵と、その勢いをさらに伸ばしたい向上。両校の意地がぶつかり合う4回戦になりそうだ。\n\n## 出典\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1193476.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1193540.html\nhttps://baseball-memories.jp/archives/89079\nhttps://www.kj.kojo.ed.jp/clubs/baseball/\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1191503.html\nhttps://baseball.omyutech.com/playerTop.action?playerId=2746969\nhttps://www.kyureki.com/player/241141/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287514.html\nhttps://www.kanagawa-baseball.com/summer/2026/0711/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288334.html\nhttps://www.hb-nippon.com/teams/1854\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1185917.html\nhttps://www.pen-kanagawa.ed.jp/kamakura-h/seikatsu/bukatu_doukoukai/yakyuu.html\nhttps://www.kanagawa-baseball.com/\nhttps://baseball.omyutech.com/CupHomePageMain.action?cupId=20260013579\nhttps://kanagawa-hbf.sakura.ne.jp/2026/?result-hard_=prefecture-summer\nhttps://www.hb-nippon.com/tournaments/1566\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html\nhttps://sites.google.com/shoryo.ed.jp/baseball/%E3%83%9B%E3%83%BC%E3%83%A0\nhttps://ja.wikipedia.org/wiki/%E8%97%A4%E6%B2%A2%E7%BF%94%E9%99%B5%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1\nhttps://ja.wikipedia.org/wiki/%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E7%AB%8B%E5%B8%8C%E6%9C%9B%E3%82%B1%E4%B8%98%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1\nhttps://news.yahoo.co.jp/articles/b437c369a98c939b66be6f315374dc74d1fc4970\nhttps://monthly-charge.com/charge-%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%89%88/23970\nhttps://sites.google.com/gl.pen-kanagawa.ed.jp/kibogaoka-baseball/%E6%B4%BB%E5%8B%95%E7%B4%B9%E4%BB%8B\nhttps://x.com/chargejapan/status/2069963795967975461\nhttps://baseball-memories.jp/archives/category/kanagawa/area-shonan/fujisawa-shoryo\nhttps://baseball-memories.jp/archives/83536\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1192217.html\nhttps://www.hb-nippon.com/articles/6678\nhttps://monthly-charge.com/2023%E5%B9%B44%E6%9C%88%E5%8F%B7/14308/\nhttps://www.townnews.co.jp/0405/2014/05/16/236510.html",
+    "g93": "## 放送・配信情報\n**TV放送**\n- tvk(テレビ神奈川) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n### 桐光学園\n2026年春季県大会でベスト4に進出し、夏の大会では第1シードを獲得。今夏は2回戦で相模原中等に11-0、3回戦で相模原弥栄に14-3、4回戦で横須賀に15-1と大差での勝利を重ね、5回戦へ駒を進めた。約40年にわたってチームを率いた野呂雅之前監督が2025年夏で勇退し、今夏からは相模原市出身の天野喜英監督が指揮を執る。掲げる目標は「全国制覇」。\n\n### 関東学院\n横浜市南区所属、神奈川工業ブロックの実力校。2026年春季県大会は2回戦で横浜翠陵に0-3(7回コールド)で敗退したが、今大会は2回戦で大船に10-0、3回戦で金井に延長10回タイブレークの末7-6、4回戦で法政二に5-3と勝ち上がり16強入り。ラグビー出身選手の起用など、他競技出身者を登用する部の特徴も持つ。\n\n## 今大会の状況\n本大会のシード校は第1シード(横浜・横浜創学館・桐光学園・慶応)、第2シード(桐蔭学園・相洋・日大藤沢・立花学園)、第3シード(鎌倉学園・川和・横浜隼人・横浜清陵・三浦学苑・神奈川工業・橘・藤沢翔陵)。桐光学園は第1シードとして順当に勝ち上がってきたのに対し、関東学院は非シード校ながら4回戦まで4連勝で16強入りを果たした。5回戦(7月18日)でこの両者の対戦が組まれている。\n\n## 注目選手\n### 林晃成(桐光学園・投手・3年)\n- 今大会成績: 7月11日2回戦で3回1安打無失点6奪三振(最速151km/h)\n- 身長191cm、右腕エース。最速151km/hの快速球を武器とするドラフト候補。フォークボール習得で「勝ち残る投手に」を目指す。\n\n### 周東希虎(桐光学園・ファースト・2年)\n- 今大会成績: 2026年夏初戦で4番ファーストでスタメン出場\n- 東京城南ボーイズ出身。バットコントロールに長け広角打ちができる中距離ヒッター。WBSC U-12ワールドカップ日本代表歴を持つ強打者。\n\n### 黄泰崇(桐光学園・レフト・3年)\n- 今大会成績: 2026年夏初戦で1番レフトでスタメン出場\n- チームの打線を牽引する1番。春季準決勝(横浜戦)では初球を叩いてフェンス直撃の二塁打を記録。\n\n### 鈴木陽仁(桐光学園・投手・2年)\n- 中本牧シニアから進学した左腕投手。速球と変化球を組み合わせた本格派。エース林晃成との右左の二枚看板として相手打線のリズムを崩す武器となる。\n\n## 関連動画\n- [【注目校特集】春季県大会でベスト4 悔しさを糧に甲子園目指す桐光学園 / 来月5日開幕!第108回全国高等学校野球選手権神奈川大会【News Linkオンライン】](https://www.youtube.com/watch?v=VoJlJPN_SLQ) — 桐光学園の春季県大会での戦いぶり、チームの特徴・強さが分かる紹介動画\n- [桐光学園vs横浜隼人【高校野球 春季神奈川大会 4回戦 全打席ハイライト】2026.4.18](https://www.youtube.com/watch?v=IF1beRvSebk) — 春季県大会4回戦のハイライト\n- [横浜 vs 桐光学園【高校野球 春季神奈川大会 準決勝 全打席ハイライト】2026.5.2](https://www.youtube.com/watch?v=XuGKwofG3Bw) — 春季県大会準決勝のハイライト\n\n## ストーリー・見どころ\n第1シードとして3試合連続の大量得点で勝ち上がってきた桐光学園と、非シードながら延長タイブレークを制するなど接戦を勝ち抜いてきた関東学院。勢いに乗る第1シードに、下馬評を覆してきた挑戦者がどう挑むかが焦点となる。\n\nエース林晃成を中心とした投手陣に、周東希虎・黄泰崇ら好打者を揃える桐光学園の破壊力あるチームに対し、関東学院がこれまで見せてきた粘りの野球で対抗できるか。ベスト8進出をかけた一戦は、保土ケ谷球場で熱戦となりそうだ。\n\n## 出典\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1289416.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288897.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288334.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287514.html\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1285906.html\nhttps://www.pen-kanagawa.ed.jp/sagamiharayaei-h/seikatsu/bukatsu/baseball.html",
+    "g94": "## 放送・配信情報\n**TV放送**\n- tvk(テレビ神奈川) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n### 日大藤沢\n春夏通算4回の甲子園出場経験を持つ古豪。2026年春季神奈川県大会ではベスト8まで勝ち上がったが、準々決勝で桐光学園に0-3で敗れた。この実績が評価され、今夏は第2シードに選出。今大会は2回戦で桜丘に10-0、3回戦で上溝に8-1、4回戦で湘南学院に4-2と3試合を勝ち抜き、5回戦進出を決めた。\n\n### 向上\n今大会はノーシードでの出場。指揮を執るのは就任20年以上のベテラン、平田隆康監督で、「ALL OUT」を部訓に掲げる。2回戦で平塚湘風に11-1、3回戦でアレセイアに5-1、4回戦では藤沢翔陵を3-2で下し、ノーシードから5回戦まで勝ち上がった。\n\n## 過去の対戦成績\n2025年7月22日、第107回大会準々決勝で対戦し、向上が13-4で日大藤沢を破った(7回コールド)。会場はパレスタ平塚。\n\n## 今大会の状況\n第108回全国高等学校野球選手権神奈川大会は7月7日に開幕、決勝は7月26日。172チーム(連合5チーム含む)が参加する中、日大藤沢は春季県大会の成績から第2シードに指定されている。本試合は5回戦、事実上のベスト8決定戦となる。\n\n## 注目選手\n### 池永浩寿(日大藤沢・内野手)\n- 果敢な走塁と俊足が武器\n- 主に1番・セカンドでスタメン出場する機会が多い\n\n## 関連動画\n- [日大藤沢 vs 三浦学苑【秋季神奈川大会4回戦ハイライト】](https://www.youtube.com/watch?v=_s4perHD3ao)\n- [日大藤沢 vs 慶應義塾【秋季神奈川大会4回戦全打席ハイライト】](https://www.youtube.com/watch?v=23gr6N3aIlM)\n- [向上 vs 東海大相模【第107回全国高校野球選手権神奈川大会準決勝】](https://www.youtube.com/watch?v=p3QJJBzUNIg)\n\n## ストーリー・見どころ\n昨夏の第107回大会準々決勝では向上が13-4で日大藤沢を退けており、その一戦の記憶を抱えた古豪と挑戦者の再戦という構図が今大会にも重なる。第2シードの日大藤沢は3試合を着実に勝ち上がって迎えたベスト8。一方の向上はノーシードながら4回戦で藤沢翔陵を破るなど勢いに乗っており、実力校同士の一戦は事実上の準々決勝進出をかけた大一番となる。両者ともここまで失点を最小限に抑える守りで勝ち上がっており、接戦になれば終盤まで目が離せない試合展開が期待される。\n\n## 出典\nhttps://www.kanagawa-baseball.com/sokuho/hiratsuka/2025-0722-0900/\nhttps://baseball-memories.jp/archives/89048\nhttps://www.kanagawa-baseball.com/spring/2026/\nhttps://kanagawa-hbf.sakura.ne.jp/2026/?result-hard_=prefecture-spring\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03140017\nhttps://apapnews.com/famousmember/2596/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287110.html\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://baseball.omyutech.com/teamTop.action?teamId=12173\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1265666.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1267278.html\nhttps://www.kj.kojo.ed.jp/clubs/baseball/\nhttps://baseball.omyutech.com/playerTop.action?playerId=2746969\nhttps://www.kanagawa-baseball.com/summer/2026/0711/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288897.html",
+    "g95": "## 放送・配信情報\n**TV放送**\n- J:COMチャンネル(地デジ11ch) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n\n### 平塚学園\n2026年春季神奈川県大会は3回戦で敗退したが、2024年度秋季大会では3位に入り関東大会に出場。2023年度は春季・夏季・秋季いずれもベスト16と、安定して上位に食い込む力を持つ強豪校である。指揮を執るのは就任19年目を迎える八木崇文監督で、2013年夏には準優勝、2014年秋には県優勝を果たしている。\n\n### 鎌倉学園\n2026年春季県大会でベスト16に進出し、関東大会を制した横浜と接戦を演じた末に敗れた。2025年秋季県大会は4回戦で東海大相模に2-1で敗退。今大会は第3シードとして出場している。指揮を執る竹内智一監督は鎌倉学園OBで、2013年から監督を務める。\n\n## 今大会の状況\n平塚学園は1回戦で高津・横浜旭陵に10-0で勝利すると、2回戦では第1シードの横浜創学館との延長タイブレークを制してサヨナラ勝ち。3回戦は山北に1-0、4回戦は茅ケ崎北陵に4-0で下し、5回戦進出を果たした。第3シードの鎌倉学園は2回戦で川崎北に9-2、3回戦は相模原城山に6-3で逆転勝利。4回戦は伊志田を7-0で下し、勝ち上がってきた。\n\n## 注目選手\n\n### 山口禅(平塚学園・投手・3年)\n- 今大会成績: 2回戦は延長13回194球を投げ抜き、第1シードの横浜創学館に5-4で勝利。4回戦は159球を投げ切り、茅ケ崎北陵を4-0に封じた\n- 最速144km右腕の本格派エース。昨夏の敗戦を機にフォームをスリークオーターに改造し、マウンドでは常に声を出してチームを主導する\n\n### 堀井祥吾(鎌倉学園・投手)\n- 今大会成績: 4回戦で伊志田を7-0に抑え勝利に貢献\n- 複数投手で夏を乗り切る鎌倉学園の継投策を担う一人。春季大会では横浜との一戦も経験している\n\n## 関連動画\n- [夏の高校野球神奈川大会2回戦 横浜創学館－平塚学園は4時間半の接戦に](https://www.youtube.com/watch?v=c1-F-2aPWbw) — 平塚学園の2回戦での延長戦の戦いぶりが見られるハイライト動画\n- [【神奈川球史に残る一戦】横浜創学館vs平塚学園 タイブレーク10回裏からの攻防 20260710](https://www.youtube.com/watch?v=bpL_tea5Qbc) — 平塚学園の山口禅がエースとして活躍した2回戦の試合映像\n- [横浜vs鎌倉学園 追い詰められた王者… 手に汗握る大熱戦！ 【高校野球 春季神奈川大会 4回戦 全打席ハイライト】 2026.4.18](https://www.youtube.com/watch?v=0O3uEMDkvAo) — 鎌倉学園が春季大会で横浜高校と対戦した試合の全打席ハイライト\n- [鎌倉学園中学校・高等学校 公式YouTubeチャンネル](https://www.youtube.com/@KamakuraGakuen) — 鎌倉学園の公式チャンネル。応援メドレーや学校紹介動画を配信\n- [【選手権神奈川大会】鎌倉学園と横須賀総合が2回戦で激突！3回戦へ駒を進めるのは…【全打席ダイジェスト】](https://www.youtube.com/watch?v=eQmhESbPeIQ) — 鎌倉学園の2回戦試合動画\n- [鎌倉学園 大応援団📣伝統の躍動感溢れる男気応援！ド迫力の大歓声！！！](https://www.youtube.com/watch?v=gRJkaKHT03E) — 鎌倉学園の伝統的な応援風景を収めた映像\n\n## ストーリー・見どころ\n第1シードの横浜創学館を延長タイブレークの末に振り切った平塚学園と、第3シードとして着実に勝ち上がってきた鎌倉学園。ともに投打がかみ合い、ここまで負け知らずで5回戦に駒を進めてきた両校の対戦は、大会屈指の好カードとなる。\n\n平塚学園はエース山口禅が194球、159球と連戦で長いイニングを投げ抜き、まさにチームの大黒柱として君臨。一方の鎌倉学園は堀井祥吾を中心に複数投手をやりくりする継投策で勝ち上がってきており、投手戦・継投策のぶつかり合いという構図も見どころの一つとなる。\n\n## 出典\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284468.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284974.html\nhttps://www.kanagawa-baseball.com/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1262086.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287999.html\nhttps://so-gakukan.ed.jp/school_life/club/s_koushiki/\nhttps://www.hiragaku.ac.jp/hs/club_activities/club_01_baseball/\nhttps://www.hb-nippon.com/articles/14410\nhttps://www.hb-nippon.com/articles/13035\nhttps://www.hb-nippon.com/articles/13033\nhttps://www.kanagawa-baseball.com/sokuho/isehara/2026-0411-0930/\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03140019\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1284802.html\nhttps://www.kyureki.com/koko/92/1811/\nhttps://www.kyureki.com/koko/92/1844/\nhttps://www.kyureki.com/player/325595/\nhttps://www.kyureki.com/player/355570/\nhttps://player.draft-kaigi.jp/PlayerInfo.php?PlayerId=39679\nhttps://baseball.omyutech.com/playerTop.action?playerId=2870307\nhttps://baseball.omyutech.com/teamMember.action?teamId=12287\nhttps://baseball.omyutech.com/teamMember.action?teamId=12244\nhttps://baseball.omyutech.com/teamGames.action?teamId=12189\nhttps://www.townnews.co.jp/0301/2025/07/05/792353.html\nhttps://www.pen-kanagawa.ed.jp/s-shiroyama-h/bukatsu/baseball.html\nhttps://www.hb-nippon.com/articles/12145?page=2\nhttps://www.kanagawa-baseball.com/spring/2026/\nhttps://www.kanagawa-baseball.com/sokuho/tokai/2026-0405-0930/\nhttps://x.com/baseball_kngw/status/1946025216993603821\nhttps://sports.yahoo.co.jp/livestream/vk/hsblocal/C255432\nhttps://ja.wikipedia.org/wiki/%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E7%AB%8B%E7%9B%B8%E6%A8%A1%E5%8E%9F%E5%9F%8E%E5%B1%B1%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1\nhttps://www.kanagawa-baseball.com/sokuho/todoroki/2025-0715-1130/\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03140005\nhttps://www.kamagaku.ac.jp/schoollife/club/baseball.html\nhttps://monthly-charge.com/tag/%E9%8E%8C%E5%80%89%E5%AD%A6%E5%9C%92/\nhttps://baseball-memories.jp/archives/71156\nhttps://www.hb-nippon.com/articles/8589\nhttps://baseball-memories.jp/archives/90104\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1182947.html\nhttps://www.kyureki.com/koko/92/2372/\nhttps://web.playerapp.tokyo/team/7541\nhttps://baseball.yahoo.co.jp/hsb/teams/21528/top\nhttps://baseball-memories.jp/archives/category/kanagawa/kawasaki/kawasaki-kita\nhttps://monthly-charge.com/tag/%E5%B7%9D%E5%B4%8E%E5%8C%97/",
+    "g96": "## 放送・配信情報\n**TV放送**\n- J:COMチャンネル(地デジ11ch) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n\n### 桐蔭学園\n神奈川県の私立校で、全員全寮制のもと県外出身選手も多く集める。指揮を執るのは昨秋に就任した小倉丞太郎監督で、2026年春季県大会ではベスト8に進出し4年ぶりの結果を残した。今大会は第2シードを背負い、2回戦は大和南に9-0、3回戦は小田原北に12-1、4回戦は藤嶺藤沢に6-1と、いずれも大差での勝利で勝ち上がってきた。\n\n### 平塚江南\n神奈川県立の進学校で、文部科学省のスーパーサイエンスハイスクール(SSH)指定校でもある。今大会は2回戦で青葉総合を6-0、3回戦で上矢部を5-0、4回戦で磯子工業を8-0で下し、9年ぶりの5回戦進出を果たした。3回戦ではエース兼キャプテンの渡辺投手が1安打15奪三振の完封を披露し、4回戦では1年生の西嶋投手が7回8奪三振無失点と圧巻の投球を見せている。\n\n## 今大会の状況\n第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式を行い、7月7日に開幕。172チーム(連合5チーム含む)が参加し、決勝は7月26日に予定されている。第2シードの桐蔭学園と、シード校ではない平塚江南がともに4回戦を突破し、5回戦で相まみえる。試合は7月18日11時30分、バッティングパレス相石スタジアムひらつかで行われる。\n\n## 注目選手\n\n### 棚原ふう(桐蔭学園・投手・3年)\n- 今大会は2回戦・3回戦・4回戦で登板\n- 東京・上原中学出身\n\n### 西嶋(平塚江南・投手・1年)\n- 4回戦で7回8奪三振無失点の完封勝利を記録\n- 1年生ながら4回戦で先発し、チームの9年ぶりの5回戦進出に貢献\n\n## ストーリー・見どころ\n第2シードの桐蔭学園はここまで4回戦を通じて失点をわずか2に抑え、圧倒的な戦力差を見せつけながら勝ち上がってきた。対する平塚江南も投手陣が充実しており、3回戦では渡辺投手が1安打15奪三振の完封、4回戦では1年生の西嶋投手が7回8奪三振無失点と、エースと新戦力がそろって好投を続けている。\n\nシード校の総合力と、9年ぶりの5回戦進出を懸けた平塚江南の勢いがぶつかる一戦。両校とも接戦を経ずに勝ち上がってきただけに、序盤の入り方が試合の流れを大きく左右しそうだ。\n\n## 出典\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288373.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288334.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287514.html\nhttps://www.kanagawa-baseball.com/summer/2026/0718/\nhttps://www.hb-nippon.com/teams/1937\nhttps://www.hb-nippon.com/schools/1937/players\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287231.html",
+    "g97": "## 放送・配信情報\n**TV放送**\n- J:COMチャンネル(地デジ11ch) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n### 横浜\n選抜優勝4回(1973年、1998年、2006年、2025年)、夏の選手権優勝2回(1980年、1998年)を誇る名門中の名門。2026年は春季神奈川大会・春季関東大会を連覇し、関東大会優勝は歴代7度目。春季県大会では32連勝を記録した。ドラフト1位候補と評される右腕・織田翔希をエースに個性豊かな投手陣が控え、投手層の厚さが際立つ。今大会は第1シードで臨み、神奈川県史上初となる4季連続の甲子園出場を狙う。指揮を執るのは横浜高OBで元捕手の村田浩明監督。2003年春の選抜では2年生正捕手として準優勝に貢献し、涌井秀章・成瀬善久という後のプロ二枚看板とバッテリーを組んだ経歴を持つ。日体大卒業後、県立霧が丘、白山での指導を経て2020年に母校監督に就任、2025年春の選抜で19年ぶり4回目の優勝を果たした。\n\n### 三浦学苑\n横須賀市に本拠を置く三浦学苑。甲子園出場歴はなく、横須賀・三浦地区悲願の初出場を懸けて戦う。2025年秋季県大会では準々決勝に進出し武相・日大藤沢という強豪を連破したが、東海大相模に屈した。2025年春季県大会では71年ぶりとなるベスト4進出を果たし、2026年春季県大会も第3シードでベスト16入り。今大会は1回戦で秦野総合を12-0で下し、3回戦では旭丘に6-0で勝利している。指揮を執るのは樫平剛監督。1984年生まれ、相模原出身。2008〜2010年に母校・日大藤沢で当時の山本秀明監督の下でコーチを務め、「いい話があったら受けろ」と送り出されて2011年に三浦学苑のコーチへ、2012年から監督に就任した。元々は英語の教員免許を持っていたが、「高校野球の監督をやりたくて」東京の日大文理学部に通い直し保健体育の免許を取得したという経歴を持つ。佐原グラウンドでの週6日練習に加え、小学生向け野球教室など地域貢献にも積極的だ。\n\n## 過去の対戦成績\n- 2020年8月16日 令和2年度神奈川県高等学校野球大会(平塚球場): 三浦学苑 7-6 横浜\n- 2022年秋季大会準々決勝: 横浜 22-7 三浦学苑(5回コールド)\n\n横浜1勝1敗。2020年は三浦学苑が1点差の逆転で横浜を破り、2022年は横浜が大差のコールドで借りを返した。\n\n## 今大会の状況\n第108回全国高等学校野球選手権神奈川大会は7月5日に横浜スタジアムで開会式、7月7日に開幕。172チーム(連合5チーム含む)が参加し、決勝は7月26日に横浜スタジアムで行われる。第1シードの横浜、第3シードの三浦学苑は共に4回戦まで無傷の4連勝で勝ち上がり、対象試合は5回戦に位置づけられる。横浜は湘南工大付、住吉、東海大相模を破って進出。三浦学苑は秦野総合、旭丘、麻布大付を破って進出した。\n\n## 注目選手\n### 織田翔希(横浜・投手・3年)\n- 今大会成績: 最速154km/h(2026年春季大会)。春季関東大会優勝に貢献。東海大相模戦では7点リードの8回2死から救援登板し、最速153km/hをマークして試合を締めくくった\n- 高校野球を代表する右腕エース。松坂大輔と比較される2026年ドラフト1巡候補。安定感と球速向上が特徴で、神奈川史上初の4季連続甲子園を目指す横浜の中核投手\n\n### 小野舜友(横浜・一塁手・2年)\n- 今大会成績: 6月6日の愛知招待試合で5打数4安打1本塁打1打点。リードオフバッターとして活躍\n- 横浜の主将兼リードオフバッター。身長177cm体重85kg。左投左打ち。東海中央ボーイズ出身。「何が何でも甲子園に戻りたい」と話す\n\n### 池田聖摩(横浜・ショート・投手・3年)\n- 今大会成績: 最速152km/h。春季県大会で好成績を記録\n- 身長176cm体重73kg。右投左打ち。二刀流として活躍する熊本県出身の有望選手。U-15日本代表経験者で2026年ドラフト候補にも名が挙がる\n\n### 田島陽翔(横浜・内野手・2年)\n- 1年時は補助選手だったが、秋季大会から二塁手でスタート出場。埼玉県吉見町出身。右投左打ち。インフィールドのマルチプレーヤーとして1年時から注目される\n\n### 佐藤摩弥(三浦学苑・投手・3年)\n- 昨年度成績: 昨秋県大会の武相戦で8回1失点、日大藤沢戦では完封勝利\n- 今大会成績: 7月13日3回戦の旭丘戦で9回1安打無失点の完封(投球数93、最速137km/h)。7月16日4回戦の麻布大付戦では4-0勝利に貢献\n- 左腕エース。横浜メビウス出身。高2の春、Aチーム昇格直後の練習試合で初回に大量失点を喫し即座にBチームへ降格を告げられ、自宅で号泣した経験を持つ。その後メンタルトレーニングと肉体改造(体重8kg増、球速10km向上)を経てエースに成長し、昨秋は強豪校も撃破した\n\n## 関連動画\n- [【高校野球 神奈川大会開会式】激戦区・神奈川の夏が開幕!甲子園を目指す183校172チームがハマスタに集結! 2026.7.5](https://www.youtube.com/watch?v=lebr9u0gKo8)\n- [横浜 vs 湘南工大付 神奈川史上初の4季連続甲子園へ挑む横浜高校の初戦!【第108回高校野球選手権神奈川大会 ２回戦 全打席ハイライト】 2026.7.9](https://www.youtube.com/watch?v=55ktFefT9wM)\n- [横浜 vs 東海大相模 早すぎる…この試合だけは絶対に見逃せない!神奈川黄金カード!【第108回高校野球選手権神奈川大会 4回戦 全打席ハイライト】 2026.7.16](https://www.youtube.com/watch?v=-wT7xEDVSq0)\n- [横浜高校『新入部員』紹介 2026年春 硬式野球部 改訂版](https://www.youtube.com/watch?v=TQTv1c-Nfsw)\n- [三浦学苑高等学校 公式チャンネル](https://www.youtube.com/channel/UCdovvKsOEViaKS5vLKk2Yhg)\n- [東海大相模 vs 三浦学苑【高校野球 春季神奈川大会 準決勝 全打席ハイライト】2025.5.5](https://www.youtube.com/watch?v=8tesB-rBBoA)\n- [桐蔭学園 vs 三浦学苑【秋季神奈川大会2回戦 全打席ハイライト】](https://www.youtube.com/watch?v=eHI7s-foxHY)\n\n## ストーリー・見どころ\n第1シード・横浜と第3シード・三浦学苑がともに4連勝で駆け上がり、相模原ギオンベースボールパークで激突する。名門校の重圧を背負う横浜と、横須賀・三浦地区悲願の甲子園初出場を目指す三浦学苑。立場は対照的だが、両者に共通するのは投打の隙のなさだ。\n\n横浜の武器は何といっても投手陣の厚み。主将・小野舜友を1番に据えた打線も勢いを落とさず、春の県大会32連勝という圧倒的な実績を引っ提げて夏の頂点を狙う。指揮官・村田浩明監督は横浜高OBの元捕手で、涌井秀章・成瀬善久とバッテリーを組んだ選手時代を経て、2025年春には19年ぶりのセンバツ優勝を成し遂げている。\n\n対する三浦学苑は、左腕エース・佐藤摩弥の成長物語が軸になる。高2の春にAチーム昇格直後の練習試合でまさかの大量失点を喫し、即座にBチーム降格を告げられて自宅で号泣した過去を持つ。そこから体重を8kg増やし、球速を10km伸ばす肉体改造とメンタルトレーニングを重ねてエースの座をつかんだ。今大会も旭丘戦で9回1安打無失点の完封を演じるなど安定感は抜群で、樫平剛監督の下、71年ぶりの春季4強に続く夏の躍進を狙う。\n\n両校には浅からぬ因縁もある。2020年8月、当時第1シードだった横浜を三浦学苑が7-6の逆転で破り、創部初の夏公式戦ベスト4進出という金字塔を打ち立てた。このとき敗れた横浜の遊撃手こそ、後に中日ドラゴンズから2位指名を受ける津田啓史だった。2022年秋には横浜が22-7の大差(5回コールド)で借りを返しており、勝敗は1勝1敗の五分。歴史を塗り替えるのはどちらか、注目の一戦となる。\n\n## 出典\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://www.hb-nippon.com/players/25185\nhttps://draft-repo.com/blog-entry-6298.html\nhttps://www.kyureki.com/player/351919/\nhttps://www.draft-kaigi.jp/highschool/high-draftnews/87424/\nhttps://www.draft-kaigi.jp/highschool/high-draftnews/86996/\nhttps://www.baseballchannel.jp/etc/274855/\nhttps://www.baseballchannel.jp/etc/274632/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287593.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287628.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1288201.html\nhttps://shin-yoko.net/2026/06/15/koko_yakyu2026-3/\nhttps://www2.yokohama-jsh.ac.jp/mmt/baseball/syoukai/record.html\nhttps://miura.ed.jp/category/undou/baseball_h/\nhttps://ja.wikipedia.org/wiki/%E6%B4%A5%E7%94%B0%E5%95%93%E5%8F%B2\nhttps://baseball.yahoo.co.jp/npb/player/1850874/top\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/entry-443404.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1174143.html\nhttps://news.yahoo.co.jp/articles/e1bd0fdf3db2bafe994977561cf615ca383a5310\nhttps://ja.wikipedia.org/wiki/%E6%9D%91%E7%94%B0%E6%B5%A9%E6%98%8E",
+    "g98": "## 放送・配信情報\n**TV放送**\n- J:COMチャンネル(地デジ11ch) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n### 市ケ尾\n神奈川県立市ケ尾高等学校(横浜市青葉区)。学力レベルの高い文武両道校でありながら、2024年夏には公立校唯一のベスト16進出を果たした。2026年春季県大会は1回戦を延長タイブレークで突破するも2回戦で横浜隼人に0-5でコールド負け。今大会は1回戦から4回戦まで無敗で勝ち上がり、シード外から5回戦に進出した。\n\n### 川和\n神奈川県立川和高校(横浜市都筑区)。進学校ながら2023年から野球部が台頭し、2025年春季大会でベスト8(同校創部初)、同年夏の選手権神奈川大会では5回戦進出と着実に力をつけてきた。2026年夏は第3シードで出場し、2回戦から4回戦まで勝ち上がって上位進出を続けている。\n\n## 過去の対戦成績\n2023年春季県大会3回戦で対戦しており、川和2-7市ケ尾で市ケ尾が勝利している。\n\n## 今大会の状況\n第108回全国高等学校野球選手権神奈川大会。市ケ尾はシード外ながら1回戦から4回戦まで4連勝(1回戦は関東六浦、2回戦は相洋、3回戦は横浜氷取沢、4回戦は川崎工科をいずれも撃破)。川和は第3シードで、確認できている範囲では2回戦の横須賀総合戦15-1、3回戦の武相戦7x-6、4回戦の横浜商大戦4-3をいずれも制している。7月18日(金)11:30、相模原ギオンベースボールパークでの5回戦、ベスト8進出をかけた一戦となる。\n\n## 注目選手\n### 大塚遼(市ケ尾・投手・3年)\n- 昨年度成績: 昨秋県大会3回戦で強豪・横浜隼人相手に140球の2失点完投勝利\n- 今大会成績: 2回戦で相洋に対して156球完投勝利\n- 最速144キロの右腕エース。身長173cm、高校入学後にピッチャーへ転向。生命線のスライダーと、外角低めにこだわる制球でプロ野球スカウトからも注目される。\n\n### 中山優太朗(市ケ尾・投手・3年)\n- 昨年度成績: 入学時116キロだった球速を2年半で145キロまで伸ばした\n- 今大会成績: 1回戦で2回2安打無失点、3奪三振の快投。自己最速タイの145キロを計測\n- 入学時60キロだった体重を80キロまで増量し、球速アップにつなげた努力家。市ケ尾の二枚看板投手の一人。\n\n### 片岸由良(川和・投手・2年)\n- 昨年度成績: 秋の県大会で桐蔭高校相手に完投勝利\n- 今大会成績: 2回戦の横須賀総合戦で4回1失点の好投でコールド勝ちに貢献。3回戦の武相戦では劇的なタイブレーク勝利に貢献\n- カーブを持ち味とする技巧派左腕。2026年は左腕投手2人体制の先発の一角として川和の中核を担う。\n\n## 関連動画\n- [[2026夏]市ヶ尾🆚相洋](https://www.youtube.com/watch?v=7cW0B36wzsY)\n- [【高校野球2026夏】武相 夏の結末はサヨナラ…涙が止まらないタイブレーク決着 川和 vs 武相 第108回高校野球選手権神奈川大会 3回戦 2026.7.13](https://www.youtube.com/watch?v=QF59K-0Bk4c)\n- [公立進学校にMLBスカウト絶賛の左腕 浜岡蒼太はなぜ川和を選んだのか、なぜ急成長を果たすことができたのか…甲子園にかける第16回](https://www.youtube.com/watch?v=Ym9dQBMFoAw)\n\n## ストーリー・見どころ\nシード外から4連勝で勝ち上がった市ケ尾と、第3シードの貫禄で勝ち進む川和。ベスト8をかけた一戦は、県立校同士の意地のぶつかり合いとなる。市ケ尾は144キロ右腕・大塚遼と145キロ右腕・中山優太朗の二枚看板が軸。相洋戦での156球完投など、投げ切る力に定評がある。\n\n川和は3回戦の武相戦をタイブレークの末に制するなど接戦を乗り越えてきた勝負強さが持ち味。左腕・片岸由良のカーブを軸にした投球が試合の鍵を握る。2023年春には市ケ尾が川和に競り勝った過去があり、3年越しの再戦がどう転ぶか注目される。\n\n## 出典\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1282591.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1179480.html\nhttps://www.hb-nippon.com/articles/14476\nhttps://baseballking.jp/yakyuiku/661341/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1279315.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1094916.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1094552.html\nhttps://note.com/kanzen/n/n76bf281115a8\nhttps://www.kanagawa-baseball.com/\nhttps://www.pen-kanagawa.ed.jp/kawawa-h/seikatsu/138baseball.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1282853.html\nhttps://www.kyureki.com/koko/92/2378/\nhttps://www.kyureki.com/koko/92/1843/\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03140018\nhttps://spaia.jp/column/baseball/hsb/26776\nhttps://shin-yoko.net/2024/05/05/koko_yakyu2024-3/\nhttps://www.townnews.co.jp/0103/2024/05/16/733151.html\nhttps://baseball-memories.jp/archives/92555\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://www.hb-nippon.com/articles/4063\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1287601.html",
+    "g99": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n\n## 両校プロフィール\n\n### 慶応\n慶應義塾高等学校(横浜市)は1888年創部の伝統校。甲子園出場は春夏通算22回(春7回・夏15回)、優勝2回を誇る。2023年夏には107年ぶりとなる全国制覇を達成し、決勝で仙台育英を8-2で降した。2008年明治神宮大会優勝、2005年センバツベスト8など実績多数。2026年春季県大会は準々決勝で立花学園に7-4で勝利したが、準決勝で横浜創学館に1-4で敗退。ウェイトトレーニングジムなど施設面も充実し、2年生の成長が著しい守備型チームとして今夏の頂点奪還を狙う。監督は森林貴彦氏。\n\n### 横浜清陵\n神奈川県立校で、初の甲子園出場は2025年春の選抜大会。21世紀枠で出場した第97回選抜では1回戦で広島商業に2-10で敗れたが、県立校としては1954年の湘南以来71年ぶりの甲子園出場となった。2025年夏は4回戦で星槎国際湘南に0-4で敗退。2026年春季県大会は2回戦で横浜商大に4-1で勝利(コールドではなく9回まで実施)、3回戦で山手学院に6-5と勝ち上がったが、4回戦で慶応に2-12(9回)で敗れている。今大会は第3シードで、公立校として3年連続のシード権獲得。監督は野原慎太郎氏で、2020年就任。現職は家庭科教諭も務める。スローガンは「準備・全力・最後まで」。「全員攻撃、全員守備」を掲げる全員野球がモットーで、選手のほとんどが県内中学出身の地域密着型チームだ。\n\n## 過去の対戦成績\n2026年春季神奈川県大会4回戦(4月18日、等々力球場)で両校は対戦し、慶応が12-2で勝利。慶応の大棒琉雅が5回に3ランを放ち、9回まで戦って決着した。\n\n## 今大会の状況\n第108回全国高等学校野球選手権神奈川大会は172チーム(連合5チーム含む)が参加し、7月7日開幕、決勝は7月26日。慶応は春季県大会ベスト4の実績で第1シード、横浜清陵は春季県大会ベスト16で第3シードに入った。\n\n慶応はここまで、2回戦(7/9)で元石川に10-0、3回戦(7/13)で大磯に11-4、4回戦(7/16)で横浜栄に12-5と危なげなく勝ち進んできた。横浜清陵も2回戦(7/10)で麻溝台に8-1、3回戦(7/13)で横須賀大津に11-0、4回戦(7/16)で多摩に10-5と、いずれも大差で5回戦に駒を進めている。\n\n5回戦は7月18日9時、川崎市等々力球場で行われる。奇しくも両校が春季県大会4回戦で対戦した舞台と同じ球場での再戦となる。\n\n## 注目選手\n\n### 湯本琢心(慶応・投手/外野手・2年生)\n- 高校通算22本塁打を誇り、ドラフト注目選手として名前が挙がる\n- 春季大会では先発投手として5回無失点、自己最速146キロを記録\n- 打者としても春季大会で3安打4打点1本塁打\n- 大谷翔平に憧れ、1年夏から投打両面でチームを牽引する二刀流エース。同学年での打力はナンバーワンと評価され、ドラフト制以降の慶応初となる高卒プロ入りを目指す\n\n### 大棒琉雅(慶応・左翼・3年生)\n- 春季大会4回戦(対横浜清陵)では5打数3安打3打点1本塁打\n- 打線の中核を担う強打者\n\n### 松嶋歩(横浜清陵・投手・3年生)\n- 主将でエース。2025年春の選抜大会出場経験を持つ\n- 7月13日の対横須賀大津戦では6回完投0失点\n- マウンド上でフォーム修正できる適応力とプレッシャーに強い試合運びが持ち味\n\n## 関連動画\n- [去年の甲子園覇者！慶應義塾 / 開幕直前！全国高等学校野球選手権神奈川大会【News Linkオンライン】](https://www.youtube.com/watch?v=y8Kh4GEcJk0)\n- [第2シードで迎える初めての夏・横浜清陵高校 / 来月開幕！全国高等学校野球選手権神奈川大会【News Linkオンライン】](https://www.youtube.com/watch?v=4OTWDLaGNJw)\n- [いざセンバツへ！大会直前の横浜高校＆横浜清陵高校に聞く【News Linkオンライン】](https://www.youtube.com/watch?v=IBCdiJ_4iKw)\n- [２１世紀枠・横浜清陵 初戦敗退も甲子園のスコアボードに刻んだ2点！](https://www.youtube.com/watch?v=gDdhOzRVVbM)\n\n## ストーリー・見どころ\n慶応と横浜清陵の顔合わせは、実は3か月前にも同じ等々力球場で実現している。4月18日の春季県大会4回戦、慶応が12-2で圧勝した一戦だ。大棒琉雅の3ランを含む強力打線が横浜清陵を突き放した記憶はまだ新しい。夏の舞台、同じグラウンドで迎える再戦は、清陵にとって雪辱を懸けた一戦となる。\n\nその清陵を率いるのは、野原慎太郎監督。自身も選手として2000年春のセンバツで東海大相模の背番号10を背負い、決勝で智弁和歌山を降して全国優勝を経験した異色の指導者だ。私学の頂点を知る指導者が、いまは公立の横浜清陵を率いて古豪・慶応に挑む構図は、この一戦に深みを与える。「全員攻撃、全員守備」を掲げる清陵の全員野球が、私学の分厚い戦力にどこまで食い込めるかが見どころだ。\n\n慶応の中心はやはり2年生の湯本琢心。自己最速146キロを誇る投打二刀流で、大谷翔平を目標に掲げる逸材だ。春季大会では投げて5回無失点、打っては3安打4打点1本塁打と投打で存在感を放っており、今大会でもチームを牽引する。加えて大棒琉雅ら上級生の打力も健在で、隙のない布陣で頂点奪還を狙う。\n\n横浜清陵はエース松嶋歩を中心とした守りが持ち味。7月13日の横須賀大津戦では6回完投0失点と安定感を見せ、フォーム修正にも柔軟に対応できる適応力を持つ。3か月前と同じ球場で行われる再戦、私学の名門と公立の挑戦者による一戦から目が離せない。\n\n## 出典\nhttps://www.baseball-station.com/memories/senbatsu2025-yokohama-seiryo/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html\nhttps://apapnews.com/famousmember/20720/\nhttps://news.yahoo.co.jp/expert/articles/00441a48ca858658e969d8bb4981ac79f9d7a753\nhttps://baseball-memories.jp/archives/92903\nhttps://www.hb-nippon.com/articles/12579\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1190715.html\nhttps://number.bunshun.jp/articles/-/862141\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1143010.html",
+    "g100": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n## 両校プロフィール\n### 立花学園\n「打」を看板とし、上位打線の破壊力は県内屈指を誇る。指揮官はデータやSNSを積極活用する革新派、志賀正啓監督。2022年夏(第104回選手権)で創部初のベスト4進出を果たすと同年春もベスト8、2025年秋季大会でもベスト4まで勝ち上がり、前回2025年夏(第107回選手権)もベスト4だった。今大会は第2シードで、2回戦から4回戦まで3試合を勝ち抜きベスト16入り。\n\n### 横浜商業\n通称「Y校」。指揮を執るのは2024年夏大会後に就任した廣濱優監督。第108回大会はノーシードでの出場となり、2回戦から4回戦まで3試合を突破してベスト16まで駒を進めた。\n## 過去の対戦成績\n2024年7月15日、夏の神奈川大会3回戦で対戦し、立花学園が7-0で横浜商業に勝利(7回コールド)。立花学園は当時2年のエース・芦川が完封を果たした。\n## 今大会の状況\n立花学園は第2シード。2回戦は藤沢清流に7-3、3回戦は小田原に14-0、4回戦は県相模原に7-6で勝利しベスト16進出。横浜商業はノーシードながら、2回戦は荏田に9-2、3回戦は横浜隼人に3-2、4回戦は新羽に12-2で勝利し波に乗る。両者は5回戦・ベスト8を懸けた一戦で相まみえる。\n## 注目選手\n### 根本奨大(立花学園・投手・3年)\n- 今大会成績: 2回戦7-3勝利、3回戦14-0勝利、4回戦は9回136球を投げ抜き7-6の完投勝利\n- 背番号1のエース。身長181cm、体重77kg、投打とも右。ノビのある直球とキレのある変化球を武器に、ピンチに強い投手\n\n### 山口櫂(横浜商業・投手)\n- 背番号1の大型右腕エース。身長187cm、体重94kg、投打とも右。Y校OB・元巨人右腕の山口鉄也を彷彿とさせる大器として評価されている\n\n### 松本大誠(横浜商業・遊撃手)\n- 横浜商業のキャプテン。横浜旭ヤングベースボールクラブ出身。『逆襲』をテーマに大会に臨むチームのリーダー\n## 関連動画\n- [立花学園高等学校 - YouTube公式チャンネル](https://www.youtube.com/channel/UCycyiqqIWw02i9C54kVq6SQ)\n- [高校野球 神奈川大会開会式 2026.7.5](https://www.youtube.com/watch?v=lebr9u0gKo8)\n## ストーリー・見どころ\n第2シードの貫禄で3試合を危なげなく勝ち上がってきた立花学園と、ノーシードから隼人撃破を含む3連勝で波に乗る横浜商業。今大会これまでの戦いぶりを見ても、上位打線の破壊力が持ち味の立花学園と、大型右腕・山口櫂を擁して守りを固める横浜商業と、対照的なチームカラーがぶつかり合う一戦になりそうだ。\n\n4回戦を完投で乗り切った立花学園のエース・根本と、187cmの長身から力強い直球を投げ込む横浜商業の山口。両左右の好投手対決に加え、ベスト8進出を懸けた緊張感がどちらに味方するか。等々力球場で行われる好カードから目が離せない。\n## 出典\nhttps://www.kanagawa-baseball.com/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1185277.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1192292.html\nhttps://www.hb-nippon.com/articles/14627\nhttps://www.hb-nippon.com/articles/14410\nhttps://www.hb-nippon.com/articles/5905\nhttps://www.hb-nippon.com/teams/1899\nhttps://www.hb-nippon.com/articles/5667\nhttps://www.kanaloco.jp/tag/1122\nhttps://www.kanaloco.jp/tag/2470\nhttps://tachibana-g.ac.jp/school-life/club/baseball/\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1280680.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-1283844.html\nhttps://www.townnews.co.jp/0601/2026/06/26/841937.html\nhttps://hujisawaseiryubbc.wixsite.com/hujisawaseiryubbc/home\nhttps://baseball-memories.jp/archives/69307\nhttps://baseball-memories.jp/archives/category/kanagawa/area-seisho/tachibana-gakuen\nhttps://baseball-memories.jp/archives/category/kanagawa/area-shonan/fujisawa-seiryu\nhttps://www.hb-nippon.com/tournaments/1566\nhttps://baseball.omyutech.com/teamMember.action?teamId=12208\nhttps://baseball.omyutech.com/teamMember.action?teamId=12258\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-925859.html\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/article-925793.html\nhttps://www.hayato.ed.jp/annai/club/hs-baseball/\nhttps://monthly-charge.com/charge/24386/\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03140004\nhttps://www.kanagawa-baseball.com/summer/2026/\nhttps://www.edu.city.yokohama.lg.jp/school/hs/y-shogyo/\nhttps://www.kyureki.com/koko/92/1812/\nhttps://www.kyureki.com/koko/92/1808/\nhttps://baseball.omyutech.com/teamGames.action?teamId=12288\nhttps://www.hb-nippon.com/articles/8135\nhttps://baseball-memories.jp/archives/31538\nhttps://www.kanaloco.jp/sports/baseball/hsbaseball/entry-24482.html\nhttps://hsbb.jp/senshuken/y1983/\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03140003"
   },
   "hooks": {
     "g1": "第1シード創学館と「ノーシード爆弾」平塚学園。3か月前の7-0の再戦、145キロ右腕ら層の厚い投手陣に挑む",
@@ -1719,7 +1840,9 @@
     "g77": "第1シード横浜と、27年ぶりにノーシードへ回った甲子園通算24回出場の東海大相模が4回戦で激突。両軍を率いるのはともに母校出身の元捕手で、原俊介監督は「能力は横浜が上。でも、それがそのまま勝敗に直結するとは限らないのが、野球の面白いところ」と語る",
     "g85": "甲子園未出場の第3シード三浦学苑と、5年ぶりの3回戦突破から勢いに乗る麻布大付が対戦。三浦学苑・樫平剛監督にとって麻布大付は地元相模原のチームで、2025年秋には自身の母校・日大藤沢を撃破してベスト8に進んだ経歴を持つ",
     "g90": "無傷のまま勝ち上がってきた両校がぶつかる4回戦。センバツ経験者で昨秋就任の桐蔭学園・小倉丞太郎監督と、2022年秋の就任から4年足らずで「凡事徹底」のフィジカル改革を進めてきた藤嶺藤沢・菊地幹監督(就任時29歳)が指揮官対決を演じる",
-    "g92": "第3シード藤沢翔陵とノーシード向上が対戦。向上の平田隆康監督は28歳で就任し20年以上をかけてチームを鍛え上げ、2014年夏の準優勝・2021年秋の創部初関東大会出場に導いてきた"
+    "g92": "第3シード藤沢翔陵とノーシード向上が対戦。向上の平田隆康監督は28歳で就任し20年以上をかけてチームを鍛え上げ、2014年夏の準優勝・2021年秋の創部初関東大会出場に導いてきた",
+    "g97": "第1シード横浜と第3シード三浦学苑は過去2度対戦しており、2020年は三浦学苑が7-6の逆転勝ち、2022年秋は横浜が22-7の大差コールドで借りを返した1勝1敗の五分。横浜は神奈川県史上初の4季連続甲子園を懸ける",
+    "g99": "慶応と横浜清陵は2026年春季県大会4回戦(4月18日、川崎市等々力球場)で対戦し慶応が12-2で勝利しており、同じ球場での夏の再戦は清陵にとって雪辱戦となる。清陵を率いる野原慎太郎監督は2000年春センバツで東海大相模の一員として全国優勝を経験した指導者"
   },
   "picks": {
     "g1": 1,
@@ -1748,6 +1871,8 @@
     "g77": 1,
     "g90": 1,
     "g92": 1,
-    "g85": 1
+    "g85": 1,
+    "g97": 1,
+    "g99": 1
   }
 }
