@@ -115,6 +115,17 @@ function lintTournament(slug) {
     if (d.kind !== 'results') continue;
     for (const v of d.venues) for (const g of v.games) resultGames.push(g);
   }
+  // 相手校名の部分文字列衝突対策(2026-07-16追加): 「京葉」⊂「京葉工」のように、opp名が
+  // 別の実在校名の部分文字列になっているケースで、sentence.includes(opp)が別校への言及を
+  // 誤って自校の対戦結果として拾ってしまう偽陽性が発覚(g70「千葉商大付が京葉工に10-0」を
+  // 「実籾vs京葉 13-3」と誤照合)。全大会の既知校名(results日+cards日の両方)を集め、
+  // oppより長い別の校名がその節に含まれる場合はそちらへの言及とみなしスキップする。
+  const allKnownNames = new Set();
+  for (const rg of resultGames) { allKnownNames.add(rg.a); allKnownNames.add(rg.b); }
+  for (const d of data.days) {
+    if (d.kind !== 'cards') continue;
+    for (const g of d.games) { allKnownNames.add(g.a); allKnownNames.add(g.b); }
+  }
   const scoreNum = (s) => parseInt(String(s).replace(/[^0-9]/g, ''), 10);
   for (const day of data.days) {
     if (day.kind !== 'cards') continue;
@@ -139,6 +150,10 @@ function lintTournament(slug) {
         // (0713分22件が全て偽陽性だったことで発覚)。
         for (const sentence of md.split(/[。、\n]/)) {
           if (!sentence.includes(opp)) continue;
+          const isSubstringCollision = [...allKnownNames].some(
+            (n) => n !== opp && n.length > opp.length && n.includes(opp) && sentence.includes(n)
+          );
+          if (isSubstringCollision) continue;
           if (historicRe.test(sentence)) continue;
           for (const m of sentence.matchAll(/(\d{1,3})\s*[-−–—]\s*(\d{1,3})/g)) {
             const got = [parseInt(m[1], 10), parseInt(m[2], 10)].sort((x, y) => x - y).join('-');
@@ -412,8 +427,8 @@ function lintTournament(slug) {
     const otherSeasons = ['春', '夏', '秋'].filter((s) => s !== ledger.season);
     const otherSeasonAlt = otherSeasons.map(seasonAlt).join('|');
     const otherCtxRe = new RegExp(
-      `今大会|第\\d+回|\\d+月\\d+日|今(?:${otherSeasons.join('|')})|昨(?:${otherSeasons.join('|')})|` +
-      `\\d{2}年(?:${otherSeasonAlt})|(?:${otherSeasons.join('|')})(?:季|の大会|の県大会|の陣|は|に入)`
+      `今大会|本大会|第\\d+回|\\d+月\\d+日|今(?:${otherSeasons.join('|')})|昨(?:${otherSeasons.join('|')})|` +
+      `\\d{2}年(?:${otherSeasonAlt})|(?:${otherSeasons.join('|')})(?:季|の大会|の県大会|の陣|は|に入|の本大会)`
     );
     // 神奈川の台帳は本戦のみ(地区予選のデータが無い、2026-07-11判明)。地区予選への言及は
     // 神奈川では検証不能なので対象外にする(誤って「該当試合なし」を出さない)
