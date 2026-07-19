@@ -236,7 +236,12 @@ function lintTournament(slug) {
   // 誤帰属した実例(2026-07-14発覚)を受けて追加。全記事を横断してチェックする。
 
   // (1) 選手名が複数の異なる校名の下に出現していないか(同一人物が2校に所属するのは
-  // あり得ないため、これは高確率で誤帰属)
+  // あり得ないため、これは高確率で誤帰属)。ただし同一校が記事によって正式名/略称で
+  // 揺れるケース(例: 「熊谷商業」正式名 vs 「熊谷商」略称・大会ブラケット表記)は誤帰属
+  // ではないため、既知の同一校エイリアスを正規化してから比較する(2026-07-19発覚、
+  // g26=熊谷商業表記 vs g76=熊谷商表記で同一選手3名が偽陽性衝突)
+  const PLAYER_SCHOOL_ALIASES = { 熊谷商業: '熊谷商' };
+  const canonicalPlayerSchool = (s) => PLAYER_SCHOOL_ALIASES[s] || s;
   const playerSchool = new Map(); // name -> Map(school -> Set(gid))
   for (const day of data.days) {
     if (day.kind !== 'cards') continue;
@@ -254,7 +259,7 @@ function lintTournament(slug) {
         const hm = head.match(/^(.+?)[(（](.+?)[)）]/);
         if (!hm) continue;
         const name = hm[1].trim();
-        const school = hm[2].split(/[・･]/)[0].trim();
+        const school = canonicalPlayerSchool(hm[2].split(/[・･]/)[0].trim());
         if (!name || !school) continue;
         if (!playerSchool.has(name)) playerSchool.set(name, new Map());
         const bySchool = playerSchool.get(name);
