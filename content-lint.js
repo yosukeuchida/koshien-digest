@@ -15,6 +15,20 @@ const arg = process.argv[2];
 const targets = arg === '--all' || !arg ? listSlugs() : [resolveSlug(arg)];
 const html = fs.readFileSync(path.join(__dirname, 'site.html'), 'utf8');
 
+// 校名と球場名の部分文字列衝突対策(2026-07-19発覚): 「小田原」⊂「小田原球場」・「横須賀」⊂
+// 「横須賀スタジアム」のように、校名が球場名の接頭辞と一致するケースで、括弧書きの開催地
+// 表記(「上溝が金沢に3-1(横須賀スタジアム)で勝利」)を対戦相手への言及と誤認する偽陽性が
+// あった(神奈川g3・g73)。校名+球場接尾辞の並びを除いた残りに校名が無ければ、その校名は
+// 球場名の中にしか現れていない=対象外とする
+const VENUE_SUFFIX_RE_SRC = '(球場|スタジアム|ボールパーク|パーク|公園|ドーム)';
+function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+function mentionedOnlyAsVenue(clause, name) {
+  const stripped = clause.replace(new RegExp(escapeRegExp(name) + VENUE_SUFFIX_RE_SRC, 'g'), '');
+  return !stripped.includes(name);
+}
+
 // 甲子園出場歴台帳照合の人手確認済み例外(disambiguations.jsonと同じ「検証済み例外は許可
 // リストへ記録」パターン)。台帳(hsbb.jp)側の直近未反映・情報源間の計上差など、記事側を
 // 書き換える根拠が無いと人が確認したケースをここに記録する
@@ -112,8 +126,16 @@ function lintTournament(slug) {
   // 既知の限界: 相手校名が他の語に部分一致する場合(「旭」等の短い校名)にまれに誤検知し得る。
   const resultGames = [];
   for (const d of data.days) {
-    if (d.kind !== 'results') continue;
-    for (const v of d.venues) for (const g of v.games) resultGames.push(g);
+    if (d.kind === 'results') {
+      for (const v of d.venues) for (const g of v.games) resultGames.push(g);
+    } else if (d.kind === 'cards') {
+      // cards形式の日にも結果(sa/sb)がmerge-results.js等で直接埋め込まれることがある
+      // (ingest-day.jsのトーナメント整合性検査と同じ設計漏れ、2026-07-19発覚: 神奈川g101の
+      // 「三浦学苑戦12-0」が5回戦cards backfillのため未収集で誤帰属疑いに誤検知)
+      for (const g of d.games) {
+        if (g.sa !== undefined && g.sb !== undefined) resultGames.push(g);
+      }
+    }
   }
   // 相手校名の部分文字列衝突対策(2026-07-16追加): 「京葉」⊂「京葉工」のように、opp名が
   // 別の実在校名の部分文字列になっているケースで、sentence.includes(opp)が別校への言及を
@@ -133,6 +155,11 @@ function lintTournament(slug) {
       const md = data.reports[cg.id];
       if (!md) continue;
       for (const rg of resultGames) {
+        // 対象カード自身の確定結果(cg.a vs cg.b)はここでは対象外 — resultGamesにcards+sa/sb
+        // (今大会の後続ラウンド)を含めた際、cg自身のレコードが「相手」として自己参照され、
+        // 別ラウンドの正当な言及まで誤検知する回帰を防ぐ(2026-07-19発覚)
+        const isSelfPair = (rg.a === cg.a && rg.b === cg.b) || (rg.a === cg.b && rg.b === cg.a);
+        if (isSelfPair) continue;
         let opp = null;
         if (rg.a === cg.a || rg.a === cg.b) opp = rg.b;
         else if (rg.b === cg.a || rg.b === cg.b) opp = rg.a;
@@ -148,19 +175,28 @@ function lintTournament(slug) {
         // 読点(、)でも分割してチェック単位を狭める(2026-07-13追加)。文単位のままだと、後半の
         // 試合のスコアが前半の対戦相手名と誤って照合され、内容は正しいのに誤検知が多発した
         // (0713分22件が全て偽陽性だったことで発覚)。
-        for (const sentence of md.split(/[。、\n]/)) {
-          if (!sentence.includes(opp)) continue;
-          const isSubstringCollision = [...allKnownNames].some(
-            (n) => n !== opp && n.length > opp.length && n.includes(opp) && sentence.includes(n)
-          );
-          if (isSubstringCollision) continue;
-          if (historicRe.test(sentence)) continue;
-          for (const m of sentence.matchAll(/(\d{1,3})\s*[-−–—]\s*(\d{1,3})/g)) {
-            const got = [parseInt(m[1], 10), parseInt(m[2], 10)].sort((x, y) => x - y).join('-');
-            if (got !== want) {
-              violations++;
-              const ctx = sentence.trim().slice(0, 60);
-              console.log(`✗ [結果スコア矛盾] ${cg.id}: 「${ctx}…」の ${m[0]} (正: ${rg.a} ${rg.sa}-${rg.sb} ${rg.b})`);
+        // 読点分割の節が「2024年7月18日、横浜に0-11で敗れて」のように季節・年度語を含む節と
+        // スコアを含む節に分かれるケースで、historic判定が節単位のみだと後続節が漏れ、過去の
+        // 対戦(今大会の結果ではない)を誤検知していた(誤帰属疑いチェックは2026-07-11に修正済みだが
+        // こちらは未修正だった、2026-07-19発覚)。文単位でhistoric判定を継承する
+        for (const sentence of md.split(/[。\n]/)) {
+          let historic = false;
+          for (const clause of sentence.split(/、/)) {
+            if (historicRe.test(clause)) historic = true;
+            if (historic) continue;
+            if (!clause.includes(opp)) continue;
+            const isSubstringCollision = [...allKnownNames].some(
+              (n) => n !== opp && n.length > opp.length && n.includes(opp) && clause.includes(n)
+            );
+            if (isSubstringCollision) continue;
+            if (mentionedOnlyAsVenue(clause, opp)) continue;
+            for (const m of clause.matchAll(/(\d{1,3})\s*[-−–—]\s*(\d{1,3})/g)) {
+              const got = [parseInt(m[1], 10), parseInt(m[2], 10)].sort((x, y) => x - y).join('-');
+              if (got !== want) {
+                violations++;
+                const ctx = clause.trim().slice(0, 60);
+                console.log(`✗ [結果スコア矛盾] ${cg.id}: 「${ctx}…」の ${m[0]} (正: ${rg.a} ${rg.sa}-${rg.sb} ${rg.b})`);
+              }
             }
           }
         }
@@ -342,7 +378,14 @@ function lintTournament(slug) {
           for (const name of opponentNames) {
             // 自校(または既知の自己言及略称)への言及は対象外
             if ([g.a, g.b].some((own) => isSelfReference(name, own))) continue;
-            if (clause.includes(name)) { matchedName = name; break; } // 最長一致1件のみ(部分文字列連鎖を回避)
+            if (!clause.includes(name)) continue;
+            // 相手校名の部分文字列衝突対策: 自校名(g.a/g.b)がnameを部分文字列として含む場合
+            // (例:「横浜商大」は自校なのでスキップされるが、続けて短い「横浜」が「横浜商大」内で
+            // 誤マッチする)は、実際には自校への言及でありnameは対象外とする(2026-07-19発覚、
+            // g86: 川和vs横浜商大の記事で「横浜商大」自己言及の中の「横浜」が誤って第三校扱いされた)
+            if ([g.a, g.b].some((own) => own !== name && own.includes(name) && clause.includes(own))) continue;
+            if (mentionedOnlyAsVenue(clause, name)) continue;
+            matchedName = name; break; // 最長一致1件のみ(部分文字列連鎖を回避)
           }
           if (!matchedName) continue;
           for (const m of scores) {
