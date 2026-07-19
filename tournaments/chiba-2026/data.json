@@ -976,7 +976,7 @@
       "kind": "cards",
       "round": "4回戦",
       "roundLabel": "四回戦",
-      "note": "4回戦 16試合 — 各球場 8:45 / 11:15 / 13:45 開始。カードをタップすると試合の背景・見どころを読めます。",
+      "note": "4回戦 16試合 — 全試合終了。太字が勝者。",
       "sources": [
         {
           "url": "https://spocale.com/sports/1/leagues/1014",
@@ -993,112 +993,221 @@
           "t": "8:45",
           "a": "東京学館浦安",
           "b": "東邦大付",
-          "v": "千葉県総合スポーツセンター野球場"
+          "v": "千葉県総合スポーツセンター野球場",
+          "sa": 6,
+          "sb": 0
         },
         {
           "id": "g57",
           "t": "8:45",
           "a": "幕張総合",
           "b": "銚子商",
-          "v": "なごみの米屋ぴーちゃんフィールド大谷津野球場"
+          "v": "なごみの米屋ぴーちゃんフィールド大谷津野球場",
+          "sa": 1,
+          "sb": 0
         },
         {
           "id": "g58",
           "t": "8:45",
           "a": "木更津総合",
           "b": "暁星国際",
-          "v": "長生の森公園野球場"
+          "v": "長生の森公園野球場",
+          "sa": 5,
+          "sb": 7
         },
         {
           "id": "g59",
           "t": "8:45",
           "a": "木更津",
           "b": "拓大紅陵",
-          "v": "ゼットエーボールパーク"
+          "v": "ゼットエーボールパーク",
+          "sa": 2,
+          "sb": 6
         },
         {
           "id": "g60",
           "t": "8:45",
           "a": "専大松戸",
           "b": "流山",
-          "v": "柏の葉公園野球場"
+          "v": "柏の葉公園野球場",
+          "sa": 7,
+          "sb": 0
         },
         {
           "id": "g61",
           "t": "8:45",
           "a": "千葉明徳",
           "b": "安房",
-          "v": "ADEKA袖ケ浦球場"
+          "v": "ADEKA袖ケ浦球場",
+          "sa": 4,
+          "sb": 5
         },
         {
           "id": "g62",
           "t": "11:15",
           "a": "柏井",
           "b": "日体大柏",
-          "v": "なごみの米屋ぴーちゃんフィールド大谷津野球場"
+          "v": "なごみの米屋ぴーちゃんフィールド大谷津野球場",
+          "sa": 2,
+          "sb": 12
         },
         {
           "id": "g63",
           "t": "11:15",
           "a": "市原中央",
           "b": "翔凜",
-          "v": "ADEKA袖ケ浦球場"
+          "v": "ADEKA袖ケ浦球場",
+          "sa": 4,
+          "sb": 0
         },
         {
           "id": "g64",
           "t": "11:15",
           "a": "市松戸",
           "b": "東葛飾",
-          "v": "柏の葉公園野球場"
+          "v": "柏の葉公園野球場",
+          "sa": 8,
+          "sb": 1
         },
         {
           "id": "g65",
           "t": "11:15",
           "a": "君津商",
           "b": "市船橋",
-          "v": "ゼットエーボールパーク"
+          "v": "ゼットエーボールパーク",
+          "sa": 2,
+          "sb": 12
         },
         {
           "id": "g66",
           "t": "11:15",
           "a": "成田",
           "b": "中央学院",
-          "v": "千葉県総合スポーツセンター野球場"
+          "v": "千葉県総合スポーツセンター野球場",
+          "sa": 14,
+          "sb": 7
         },
         {
           "id": "g67",
           "t": "11:15",
           "a": "志学館",
           "b": "我孫子東",
-          "v": "長生の森公園野球場"
+          "v": "長生の森公園野球場",
+          "sa": 9,
+          "sb": 0
         },
         {
           "id": "g68",
           "t": "13:45",
           "a": "習志野",
           "b": "市柏",
-          "v": "千葉県総合スポーツセンター野球場"
+          "v": "千葉県総合スポーツセンター野球場",
+          "sa": 9,
+          "sb": 2
         },
         {
           "id": "g69",
           "t": "13:45",
           "a": "千葉敬愛",
           "b": "流通経大柏",
-          "v": "柏の葉公園野球場"
+          "v": "柏の葉公園野球場",
+          "sa": 3,
+          "sb": 4
         },
         {
           "id": "g70",
           "t": "13:45",
           "a": "実籾",
           "b": "千葉商大付",
-          "v": "ゼットエーボールパーク"
+          "v": "ゼットエーボールパーク",
+          "sa": 2,
+          "sb": 10
         },
         {
           "id": "g71",
           "t": "13:45",
           "a": "県船橋",
           "b": "千葉経大付",
-          "v": "ADEKA袖ケ浦球場"
+          "v": "ADEKA袖ケ浦球場",
+          "sa": 1,
+          "sb": 8
+        }
+      ]
+    },
+    {
+      "key": "0720",
+      "label": "7月20日(月)",
+      "date": "2026-07-20",
+      "kind": "cards",
+      "round": "5回戦",
+      "roundLabel": "五回戦",
+      "note": "5回戦 8試合 — 各球場 8:45 / 11:15 開始。カードをタップすると試合の背景・見どころを読めます。",
+      "sources": [
+        {
+          "url": "https://baseball.yahoo.co.jp/hsb_summer_local/competitions/116/13?date=2026-07-20",
+          "fetchedAt": "2026-07-19"
+        },
+        {
+          "url": "https://spocale.com/sports/1/leagues/1014",
+          "fetchedAt": "2026-07-19"
+        }
+      ],
+      "games": [
+        {
+          "id": "g72",
+          "t": "8:45",
+          "a": "幕張総合",
+          "b": "東京学館浦安",
+          "v": "柏の葉公園野球場"
+        },
+        {
+          "id": "g73",
+          "t": "8:45",
+          "a": "千葉商大付",
+          "b": "専大松戸",
+          "v": "千葉県総合スポーツセンター野球場"
+        },
+        {
+          "id": "g74",
+          "t": "8:45",
+          "a": "市船橋",
+          "b": "市松戸",
+          "v": "なごみの米屋ぴーちゃんフィールド大谷津野球場"
+        },
+        {
+          "id": "g75",
+          "t": "8:45",
+          "a": "千葉経大付",
+          "b": "志学館",
+          "v": "ゼットエーボールパーク"
+        },
+        {
+          "id": "g76",
+          "t": "11:15",
+          "a": "日体大柏",
+          "b": "習志野",
+          "v": "ゼットエーボールパーク"
+        },
+        {
+          "id": "g77",
+          "t": "11:15",
+          "a": "流通経大柏",
+          "b": "暁星国際",
+          "v": "なごみの米屋ぴーちゃんフィールド大谷津野球場"
+        },
+        {
+          "id": "g78",
+          "t": "11:15",
+          "a": "拓大紅陵",
+          "b": "市原中央",
+          "v": "千葉県総合スポーツセンター野球場"
+        },
+        {
+          "id": "g79",
+          "t": "11:15",
+          "a": "成田",
+          "b": "安房",
+          "v": "柏の葉公園野球場"
         }
       ]
     }
@@ -1174,7 +1283,15 @@
     "g69": "## 放送・配信情報\n**TV放送**\n- J:COMチャンネル(地デジ11ch) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 千葉敬愛\n四街道市の私立校。2025年(第107回)大会は4回戦で前年優勝の木更津総合と対戦し敗退した。今大会は7月10日の初戦で西武台千葉に13-6で勝利し、7月14日の3回戦では稲毛・稲毛国際を14-0で下して4回戦進出。継投を軸にした戦い方が持ち味のチームだ。\n\n### 流通経大柏\n柏市十余二に専用グラウンドを構える。2025年大会は初の甲子園出場を目指して出場した。今大会は7月11日の2回戦でシード校の光英VERITASを2-3で破ると、7月14日の3回戦でも長生を5-3で下して4回戦に駒を進めた。打線は4番・中野を中心に組み立てる。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会は7月9日開幕、165校148チーム(連合24校7チーム)が参加する。千葉敬愛・流通経大柏はいずれもノーシードながら勝ち上がっており、流通経大柏は2回戦でCシードの光英VERITASを撃破しての4回戦進出となる。両校の対戦は7月18日13:45、柏の葉公園野球場で行われる。\n\n## 注目選手\n\n### 植草喬太(千葉敬愛・投手・ショート)\n- 2025年大会の4回戦・木更津総合戦で143球を投げ切る完投を果たし、7回まで2失点と好投した\n- 今大会も先発ピッチャーとしてスタメン出場\n\n### 一宮嵩史(千葉敬愛・ショート)\n- キャプテンを務め、ショートの守備と攻撃陣の中心として活躍\n\n### 山本駿瑛(千葉敬愛・内野手)\n- 安定した守備と積極的な打撃が評価されている\n\n### 椎名健太(千葉敬愛・ファースト・キャッチャー・サード)\n- 複数ポジションで活躍\n\n### 山賀正典(千葉敬愛・投手)\n- 先発として複数の試合に登板\n\n### 河邊亘瑛(流通経大柏・キャッチャー)\n- 強肩で知られるキャッチャー\n\n### 篠崎琥太郎(流通経大柏・外野手)\n- 守備能力と走塁が評価されている\n\n### 臼井十冴(流通経大柏・中堅手)\n- 攻撃陣の一員として活躍\n\n### 神永大和(流通経大柏・一塁手)\n- 安定したポジション選手\n\n## 関連動画\n- [【春は銚子商と熱戦】専用グラウンドに雨天練習所も!戦国千葉の注目校・流通経済大柏に密着](https://www.youtube.com/watch?v=BthkqCVw1z8)\n\n## ストーリー・見どころ\nともにノーシードから勝ち上がってきた両校の激突。千葉敬愛は3回戦までの2試合で合計27得点と打線が活発で、継投で試合を締めるスタイルが安定感を生んでいる。対する流通経大柏はシード校の光英VERITAS撃破を含む接戦を2試合連続で制しており、勝負強さが際立つ。ともに4回戦進出の勢いを持つチーム同士、柏の葉公園野球場でどちらが上位進出への流れをつかむか注目だ。\n\n## 出典\nhttps://www.chiba-tv.com/baseball/\nhttps://chbf.or.jp/\nhttps://www.hb-nippon.com/tournaments/1551\nhttps://www.chibanippo.co.jp/articles/1472199\nhttps://www.chibanippo.co.jp/articles/1457771\nhttps://www.chibanippo.co.jp/articles/1462086",
     "g70": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 実籾\n千葉県立実籾高等学校(習志野市)。甲子園出場歴はなく、ノンシード校として大会に臨む。2026年春季千葉県大会地区予選では1回戦で船橋二和に4-5(5回コールド)で敗退。夏の大会では2回戦(7月10日)で市川工にタイブレーク延長11回の末7-6で競り勝ち、3回戦(7月15日)は京葉に13-3で快勝した。\n\n### 千葉商大付\n千葉商科大学付属高等学校(松戸市)。今大会はCシードの一角。2026年春季千葉県大会は2回戦で千葉工を2-0で下したものの、3回戦で千葉学芸に敗れた。夏の大会では2回戦(7月13日)で京葉工に10-0、3回戦(7月15日)で芝浦工大柏に7-0で勝利し、4回戦へ駒を進めた。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会・4回戦。7月18日13:45、ゼットエーボールパークで実籾とCシードの千葉商大付が対戦する。ノンシード校の実籾は市川工、京葉を連破して勝ち上がり、千葉商大付は京葉工、芝浦工大柏を下してシード校の力を見せてきた。\n\n## 関連動画\n- [千葉商科大学付属高校 Official Channel (CUCHS)](https://www.youtube.com/@cuchs8169)\n- [千葉商科大学付属高校 野球部](https://www.youtube.com/@千葉商科大学付属高校)\n- [【ダイジェスト】両チーム計34安打の壮絶な打撃戦!4本塁打の千葉商大付が準決勝進出(令和5年度秋季千葉県高校野球大会 東海大浦安vs千葉商大付)](https://www.youtube.com/watch?v=SSUT_l9B-XY)\n- [【チバテレ公式】第105回全国高校野球選手権記念千葉大会 7月25日(火) 準決勝 千葉商大付 vs 習志野 ダイジェスト版](https://www.youtube.com/watch?v=g8oq5nQbL8E)\n\n## ストーリー・見どころ\nノンシードながら市川工とのタイブレーク激戦を制し、3回戦では京葉に13点差で快勝した実籾。勢いに乗るノンシード校が、Cシードの千葉商大付にどこまで食らいつけるかが見どころとなる。対する千葉商大付は2回戦・3回戦とも無失点勝利で4回戦に駒を進めており、投打の安定感でシード校らしい戦いを見せている。ゼットエーボールパークでの一戦は、勢いの実籾と安定感の千葉商大付、対照的な強みがぶつかる好カードだ。\n\n## 出典\nhttps://www.chibanippo.co.jp/articles/1639401\nhttps://chbf.or.jp/\nhttps://campus.chibanippo.co.jp/high/1099\nhttps://www.chiba-tv.com/plus/detail/2026071834962\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120016\nhttps://www.hs.cuc.ac.jp/students/club/ky/\nhttps://baseball.omyutech.com/teamGames.action?teamId=11654\nhttps://www.hb-nippon.com/teams/1298\nhttps://cms1.chiba-c.ed.jp/keiyo-th/club/sports_club/baseball\nhttps://chbf.or.jp/koyaren/record\nhttps://baseball.omyutech.com/CupHomePageTournament.action?cupId=20260013575\nhttps://www.baseball-station.com/koshien/2026/\nhttps://www.chibanippo.co.jp/\nhttps://www.hb-nippon.com/tournaments/1551",
     "g71": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 県船橋\n県立船橋高等学校は千葉県船橋市に所在し、千葉県高野連第2ブロック(習志野・船橋・鎌ケ谷地域21校加盟)に属す。2026年春季千葉大会では地区予選1回戦で船橋芝山を14-6の7回コールドで下したものの、代表決定戦で習志野に0-6で敗退。夏の第108回大会は非シードから勝ち上がり、2回戦で犢橋に16-0、3回戦は佐原に3-0で勝利し4回戦進出を決めた。\n\n### 千葉経大付\n千葉経大付は夏の第108回大会で1回戦は袖ケ浦に9-1で快勝すると、2回戦は八千代松陰に2-0、3回戦は秀明八千代に21-3で勝利し、4回戦へ駒を進めた。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会は7月4日にZOZOマリンスタジアムで開会式を行い、7月9日に開幕。決勝は7月26日、準決勝は7月24日にいずれもZOZOマリンスタジアムで行われる。\n\n県船橋と千葉経大付はともに2回戦・3回戦を勝ち抜き、7月18日13:45、ADEKA袖ケ浦球場での4回戦進出を決めている。\n\n## 注目選手\n\n### 西田隼也(千葉経大付・遊撃手・2年)\n- 2026年7月9日の夏の千葉大会1回戦(袖ケ浦戦)でタイムリーヒットを放ち、チームの9-1勝利に貢献\n\n### 宇都宮颯二郎(千葉経大付・一塁手・3年)\n- 2026年7月9日の夏の千葉大会1回戦(袖ケ浦戦)でタイムリーヒットを放ち、チームの9-1勝利に貢献\n- 八千代市立村上東中出身\n\n## 関連動画\n- [【強豪校破りベスト4】屈指の進学校・県立船橋に密着!注目2枚看板も要チェック!](https://www.youtube.com/watch?v=XH2_1X5lbYE)\n- [春季千葉大会ベスト4の千葉経大附。プロ注目・福井聖理の投球に要注目!](https://www.youtube.com/watch?v=rSIm5k0SAQ4)\n- [【千葉大会展望16/49】7月9日(木)開幕試合→今年も「戦国千葉」か・専大松戸が大本命!中央学院・拓大紅陵・千葉黎明・東京学館浦安・千葉経大付など争う【第108回全国高校野球選手権大会】](https://www.youtube.com/watch?v=CdJpj43hiZI)\n- [【ダイジェスト】2026年春季千葉大会2回戦 千葉経済大付属vs...](https://www.youtube.com/watch?v=JQzcmxv2804)\n- [プロモーション動画【千葉経済大学硬式野球部】ONE OK ROCK「C.h.a.o.s.m.y.t.h.」](https://www.youtube.com/watch?v=KY6kBH4Upn4)\n\n## ストーリー・見どころ\n非シードから勝ち上がってきた県船橋は、2回戦で犢橋を16-0と圧倒し、3回戦も佐原を3-0で退けるなど着実に力をつけてきた。対する千葉経大付は、1回戦で袖ケ浦に9-1、3回戦では秀明八千代に21-3と大量点で勝ち上がってきており、両者ともに勢いを保ったまま4回戦を迎える。\n\nADEKA袖ケ浦球場という中立地での一戦は、両校の勢いがぶつかる好カード。ここまでの得点力を維持できるかどうかが、ベスト16進出の行方を左右しそうだ。\n\n## 出典\nhttps://www.hb-nippon.com/articles/14709\nhttps://www.hb-nippon.com/tournaments/1551\nhttps://chbf.or.jp/school\nhttps://www.chibanippo.co.jp/topics/1412383\nhttps://www.chibanippo.co.jp/articles/1639787\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120023\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120013\nhttps://chbf.or.jp/koyaren/record\nhttps://www.chiba-tv.com/baseball/\nhttps://topics.smt.docomo.ne.jp/article/chibatv/region/chibatv-2026061802424\nhttps://www.chibanippo.co.jp/articles/1626785\nhttps://www.chibanippo.co.jp/articles/1627227\nhttps://teams.one/news/koukouyakyu-chiba/\nhttps://chbf.or.jp/wp-content/uploads/2026/06/%E7%AC%AC%EF%BC%91%EF%BC%90%EF%BC%98%E5%9B%9E%E7%B5%84%E5%90%88%E3%81%9B%EF%BC%88%EF%BC%93%E5%9B%9E%E6%88%A6%E6%97%A5%E7%A8%8B%EF%BC%89.pdf\nhttps://baseball.omyutech.com/CupHomePageTournament.action?cupId=20260013575",
-    "g55": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n### 印旛明誠\n千葉県立印旛明誠高等学校(印西市)は県立校。2023年に2年ぶりの単独出場を果たし、小規模校ながら古豪復活を目指す。2026年春季地区予選では八千代に8-16(8回コールド)で敗れたが、大会では「攻めの姿勢を貫く」と報じられた。2回戦を10-0で勝利し、3回戦に進出した。\n\n### 日体大柏\nノーシードで今大会に臨む。1回戦は鎌ケ谷相手に延長10回サヨナラの末3-2で勝利し、2回戦ではBシードの千葉学芸を2-1で下して3回戦進出を決めた。2019年秋に監督が就任すると、2021年からは主将を8人任命する日替わり制度を導入し、部の雰囲気を変えてきた。部の最高成績は2012年(当時は柏日体)の千葉大会準優勝。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会は7月4日にZOZOマリンスタジアムで開会式、7月9日に試合開始。165校148チーム(連合24校7チーム)が出場し、決勝は7月26日にZOZOマリンスタジアムで行われる。印旛明誠は2回戦で泉・生浜・市原・市原緑・君津青葉の連合を10-0で下して3回戦進出。日体大柏は2回戦でBシードの千葉学芸を2-1で撃破して勝ち上がった。\n\n## 注目選手\n### 石原誠太(日体大柏・捕手)\n- 日体大柏の主力捕手で背番号2\n\n### 力根ティアニー大賀(日体大柏・投手)\n- 今大会成績: 2026年春季大会2回戦で先発登板\n- 千葉県選抜として台湾親善試合に出場した経歴を持つ\n\n## 関連動画\n- [【野球部訪問】キャプテンが8人いる!?シード校・日体大柏の練習に密着](https://www.youtube.com/watch?v=CjDTAghbo44) — 日体大柏高校野球部の練習風景と選手紹介\n- [【4K】日本体育大学柏高等学校 学校紹介ムービー](https://www.youtube.com/watch?v=rG8j3rnWMSU) — 日体大柏高校の全体的な学校紹介\n- [千葉テレビ放送「高校野球ダイジェスト」 3回戦(7月14日放送)](https://sports.yahoo.co.jp/video/player/26976357) — 7月14日の千葉県大会3回戦全試合ダイジェスト(本試合含む)\n- [【ダイジェスト】日体大柏がコールド勝利で2回戦へ/3投手のリレーで被安打ゼロ(2024秋季千葉大会 日体大柏vs佐倉)](https://www.youtube.com/watch?v=Nzg782sP9Gk) — 日体大柏の試合ハイライト・ピッチング映像\n- [【ダイジェスト】日体大柏と匝瑳の敗者復活戦は9回土壇場で逆転劇](https://www.youtube.com/watch?v=vrda_mhtUms) — 日体大柏の敗者復活戦・逆転劇の映像\n- [日体大柏 シートノック(2024年秋季千葉大会 準々決勝)](https://www.youtube.com/watch?v=KlUKdnaExsQ) — 日体大柏の守備練習・チームの統制\n\n## ストーリー・見どころ\n古豪復活を掲げる県立・印旛明誠と、日替わり主将制で選手層の厚さを武器にする日体大柏の一戦。印旛明誠は春の県予選でコールド負けを喫しながらも、夏は連合チーム相手に10-0の完勝で立て直しを見せた。対する日体大柏は1回戦を延長サヨナラで振り切り、2回戦ではBシード撃破を制するなど、接戦を勝ち抜いてきたたくましさが持ち味だ。\n\nなごみの米屋ぴーちゃんフィールド大谷津野球場で行われる3回戦は、両者の地力が試される好カードとなりそうだ。\n\n## 出典\nhttps://www.chibanippo.co.jp/news/sports/1082654\nhttps://www.chibanippo.co.jp/articles/1459648\nhttps://www.chibanippo.co.jp/news/sports/1249369\nhttps://www.chibanippo.co.jp/news/sports/482346\nhttps://www.hb-nippon.com/teams/4636\nhttps://www.hb-nippon.com/teams/5271\nhttps://www.chibanippo.co.jp/articles/1464087\nhttps://www.chibanippo.co.jp/articles/1639125\nhttps://www.cgh.ed.jp/club/club07.html\nhttps://k-nittai.ed.jp/\nhttps://www.chibanippo.co.jp/articles/1639247\nhttps://www.kyureki.com/koko/90/2421/\nhttps://www.hb-nippon.com/team/5291/\nhttps://www.hb-nippon.com/team/1346/\nhttps://www.baseball-station.com/memories/chiba-spring2026/\nhttps://baseball.yahoo.co.jp/hsb/teams/21243/top\nhttps://baseball.yahoo.co.jp/hsb/teams/21214/top\nhttps://ja.wikipedia.org/wiki/%E5%85%A8%E5%9B%BD%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1%E9%87%8E%E7%90%83%E9%81%B8%E6%89%8B%E6%A8%A9%E5%A4%A7%E4%BC%9A_(%E5%8D%83%E8%91%89%E7%9C%8C%E5%8B%A2)\nhttps://chbf.or.jp/"
+    "g55": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n### 印旛明誠\n千葉県立印旛明誠高等学校(印西市)は県立校。2023年に2年ぶりの単独出場を果たし、小規模校ながら古豪復活を目指す。2026年春季地区予選では八千代に8-16(8回コールド)で敗れたが、大会では「攻めの姿勢を貫く」と報じられた。2回戦を10-0で勝利し、3回戦に進出した。\n\n### 日体大柏\nノーシードで今大会に臨む。1回戦は鎌ケ谷相手に延長10回サヨナラの末3-2で勝利し、2回戦ではBシードの千葉学芸を2-1で下して3回戦進出を決めた。2019年秋に監督が就任すると、2021年からは主将を8人任命する日替わり制度を導入し、部の雰囲気を変えてきた。部の最高成績は2012年(当時は柏日体)の千葉大会準優勝。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会は7月4日にZOZOマリンスタジアムで開会式、7月9日に試合開始。165校148チーム(連合24校7チーム)が出場し、決勝は7月26日にZOZOマリンスタジアムで行われる。印旛明誠は2回戦で泉・生浜・市原・市原緑・君津青葉の連合を10-0で下して3回戦進出。日体大柏は2回戦でBシードの千葉学芸を2-1で撃破して勝ち上がった。\n\n## 注目選手\n### 石原誠太(日体大柏・捕手)\n- 日体大柏の主力捕手で背番号2\n\n### 力根ティアニー大賀(日体大柏・投手)\n- 今大会成績: 2026年春季大会2回戦で先発登板\n- 千葉県選抜として台湾親善試合に出場した経歴を持つ\n\n## 関連動画\n- [【野球部訪問】キャプテンが8人いる!?シード校・日体大柏の練習に密着](https://www.youtube.com/watch?v=CjDTAghbo44) — 日体大柏高校野球部の練習風景と選手紹介\n- [【4K】日本体育大学柏高等学校 学校紹介ムービー](https://www.youtube.com/watch?v=rG8j3rnWMSU) — 日体大柏高校の全体的な学校紹介\n- [千葉テレビ放送「高校野球ダイジェスト」 3回戦(7月14日放送)](https://sports.yahoo.co.jp/video/player/26976357) — 7月14日の千葉県大会3回戦全試合ダイジェスト(本試合含む)\n- [【ダイジェスト】日体大柏がコールド勝利で2回戦へ/3投手のリレーで被安打ゼロ(2024秋季千葉大会 日体大柏vs佐倉)](https://www.youtube.com/watch?v=Nzg782sP9Gk) — 日体大柏の試合ハイライト・ピッチング映像\n- [【ダイジェスト】日体大柏と匝瑳の敗者復活戦は9回土壇場で逆転劇](https://www.youtube.com/watch?v=vrda_mhtUms) — 日体大柏の敗者復活戦・逆転劇の映像\n- [日体大柏 シートノック(2024年秋季千葉大会 準々決勝)](https://www.youtube.com/watch?v=KlUKdnaExsQ) — 日体大柏の守備練習・チームの統制\n\n## ストーリー・見どころ\n古豪復活を掲げる県立・印旛明誠と、日替わり主将制で選手層の厚さを武器にする日体大柏の一戦。印旛明誠は春の県予選でコールド負けを喫しながらも、夏は連合チーム相手に10-0の完勝で立て直しを見せた。対する日体大柏は1回戦を延長サヨナラで振り切り、2回戦ではBシード撃破を制するなど、接戦を勝ち抜いてきたたくましさが持ち味だ。\n\nなごみの米屋ぴーちゃんフィールド大谷津野球場で行われる3回戦は、両者の地力が試される好カードとなりそうだ。\n\n## 出典\nhttps://www.chibanippo.co.jp/news/sports/1082654\nhttps://www.chibanippo.co.jp/articles/1459648\nhttps://www.chibanippo.co.jp/news/sports/1249369\nhttps://www.chibanippo.co.jp/news/sports/482346\nhttps://www.hb-nippon.com/teams/4636\nhttps://www.hb-nippon.com/teams/5271\nhttps://www.chibanippo.co.jp/articles/1464087\nhttps://www.chibanippo.co.jp/articles/1639125\nhttps://www.cgh.ed.jp/club/club07.html\nhttps://k-nittai.ed.jp/\nhttps://www.chibanippo.co.jp/articles/1639247\nhttps://www.kyureki.com/koko/90/2421/\nhttps://www.hb-nippon.com/team/5291/\nhttps://www.hb-nippon.com/team/1346/\nhttps://www.baseball-station.com/memories/chiba-spring2026/\nhttps://baseball.yahoo.co.jp/hsb/teams/21243/top\nhttps://baseball.yahoo.co.jp/hsb/teams/21214/top\nhttps://ja.wikipedia.org/wiki/%E5%85%A8%E5%9B%BD%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1%E9%87%8E%E7%90%83%E9%81%B8%E6%89%8B%E6%A8%A9%E5%A4%A7%E4%BC%9A_(%E5%8D%83%E8%91%89%E7%9C%8C%E5%8B%A2)\nhttps://chbf.or.jp/",
+    "g72": "## 放送・配信情報\n**TV放送**\n- J:COMチャンネル(地デジ11ch) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 幕張総合\n千葉県立幕張総合高等学校(千葉市美浜区)。シード校ではないが、1回戦から白星を重ねて勝ち上がってきた。2回戦は市千葉に9-1、3回戦は市川に6-0、4回戦は銚子商を1-0で降し5回戦進出を決めた。2026年春季千葉県大会は地区予選代表決定戦で千葉北に2-3(6回コールド)で敗れている。\n\n### 東京学館浦安\n今大会はAシードに名を連ねる。1回戦突破後、2回戦は東京学館を1-0で下し、3回戦は検見川に12-5、4回戦は東邦大付に6-0で勝利し5回戦へ駒を進めた。2026年春季千葉県大会では準々決勝で千葉学芸に延長10回5-4で競り勝ち決勝へ進出したが、専大松戸に3-4で惜敗し準優勝。続く春季関東大会でも2回戦を突破するなど勢いに乗る。甲子園はいまだ未出場で、悲願の初出場に期待がかかる。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会。幕張総合はシード校ではなく1回戦から勝ち上がり、東京学館浦安はAシード校として5回戦に進出。ベスト8入りをかけた一戦が7月20日(日)8:45から柏の葉公園野球場で行われる。\n\n## 注目選手\n\n### 大家雅史(東京学館浦安・投手・3年)\n- 昨年度成績: 登板4試合(先発3試合)で防御率3.00、投球回27回、奪三振15個、与四球3個\n- 今大会成績: 2回戦で9回113球、2安打無四球7奪三振の完封。自己最速147キロを記録し、今大会通算防御率0.00\n- 常時140キロ台の直球と鋭いスライダーを武器とする本格派右腕で、複数球団がドラフト候補として注目\n\n## 関連動画\n- [専大松戸 VS 東京学館浦安 決勝戦ハイライト【令和8年度第79回春季千葉県高等学校野球大会】2026.05.03](https://www.youtube.com/watch?v=24DpNir6KmE)\n- [浦和学院 vs 東京学館浦安【高校野球 春季関東大会 準々決勝 全打席ハイライト】2026.5.18](https://www.youtube.com/watch?v=fbg2I3R5-A4)\n- [東京学館浦安 高校野球応援メドレー 春大会にチアと吹奏楽部応援!初の関東大会出場へ強力アシスト](https://www.youtube.com/watch?v=VOkcC_VbcLE)\n- [東京学館浦安対千葉商業ハイライト【2025年第107回全国高等学校野球選手権千葉大会4回戦】2025.07.19](https://www.youtube.com/watch?v=8eo5zqxKkM4)\n\n## ストーリー・見どころ\nシードなしから4回戦まで4試合を勝ち抜いてきた幕張総合と、Aシードの東京学館浦安が5回戦で激突。東京学館浦安は春季千葉県大会準優勝、春季関東大会でも白星を挙げるなど今夏の台風の目と目される存在で、147キロ右腕・大家雅史の投球が最大の見どころとなる。対する幕張総合は1回戦から着実に得点を重ねて勝ち上がり、4回戦は1-0の接戦を制する粘り強さを見せた。ベスト8進出をかけた一戦、シードなしのチームがどこまで勢いを継続できるか注目したい。\n\n## 出典\nhttps://www.chibanippo.co.jp/articles/1457327\nhttps://www.chibanippo.co.jp/articles/1610826\nhttps://www.chibanippo.co.jp/articles/1641942\nhttps://www.chiba-tv.com/baseball/\nhttps://www.hb-nippon.com/tournaments/1551\nhttps://www.hb-nippon.com/articles/14943?page=2\nhttps://www.hb-nippon.com/articles/15082\nhttps://chbf.or.jp/\nhttps://timely-web.jp/article/1917/\nhttps://www.chiba-tv.com/plus/detail/2026071804664\nhttps://www.hb-nippon.com/teams/1300/players\nhttps://draft.tokyo/area/chiba/tokyo-gakkan/\nhttps://www.draft-kaigi.jp/highschool/high-draftnews/86757/",
+    "g73": "## 放送・配信情報\n**TV放送**\n- 千葉テレビ(地上波メインチャンネル、8:45〜16:30。以降はチバテレミライチャンネル) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 千葉商大付\n千葉商科大学付属高等学校(松戸市)。甲子園出場は1982年春の第54回選抜が唯一で、1回戦で尾道商(広島)に0-3で敗れて以来出場がない。今大会はCシードに名を連ねる。\n\n2026年春季千葉県大会は2回戦で千葉工を2-0で下したが、3回戦で千葉学芸に敗退した。\n\n指揮を執るのは吉原拓監督。部員数は68名(3年20名・2年22名・1年24名)。「百花一想」をスローガンに掲げ、「高校野球100%×学校生活100%」の両立を目指してホームグラウンドの秋山グラウンドで汗を流す。\n\n### 専大松戸\n私立の進学校で、甲子園出場歴は通算6回。2015年夏に初出場を果たし、2021年春夏、2023年春夏、そして2026年春と、近年着実に力をつけてきた。2026年春の千葉県大会では史上初の4連覇を達成。決勝では東京学館浦安を相手に4-3で逆転サヨナラ勝ちを収めた。続くセンバツ大会ではベスト4に進出している。\n\n指揮を執るのは持丸修一監督(78歳)。竜ヶ崎一、藤代、常総学院、そして専大松戸と、これまでに4校を甲子園に導いてきた名将だ。2026年春のセンバツでは77歳での勝利という史上最高齢記録を樹立しながら、同校を初のベスト4へ押し上げた。特別強化指定部だが寮は持たず、県外出身選手も自宅から通う体制。メンバーは千葉県内の中学出身者が16名を占める。\n\n## 過去の対戦成績\n過去2度の対戦で専大松戸が2勝0敗。2023年9月秋季千葉大会準決勝では10-2で完勝、2020年8月第3地区決勝でも完封勝利を収めている。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会。Cシードの千葉商大付は2回戦で京葉工を10-0、続く一戦で芝浦工大柏を7-0で下し、4回戦では実籾を2-10で退けてベスト16入りを果たした。\n\nAシードの専大松戸は2回戦で四街道を12-0、続く一戦で君津を13-1、4回戦では流山を7-0で下し、いずれも大差で勝ち上がっている。両校とも無傷で5回戦に駒を進めた。\n\n準決勝は7月24日、決勝は7月26日、いずれもZOZOマリンスタジアムで行われる。\n\n## 注目選手\n\n### 吉岡伸太朗(専大松戸・捕手/三塁手・3年)\n- 2025年秋季大会準決勝(八千代松陰戦)3打数2安打2打点。秋季大会全体では12打数6安打3打点、打率.500\n- 2026年春選抜は全4試合で打率.545(11打数6安打)。2026年夏の千葉大会ではランニング弾を含む2安打4打点\n- 右投左打、身長180cm・体重90kg。プロ注目の大型捕手で、高卒プロ志望を表明。遠投80m、二塁送球は最速1.97秒、一塁到達4.3〜4.4秒台の身体能力を誇る\n\n### 門倉昂大(専大松戸・投手・3年)\n- 2026年春選抜は4試合(2先発)で27.1回を投げ、18被安打・15奪三振・6四球・2失点、防御率0.66。北照戦では4被安打完封、山梨学院戦では7被安打1失点の完投を演じた\n- 右投げ、身長182cm・体重85kg。最速145km/h。三塁側から投げ込み、スライダー・フォーク・カーブを操る。冬季トレーニングでアーム角を下げてから制球力が飛躍的に向上した\n\n### 高貝規仁(専大松戸・遊撃手・3年)\n- 専大松戸の主将としてチームの司令塔を担う。春季県大会で負った左肋骨骨折から6月に完治し、本大会に臨んでいる。「初戦は緊張するし、一番大事。緊張しすぎて、自分たちの力を発揮できないことがないように」と話す\n\n## 関連動画\n- [【全イニングハイライト】四街道vs専大松戸](https://www.youtube.com/watch?v=M90HzG4RaeI) — 2026夏の千葉県大会。先発・小俣太陽が5回をパーフェクト、専大松戸の猛打が爆発\n- [【ダイジェスト】2026年春季千葉大会 準々決勝 千葉黎明vs専大松戸](https://www.youtube.com/watch?v=ZTkw5zc3h_Q) — 2年生畠山選手が先発、4番吉岡選手が3安打長打の大暴れ\n- [【全イニングハイライト】千葉の春決勝戦!学館浦安vs専大松戸](https://www.youtube.com/watch?v=4owSRnCHJKM) — 2026春季千葉県大会決勝戦\n- [専大松戸 VS 東京学館浦安 決勝戦ハイライト](https://www.youtube.com/watch?v=24DpNir6KmE) — 令和8年度第79回春季千葉県高等学校野球大会(2026.05.03)\n- [専大松戸恒例の一発芸にメンバーも大笑い](https://www.youtube.com/watch?v=za4VTlS-HWw) — 2026春季千葉県大会 千葉経大附vs専大松戸\n- [専大松戸 vs 花咲徳栄 注目の好カード!選抜出場校が激突!](https://www.youtube.com/watch?v=FIfJr3wZH9s) — 高校野球 春季関東大会 2回戦 全打席ハイライト(2026.5.17)\n- [【ダイジェスト】両チーム計34安打の壮絶な打撃戦!4本塁打の千葉商大付が準決勝進出(令和5年度秋季千葉県高校野球大会 東海大浦安vs千葉商大付)](https://www.youtube.com/watch?v=SSUT_l9B-XY) — 千葉商大付の試合ダイジェスト。両チーム合わせて34安打が出た打撃戦で、千葉商大付が4本塁打を記録\n- [【チバテレ公式】第105回全国高校野球選手権記念千葉大会 7月25日(火) 準決勝 千葉商大付 vs 習志野 ダイジェスト版](https://www.youtube.com/watch?v=g8oq5nQbL8E) — 千葉商大付と習志野の準決勝試合のダイジェスト\n\n## ストーリー・見どころ\n甲子園まであと一歩、千葉商大付の挑戦が続く。1982年春の選抜を最後に夏の甲子園を知らない古豪が、Cシードから勝ち上がって迎える5回戦。京葉工、芝浦工大柏、実籾と着実に勝ちを重ね、投打二枚看板を擁するチームとして勢いに乗る。\n\n対する専大松戸はAシード、そして今大会最大の注目校の一つだ。春の県大会で史上初の4連覇を達成し、続くセンバツではベスト4に進出。指揮を執る持丸修一監督は竜ヶ崎一・藤代・常総学院・専大松戸と4校を甲子園に導いた名将で、77歳での勝利という史上最高齢記録を樹立しながらチームを高みへ押し上げてきた。夏の千葉大会でも四街道、君津、流山と大差で退け、隙のない戦いぶりを見せている。\n\n打線の中心は4番捕手の吉岡伸太朗。センバツ全4試合で打率.545をマークし、高卒でのプロ入りを志望する逸材だ。遠投80m、二塁送球最速1.97秒という強肩も武器で、打っても守っても存在感を放つ。マウンドには最速145km/hを誇る門倉昂大が控え、センバツでは防御率0.66という圧巻の数字を残した。冬のオフシーズンにアーム角を修正してから制球が安定し、完全試合に近い内容の投球も見せている。主将の遊撃手・高貝規仁は春に負った肋骨骨折を乗り越えて夏を迎え、司令塔として堅守を支える。\n\n千葉商大付にとっては、シードの差を跳ね返せるかが焦点となる。ここまでの4試合を大差で勝ち上がってきた勢いを、格上との一戦でどこまで発揮できるか。夏の甲子園まで勝ち残ればベスト16、両校にとって負けられない一戦が千葉県総合スポーツセンター野球場で幕を開ける。\n\n## 出典\nhttps://baseball.yahoo.co.jp/hsb/teams/21217/results/game\nhttps://baseball.yahoo.co.jp/hsb/teams/20366/results/game\nhttps://www.chibanippo.co.jp/news/sports/713423\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120016\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120027\nhttps://www.hb-nippon.com/articles/14943\nhttps://www.hs.cuc.ac.jp/students/club/ky/\nhttps://x.com/kyureki_com/status/2045759380864565710\nhttps://baseball.omyutech.com/teamGames.action?teamId=11654\nhttps://www.kyureki.com/koko/90/1932/\nhttps://www.hb-nippon.com/teams/1298\nhttps://cms1.chiba-c.ed.jp/keiyo-th/club/sports_club/baseball\nhttps://chbf.or.jp/koyaren/record\nhttps://kokobaseball.kumobit.com/bypref/past_chiba.html\nhttps://baseball.omyutech.com/CupHomePageTournament.action?cupId=20260013575\nhttps://www.baseball-station.com/koshien/2026/\nhttps://www.chibanippo.co.jp/\nhttps://www.hb-nippon.com/tournaments/1551\nhttps://www.hb-nippon.com/articles/11498\nhttps://www.chiba-tv.com/baseball/2026/summer/?date=20260713\nhttps://sports.yahoo.co.jp/livestream/vk/hsblocal/C267663\nhttps://baseball.yahoo.co.jp/hsb/teams/23236/top\nhttps://www.chibanippo.co.jp/articles/1641357\nhttps://www.kyureki.com/koko/90/7558/\nhttps://baseball.omyutech.com/teamTop.action?teamId=11695\nhttps://www.hb-nippon.com/teams/1390\nhttps://www.hb-nippon.com/articles/13838\nhttps://www.hb-nippon.com/articles/12987\nhttps://www.chibanippo.co.jp/articles/1626785\nhttps://apapnews.com/famousmember/5838/\nhttps://topics.smt.docomo.ne.jp/article/sankei/sports/sankei-_sports_baseball_O33SZZWZSRPYBJTP4FC2AEMTAA\nhttps://x.com/Chiba_Hsbb_Info/status/2075100737361826058\nhttps://www.city.matsudo.chiba.jp/miryoku/sports-katsuyaku/sports_2025/senmatsu_senbatsu.html\nhttps://limo.media/articles/-/44436?page=1\nhttps://baseball.omyutech.com/teamTop.action?teamId=11750\nhttps://chbf.or.jp/\nhttps://www.chiba-tv.com/baseball/",
+    "g74": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 市船橋\n2025年夏は3年ぶり7回目の甲子園出場を果たした県内屈指の強豪。今年は2026年春季千葉県大会で準々決勝敗退(1-4、対八千代松陰)を喫したが、夏の大会ではBシードとして着実に勝ち上がる。140キロ超の速球派投手が4人在籍する層の厚い投手陣が武器で、部員数93人(男子82人、女子マネージャー11人)の大所帯。自校グラウンドで日々練習に励んでいる。\n\n### 市松戸\n甲子園出場歴はないものの、2026年春季千葉県大会での実績が評価されCシードでの登場となった松戸市立松戸高校。2023年・2024年の県大会では3回戦まで進出している。「成り得る最高の自分に成る」を理念に掲げ、「想」「乾坤一擲」をビジョンに据える。主将を2人置くダブル主将制も特色だ。\n\n## 今大会の状況\n第108回全国高校野球選手権千葉大会5回戦。市船橋は2回戦で千葉南に20-0、続く一戦で千葉東に13-0、4回戦では君津商に12-2と3試合とも大差で勝利しベスト16入り。市松戸は2回戦で県千葉に5-1、続く一戦で昭和秀英に10-3、4回戦では東葛飾に8-1と、いずれも接戦を許さぬ内容で勝ち進んできた。Bシードの市船橋とCシードの市松戸による一戦は、7月20日8:45開始、なごみの米屋ぴーちゃんフィールド大谷津野球場で行われる。\n\n## 注目選手\n\n### 諸岡杜和(市船橋・投手・3年)\n- 評価の根拠: 2025年夏甲子園初戦先発時防御率0.00\n- 174cm/77kg、右投げ左打ち\n- 最速145キロの速球にフォーク・スライダーを織り交ぜ三振を奪う投球が持ち味\n- 2025年秋季大会より主戦として活躍、ドラフト候補\n\n### 米亮輔(市松戸・外野手・3年)\n- 180cm/76kg、右打ち左投げ\n- 地区を代表する注目選手、ドラフト注目度C\n\n## 関連動画\n- [激闘の決勝戦はタイブレークへ！市立船橋が4点差をひっくり返す奇跡の逆転サヨナラで優勝し聖地甲子園へ！2025夏の千葉大会](https://www.youtube.com/watch?v=wE2_Kf00obA) — 市立船橋の過去の試合ハイライト・チーム応援の様子\n- [【高校野球 甲子園応援】市立船橋応援メドレー 甲子園に響く市船ソウル](https://www.youtube.com/watch?v=cBtKLu_w_E8) — 市立船橋の名物応援「市船ソウル」のハイライト\n- [2年ぶりの夏の甲子園へ！市立船橋 応援メドレー](https://m.youtube.com/watch?v=qjRzKu6d8xs) — 市立船橋の応援の雰囲気・チーム文化紹介\n\n## ストーリー・見どころ\n140キロ超の投手4人を擁する投手王国・市船橋と、ダブル主将制で結束を固める市松戸。ここまで市船橋は3試合を大差で乗り切り、市松戸も無失点に近い安定感で勝ち上がってきており、両校とも仕上がりの良さがうかがえる。エース諸岡杜和の145キロ速球と多彩な変化球を市松戸打線がどう攻略するか、そして地区注目の米亮輔が外野からゲームをどう動かすか。ベスト8進出をかけたシード対決から目が離せない。\n\n## 出典\nhttps://www.hb-nippon.com/articles/15082\nhttps://www.hb-nippon.com/articles/14943\nhttps://www.chibanippo.co.jp/articles/1640741\nhttps://www.chibanippo.co.jp/articles/1641357\nhttps://www.chiba-tv.com/baseball/2026/summer/\nhttps://www.ichifuna.ed.jp/school/club/baseball/\nhttps://office-morioka.com/h_baseball/seiseki/ichiritsu_funabashi.html\nhttps://apapnews.com/famousmember/10503/\nhttps://limo.media/articles/-/61372?page=1\nhttps://chiba.hsbflash.jp/\nhttps://www.chiba-tv.com/baseball/\nhttps://www.city.funabashi.lg.jp/funabashistyle/jp/topics/p139332.html\nhttps://www.city.funabashi.lg.jp/funabashistyle/jp/topics/p107349.html\nhttps://www.kyureki.com/koko/90/7497/\nhttps://www.hb-nippon.com/tournaments/1551\nhttps://baseball.omyutech.com/CupHomePageMain.action?cupId=20260013575\nhttps://draft.tokyo/area/chiba/kimitsu-sho/\nhttps://www.hb-nippon.com/schools/1290/games\nhttps://hsbb.jp/chiba/\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120005\nhttps://sports.yahoo.co.jp/livestream/vk/hsblocal/C266386\nhttps://spocale.com/sports/1/leagues/1014\nhttps://koko-baseball.com/game/chiba.html\nhttps://chbf.or.jp/\nhttps://www.zyuken.net/school_page/11221721269/bbs_query/%E9%87%8E%E7%90%83/\nhttps://school.ameba.jp/articles/higashi-katsushika\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120012\nhttps://news.yahoo.co.jp/articles/2a29683a4fb250a6f9742823e037b5e4d2de3e5d\nhttps://news.yahoo.co.jp/articles/b668f270aea330b9241aa2d8cecfb286eeda70c0\nhttps://www.draft-kaigi.jp/highschool/high-draftnews/87677/\nhttps://profilearchive.com/kagayahajime_school/\nhttps://news.yahoo.co.jp/articles/b0faa0f1226c130e231e2c51f4d8b61616b8fbb3\nhttps://www.chibanippo.co.jp/articles/1630662\nhttps://baseball.yahoo.co.jp/hsb/teams/21198/top\nhttps://ja.wikipedia.org/wiki/%E5%85%A8%E5%9B%BD%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1%E9%87%8E%E7%90%83%E9%81%B8%E6%89%8B%E6%A8%A9%E5%A4%A7%E4%BC%9A_(%E5%8D%83%E8%91%89%E7%9C%8C%E5%8B%A2)\nhttps://chbf.or.jp/koyaren/record\nhttps://www.chibanippo.co.jp/articles/1626785",
+    "g75": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n### 千葉経大付\n千葉県内屈指の私学強豪として知られる存在。2026年は春季県大会・夏の大会ともにシード校入りを逃したが、夏の第108回大会は1回戦で袖ケ浦に9-1で快勝すると、2回戦は八千代松陰、3回戦は秀明八千代、4回戦は県船橋を降し勝ち上がってきた。\n\n### 志学館\nCシードから今大会に臨む。2026年春季千葉県大会は3回戦で拓大紅陵に4-6で敗れたが、夏の大会では2回戦で敬愛学園に7-2、3回戦は船橋古和釜を9-0の7回コールドで下し、4回戦も我孫子東を9-0で降し勝ち上がった。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会、ノーシードの千葉経大付とCシードの志学館による一戦。千葉経大付は2回戦で八千代松陰を2-0で下すと、3回戦は秀明八千代に21-3の大勝、4回戦は県船橋を8-1で退け勝ち進んできた。志学館は2回戦で敬愛学園に7-2、3回戦は船橋古和釜を9-0の7回コールドで、4回戦は我孫子東を9-0で降し、いずれも危なげない戦いぶりで5回戦進出を決めている。5回戦は7月20日8時45分、ゼットエーボールパークで行われる。\n\n## 注目選手\n### 西田隼也(千葉経大付・内野手)\n- 今大会成績: 2回戦以降に出場し、安打・打点を記録\n- 内野手として攻撃の中心的役割を担う\n\n### 山中律輝(志学館・外野手)\n- 昨年度成績: 春季大会1回戦で5打数4安打3打点、本塁打も記録\n- 今大会成績: 2回戦・敬愛学園戦の5回に本塁打を放つなど出場、3回戦・4回戦にも出場\n\n### 瀧口(志学館・投手)\n- 今大会成績: 2回戦に登板し、2ランを許しながらも8回を投げ切る\n\n## 関連動画\n- [春季千葉大会ベスト4の千葉経大附。プロ注目・福井聖理の投球に要注目!](https://www.youtube.com/watch?v=rSIm5k0SAQ4) — チーム紹介・プロ注目投手の紹介\n- [【大会展望16/49】7月9日(木)開幕試合→今年も「戦国千葉」か・専大松戸が大本命!中央学院・拓大紅陵・千葉黎明・東京学館浦安・千葉経大付など争う](https://www.youtube.com/watch?v=CdJpj43hiZI) — 第108回全国高校野球選手権大会 千葉大会の展望\n- [拓大紅陵VS志学館 全打席ダイジェスト【2025春季千葉県高校野球大会】](https://www.youtube.com/watch?v=ZCSsNNLgEow) — 志学館試合ハイライト・打撃シーン\n- [志学館 VS 船橋東 ハイライト【2025年 第78回 春季千葉県高等学校野球大会 1回戦】](https://www.youtube.com/watch?v=9yqWpJNVYTQ) — 志学館試合ハイライト・守備・打撃\n\n## ストーリー・見どころ\nノーシードの千葉経大付、Cシードの志学館ともに、ここまで無傷で5回戦にたどり着いた両校。千葉経大付は3回戦で秀明八千代相手に21得点を挙げるなど破壊力ある打線が持ち味で、西田隼也ら中軸が安定して結果を残している。対する志学館は2試合連続完封の守備陣が光り、山中律輝の一発が要所で流れを引き寄せてきた。\n\n打って勝ち上がる千葉経大付と、守って勝ち上がる志学館。対照的なスタイルの両校がどちらの野球を通すか、ベスト16進出を懸けた一戦は見応え十分だ。\n\n## 出典\nhttps://www.chibanippo.co.jp/articles/1640733\nhttps://www.chiba-tv.com/baseball/\nhttps://www.hb-nippon.com/articles/14943\nhttps://www.hb-nippon.com/tournaments/1551\nhttps://chbf.or.jp/koyaren/record\nhttps://www.chibanippo.co.jp/articles/1626785\nhttps://www.chibanippo.co.jp/articles/1627227\nhttps://chbf.or.jp/wp-content/uploads/2026/06/%E7%AC%AC%EF%BC%91%EF%BC%90%EF%BC%98%E5%9B%9E%E7%B5%84%E5%90%88%E3%81%9B%EF%BC%88%EF%BC%93%E5%9B%9E%E6%88%A6%E6%97%A5%E7%A8%8B%EF%BC%89.pdf\nhttps://baseball.omyutech.com/CupHomePageTournament.action?cupId=20260013575\nhttps://chbf.or.jp/stadium/oyatsu\nhttps://www.shigakukan.ed.jp/shs/shs-club/sh-baseball/\nhttps://timely-web.jp/article/4378/\nhttps://baseball.omyutech.com/teamTop.action?teamId=15060\nhttps://chbf.or.jp/\nhttps://baseball.yahoo.co.jp/hsb/teams/19145/results/game\nhttps://baseball.yahoo.co.jp/hsb/teams/21145/results/game",
+    "g76": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 日体大柏\nノーシードからの勝ち上がり。1回戦は鎌ケ谷と対戦し、延長10回サヨナラの末3-2で勝利するという波乱の幕開けから大会がスタートした。2回戦は千葉学芸、3回戦は印旛明誠、4回戦は柏井を下して5回戦に進出。2021年からは主将を8人任命する日替わり制度を導入するなど、独自色のあるチーム運営で知られる。\n\n### 習志野\n2026年春季千葉県大会ではAシードを獲得したが2回戦で敗退。迎えた夏の大会では立て直し、2回戦は千葉商に5-1、3回戦は磯辺に13-2、4回戦は市柏に9-2と圧勝を重ねて5回戦に進出した。「粘りの野球」を掲げ、今年のチームは20名が千葉県内の中学出身という地元密着の編成が特徴。\n\n## 過去の対戦成績\n2021年4月30日の春季試合では習志野が7-2で日体大柏を下し、同年7月17日の夏季試合でも習志野が13-2の5回コールドで勝利。過去の対戦では習志野が連勝している。\n\n## 今大会の状況\n習志野は2回戦から4回戦まで大差での勝利を重ね、安定した戦いぶりで5回戦にたどり着いた。一方の日体大柏はノーシードながら1回戦の延長サヨナラ勝ちを皮切りに勝ち上がり、ここまで無敗で5回戦進出を決めている。\n\n## 注目選手\n\n### 林響己(習志野・外野手・3年)\n- 出身中学は千潟中学\n- 守備範囲の広さが持ち味で、スピードを生かした1、2番打者としてチームを牽引\n- 2026年春季県大会でも主要打順に名を連ねた\n\n### 上村碧(習志野・投手・3年)\n- カーブを武器とするポーカーフェイスで、テンポの良い投球が持ち味\n- 2025年春季大会の決勝ではリリーフとして専大松戸戦に登板した\n\n## 関連動画\n- [【高校野球応援2026夏】 桁違いの音圧!習志野高校\"美爆音\"応援メドレー 1試合フル 習志野 vs 千葉商 第108回高校野球選手権千葉大会 ２回戦 全打席ハイライト【2026.7.11】](https://www.youtube.com/watch?v=fMM5V5t7HHI)\n- [【野球部訪問】キャプテンが8人いる!?シード校・日体大柏の練習に密着](https://www.youtube.com/watch?v=CjDTAghbo44)\n\n## ストーリー・見どころ\n過去2度の対戦でいずれも習志野に軍配が上がっている中、日体大柏はノーシードから1回戦の延長サヨナラ勝ちを起点に勢いをつけ、ここまで危なげない戦いで5回戦にたどり着いた。8人の主将が日替わりで采配を支えるという独自の運営体制も、チームの粘り強さを支える一因となっている。\n\n対する習志野は貫禄を見せ、2回戦以降の3試合を大差で勝ち抜いてきた。「粘りの野球」を掲げるチームが、地元中学出身の選手を軸にどこまで勢いを持続できるか。過去の対戦成績で分がある習志野と、その系譜を打ち破りたい日体大柏の一戦は、5回戦らしい見応えのある展開が期待できる。\n\n## 出典\nhttps://hsbb.jp/school/366\nhttps://www.kyureki.com/koko/90/1924/\nhttps://apapnews.com/famousmember/2829/\nhttps://office-morioka.com/h_baseball/seiseki/narashino.html\nhttps://baseball.yahoo.co.jp/hsb/teams/20224/results/game\nhttps://www.kyureki.com/koko/90/1924/2026/member/\nhttps://www.cgh.ed.jp/club/club07.html\nhttps://k-nittai.ed.jp/\nhttps://www.chibanippo.co.jp/articles/1639125\nhttps://www.chibanippo.co.jp/articles/1639247\nhttps://www.kyureki.com/koko/90/2421/\nhttps://www.hb-nippon.com/team/5291/\nhttps://www.hb-nippon.com/team/1346/\nhttps://www.baseball-station.com/memories/chiba-spring2026/\nhttps://baseball.yahoo.co.jp/hsb/teams/21243/top\nhttps://baseball.yahoo.co.jp/hsb/teams/21214/top\nhttps://ja.wikipedia.org/wiki/%E5%85%A8%E5%9B%BD%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1%E9%87%8E%E7%90%83%E9%81%B8%E6%89%8B%E6%A8%A9%E5%A4%A7%E4%BC%9A_(%E5%8D%83%E8%91%89%E7%9C%8C%E5%8B%A2)\nhttps://chbf.or.jp/",
+    "g77": "## 放送・配信情報\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 流通経大柏\n千葉県柏市十余二に所在する流通経済大学付属柏高等学校。2026年春季千葉県大会では地区予選代表決定戦で柏陵に連勝したが、1回戦で習志野に敗退している。夏の大会では2回戦で光英VERITASに2-3、3回戦で長生に3-5、4回戦で千葉敬愛に3-4と、いずれも僅差の接戦を制して5回戦へ進出した。\n\n### 暁星国際\n千葉県木更津市矢那の暁星国際高等学校。監督は内藤雅也氏。2026年春季千葉県大会は地区予選代表決定戦で袖ケ浦に18-6の6回コールドで快勝したものの、1回戦で拓大紅陵に8回コールドで敗れた。2025年夏の選手権は東海大浦安に1-10で敗退している。今大会は2回戦で千葉日大一に7-1、3回戦で木更津高専に11-1と圧倒し、4回戦は木更津総合に5-7で競り勝って5回戦に駒を進めた。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会は165校148チーム(連合24校7チーム)が参加。開会式は7月4日にZOZOマリンスタジアムで行われ、試合は7月9日に開始した。決勝は7月26日、同じくZOZOマリンスタジアムで予定されている。\n\n流通経大柏・暁星国際はともにシード校ではない中から4回戦まで勝ち上がってきたチーム。5回戦は7月20日11時15分、なごみの米屋ぴーちゃんフィールド大谷津野球場で行われる。\n\n## 関連動画\n- [【春は銚子商と熱戦】専用グラウンドに雨天練習所も！戦国千葉の注目校・流通経済大柏に密着](https://www.youtube.com/watch?v=BthkqCVw1z8)\n- [【凄すぎる環境】1人1部屋の寮生活など充実した環境は必見！暁星国際は夏の千葉を沸かせるか](https://www.youtube.com/watch?v=R1nNzFDRFA8)\n- [暁星国際 VS 安房 ⚾ハイライト【第70回 千葉県高等学校南部地区野球大会 準決勝】](https://www.youtube.com/watch?v=5GM9pYp4Iow)\n- [木更津総合 VS 暁星国際 ⚾ハイライト【第70回 千葉県高等学校南部地区野球大会 決勝戦】](https://www.youtube.com/watch?v=2yUb7lx2qGM)\n\n## ストーリー・見どころ\n非シード校同士ながら、ともに4回戦を勝ち抜いてきた両校の対戦。流通経大柏は2回戦2-3、3回戦3-5、4回戦3-4と接戦を制してきた勝負強さが持ち味だ。一方の暁星国際は2回戦・3回戦で大量得点を挙げる攻撃力を見せつつ、4回戦は5-7の接戦をものにしており、状況に応じた戦い方の幅を感じさせる。\n\nシード校が涙をのむ展開も珍しくない夏の千葉大会。ここまで際どい試合を勝ち抜いてきた2校が5回戦でぶつかる一戦は、どちらが競り合いを制するチーム力を持っているかを占う好カードとなりそうだ。\n\n## 出典\nhttps://www.hb-nippon.com/teams/1445\nhttps://www.hb-nippon.com/schools/1445\nhttps://www.hb-nippon.com/teams/1291\nhttps://www.hb-nippon.com/schools/1291\nhttps://www.hb-nippon.com/articles/14943?page=2\nhttps://chbf.or.jp/\nhttps://www.chiba-tv.com/baseball/2026/summer/\nhttps://www.chibanippo.co.jp/articles/1643095\nhttps://www.chibanippo.co.jp/articles/1641942\nhttps://campus.chibanippo.co.jp/high/1230",
+    "g78": "## 放送・配信情報\n**TV放送**\n- 千葉テレビ(地上波メインチャンネル、8:45〜16:30。以降はチバテレミライチャンネル) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n\n### 拓大紅陵\n甲子園に春夏合わせて9回出場し、1992年夏には準優勝を果たした千葉屈指の伝統強豪校。夏の甲子園に限れば2002年以来24年ぶり、春夏通算では2004年春以来22年ぶりとなる聖地奪回を2026年は狙う。2025年春季千葉県大会でベスト4に進出し、Aシードを獲得しての臨戦。基本的な生活習慣と人格形成を重視し、文武両道を実践する校風で知られる。\n\n指揮を執るのは坂巻展行監督。同校が甲子園に初出場した1984年春、続く同年夏の主将を務めた人物で、1992年夏の準優勝を含め30年以上チームを率い、U-18日本代表監督も務めた故・小枝守元監督の下で指導者としての礎を築き、2023年秋に監督へ就任した。今大会は2回戦で東海大市原望洋を6-2で下している。\n\n### 市原中央\n第108回全国高等学校野球選手権千葉大会にCシード校として出場。\n\n## 過去の対戦成績\n2021年10月2日、秋季千葉県大会準決勝で対戦。拓大紅陵が3-1で市原中央を下している。市原中央は191センチのサブマリン投手・松平快聖を先発に起用し、120〜126キロのストレートで拓大紅陵打線を苦しめたが、1点差で及ばなかった。拓大紅陵はこの勝利で決勝に進んだが、決勝で敗れこの秋は準優勝だった。\n\n## 今大会の状況\n拓大紅陵はAシードとして出場。2回戦(7月11日、ADEKA袖ケ浦球場)で東海大市原望洋に6-2で勝利、3回戦(7月14日、ZOZOマリンスタジアム)は県柏に10-0で快勝、4回戦(7月18日、ゼットエーボールパーク)は木更津を6-2で下し、5回戦進出を決めた。\n\n市原中央はCシードとして出場。2回戦(7月11日、ADEKA袖ケ浦球場)で成田北に7-3で勝利、3回戦(7月14日、千葉県総合スポーツセンター野球場)は鴨川令徳を18-0の5回コールドで下し、4回戦(7月18日、ADEKA袖ケ浦球場)は翔凜を4-0で下して勝ち上がってきた。\n\n## 注目選手\n\n### 宮澤和聖(拓大紅陵・投手・2年)\n- 昨年度成績: 2025年秋季県大会でベンチ入り\n- 今大会成績: 2026年夏の千葉大会に出場\n- 静岡県出身の左投げ左打ち二刀流選手。走塁技術に優れた俊足打者。中学時代はジャイアンツカップで準優勝。高校では1年春よりベンチ入り。\n\n### 片岡大瑚(拓大紅陵・中堅手)\n- 今大会成績: 2026年夏の千葉大会全試合に出場\n- 1番打者として起用され、チーム打線の中心的役割を担う。\n\n## 関連動画\n- [木更津総合 VS 拓大紅陵 2回戦ハイライト【令和8年度第79回春季千葉県高等学校野球大会】2026.04.19](https://www.youtube.com/watch?v=2CT31AI0DUg)\n- [拓大紅陵 高校野球応援 特集!(再生リスト)](https://www.youtube.com/playlist?list=PLCaAQhpB29IGXDJaAzuquRL53-Tc6L3FQ)\n- [【全イニングハイライト】2025夏の千葉大会 松戸六実vs拓大紅陵](https://www.youtube.com/watch?v=d2avThzbXXE)\n- [1点を追う拓大紅陵は2アウトながら1、2塁で長打が出ればサヨナラの場面!9回裏ノーカット](https://www.youtube.com/watch?v=_DtKQGBKWTk)\n- [拓大紅陵 VS 幕張総合 ハイライト【第77回春季千葉県高等学校野球大会 2回戦】](https://www.youtube.com/watch?v=sdjbtGD1ynU)\n- [拓大紅陵 VS 君津商業 ハイライト【第77回春季千葉県高等学校野球大会予選】](https://www.youtube.com/watch?v=JhYgqFiNq7Y)\n- [拓大紅陵(再生リスト)](https://www.youtube.com/playlist?list=PLyTq4cmTn41DWJ-ufp7NHouKKmYA7MCsC)\n\n## ストーリー・見どころ\n拓大紅陵にとって今大会は単なる勝ち上がりではない。1992年夏の準優勝から30年余、最後の甲子園は2004年春。22年間遠ざかっている聖地奪回へ、Aシードの座から突き進んできた。坂巻展行監督は自らこの学び舎で選手権を戦った経験を持つ指揮官。かつて仕えた小枝守元監督が築いた伝統を継ぎ、就任3年目でチームを勝負どころまで引き上げてきた。\n\n対する市原中央もCシードから着実に勝ち星を重ねてきた。成田北との接戦を7-3でものにし、鴨川令徳戦では18-0の5回コールドで力の差を見せつけ、翔凜には4-0で完封リレー。守りの安定感を武器に、勢いをまとってこの5回戦へたどり着いた。\n\n両校には5年前の因縁がある。2021年秋の千葉県大会準決勝、拓大紅陵は3-1で市原中央を退けた一戦だ。この時マウンドに立った市原中央の松平快聖は、191センチの長身から繰り出すサブマリン投法で拓大紅陵打線を苦しめながらも1点差で涙をのんだ。あれから月日は流れ、松平は神奈川大学へ進み、2026年春には通算20勝を挙げるエースへ成長。プロ野球複数球団が注目するドラフト候補にまで名を上げている。あのとき投げ合った世代が、それぞれの舞台で結果を出しつつある構図は、この一戦にもうひとつの物語の厚みを与える。\n\n上総地区に隣接する両校の対決は、聖地への切符をかけた真剣勝負そのもの。伝統と復権を懸ける拓大紅陵の投打がかみ合うか、勢いに乗る市原中央が接戦を制してきた勝負強さで上位シードを食うか。5年前の雪辱に燃える市原中央と、24年ぶりの夏をたぐり寄せたい拓大紅陵。千葉県総合スポーツセンター野球場で迎える一戦は、その先の頂点争いを占う好カードとなる。\n\n## 出典\nhttps://baseball.omyutech.com/teamTop.action?teamId=11564\nhttps://baseball.omyutech.com/teamGames.action?teamId=11564\nhttps://www.kyureki.com/koko/90/7470/\nhttps://www.tokyo-np.co.jp/article/342963\nhttps://www.xn--8wv97xz6xo7h.online/2024-natsu-chiba/\nhttps://sports.yahoo.co.jp/livestream/vk/hsblocal/C243583\nhttps://www.chibanippo.co.jp/news/sports/1253254\nhttps://player.draft-kaigi.jp/PlayerInfo.php?PlayerId=37111\nhttps://www.kyureki.com/player/203809/\nhttps://baseball.omyutech.com/playerTop.action?playerId=1716934\nhttps://www.hb-nippon.com/chiba/report/2256-hb-chiba-game2021/22208-20211002002\nhttps://baseball.omyutech.com/teamTotalStats.action?teamId=11578\nhttps://www.hb-nippon.com/schools/1273\nhttps://www.kyureki.com/koko/90/7484/\nhttps://web.playerapp.tokyo/team/10004\nhttps://www.koryo.ed.jp/life/club/baseball/\nhttps://baseball.omyutech.com/teamTop.action?teamId=11639\nhttps://nettourakara.exblog.jp/244092570/\nhttps://apapnews.com/famousmember/869/\nhttps://baseball.yahoo.co.jp/hsb_summer_local/game/2021044981/top\nhttps://www.chiba-tv.com/plus/detail/2026071831882\nhttps://www.hb-nippon.com/tournaments/1551\nhttps://baseball.omyutech.com/CupHomePageMain.action?cupId=20260013575\nhttps://baseball.yahoo.co.jp/hsb/teams/21156/results/game\nhttps://www.hb-nippon.com/articles/6370\nhttps://news.yahoo.co.jp/articles/536dd6c731836b7fa53c3a172b1585c789c91d85\nhttps://www.hb-nippon.com/articles/11105\nhttps://www.draft-kaigi.jp/university/univ-draftnews/86918/\nhttps://topics.smt.docomo.ne.jp/article/sanspo/sports/sanspo-_sports_baseball_high_JURE4QKAWZCRBKW6YOUAHNX46Q\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120017",
+    "g79": "## 放送・配信情報\n**TV放送**\n- J:COMチャンネル(地デジ11ch) `LIVE`\n\n**配信**\n- [バーチャル高校野球](https://sports.yahoo.co.jp/livestream/vk) `LIVE`\n- [チバテレ 球場別LIVE配信](https://www.chiba-tv.com/baseball/2026/summer/) `LIVE`\n\n## 両校プロフィール\n### 成田\n私立の伝統校で、甲子園出場は春2回・夏7回。最後の出場は2010年夏の第92回大会で、ベスト4まで勝ち上がった実績を持つ。今春の千葉県大会では本戦1回戦で市立船橋に敗れシード権を逃したが、選手権千葉大会では2回戦で東京学館船橋、3回戦で成東を破り勢いに乗る。4回戦では中央学院に14-7で快勝し、7回コールドで4回戦を突破した。\n\n### 安房\n県立の南房総地域を代表する野球部で、創部は1901年と120年を超える歴史を刻む。甲子園出場は2008年春の第80回選抜大会の21世紀枠が唯一で、初勝利も挙げている。今春の千葉県大会は本戦2回戦で市原中央に敗れシード外からの出場となったが、選手権千葉大会では横芝敬愛、匝瑳を連破し勢いに乗る。4回戦では千葉明徳に5-4で9回サヨナラ勝ちを収め、粘り強さを見せた。\n\n## 今大会の状況\n第108回全国高等学校野球選手権千葉大会は7月4日に開会式、試合は7月9日に開始した。決勝は7月26日10:00からZOZOマリンスタジアムで、準決勝は7月24日に組まれている。\n\n成田・安房はいずれも今春の県大会でシード権を得られず、シード外から選手権大会に臨んでいる立場。それぞれ2回戦・3回戦・4回戦を勝ち抜き、5回戦の柏の葉公園野球場での対戦にたどり着いた。\n\n## 注目選手\n### 福島大駕(成田・外野手・3年)\n- 今大会成績: 4回戦の中央学院戦、3回裏に満塁の場面でランニング満塁本塁打を放ち4点を奪う活躍\n- 50メートル走5.9秒の俊足を誇る\n\n### 松本翔真(成田・外野手)\n- 4番打者を務め、足の速さとミート力を武器に逆方向にも強い打球を飛ばせるバッター\n\n### 岩崎昊太(安房・投手・3年)\n- 今大会成績: 2回戦の横芝敬愛戦で3時間3分の熱戦を制し、9回2失点・14奪三振の力投\n- チームのエースとして接戦を投げ抜く\n\n## 関連動画\n- [「千葉の名門」成田高校の練習に密着！実戦感覚鍛え8月5日の初戦へ](https://www.youtube.com/watch?v=1llVw5cm-98)\n- [【全イニングハイライト】3本のホームランが飛び出す素晴らしい熱戦！2025.7.13 成田vs志学館](https://www.youtube.com/watch?v=lwfgc5TPOps)\n- [安房高校 メドレー野球応援](https://www.youtube.com/watch?v=mPbNtgLcitg)\n- [暁星国際 VS 安房 ⚾ハイライト【第70回 千葉県高等学校南部地区野球大会 準決勝】2024.11.10](https://www.youtube.com/watch?v=5GM9pYp4Iow)\n\n## ストーリー・見どころ\nシード外から勝ち上がってきた両校が5回戦で激突。成田は4回戦で中央学院を14-7で下したパワー野球が持ち味で、福島大駕のランニング満塁本塁打に象徴される勢いをそのまま持ち込みたいところ。一方の安房はエース岩崎昊太の粘投を軸に接戦を制してきたチームで、4回戦の千葉明徳戦も9回サヨナラという劇的な展開で勝ち抜いている。攻めの成田と守りの安房、対照的な強みを持つ両校がベスト16の座を懸けてどう渡り合うか注目の一戦となる。\n\n## 出典\nhttps://baseball.yahoo.co.jp/hsb/teams/20113/top\nhttps://www.kyureki.com/koko/90/1915/\nhttps://cms2.chiba-c.ed.jp/awakou/4dcd88fdc23da30f64a223ed65cd9561/%E9%83%A8%E6%B4%BB%E5%8B%95%E7%B4%B9%E4%BB%8B/%E9%87%8E%E7%90%83%E9%83%A8/%E9%87%8E%E7%90%83%E9%83%A8%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF/\nhttps://www.chibanippo.co.jp/articles/1639812\nhttps://news.yahoo.co.jp/articles/deb169781da5bc89b7b104b34b64da4d70f8cc51\nhttps://ja.wikipedia.org/wiki/%E5%8D%83%E8%91%89%E7%9C%8C%E7%AB%8B%E5%AE%89%E6%88%BF%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1\nhttps://data-man.com/kokoyakyu/school/school.php?s_id=03120010\nhttps://www.hb-nippon.com/report/524-hb-nippon-game2010/6839-20100807001"
   },
   "hooks": {
     "g3": "3年前と同じ2回戦の再戦(千葉学芸が4-2)。初陣0-30から県大会優勝へ再建した高倉監督のBシードに、延長サヨナラで勝ち上がった日体大柏が挑む",
@@ -1192,7 +1309,9 @@
     "g60": "史上初4連覇・センバツ4強の専大松戸に、東金・東葉と1点差を勝ち抜いた流山が挑む",
     "g64": "御三家・県千葉を破った市松戸、同じ御三家の東葛飾との\"東葛ダービー\"で連続撃破なるか",
     "g65": "名将・海上前監督勇退で新体制の市船橋に、唯一のプロOB大野雄次を持つ君津商が挑む",
-    "g67": "昨夏4回戦で千葉黎明に延長サヨナラ負けした我孫子東、雪辱を期しCシード志学館に挑む"
+    "g67": "昨夏4回戦で千葉黎明に延長サヨナラ負けした我孫子東、雪辱を期しCシード志学館に挑む",
+    "g73": "史上初4連覇・センバツ4強のAシード専大松戸(78歳・持丸監督)に、1982年以来甲子園が遠い千葉商大付が挑む。過去対戦は専大松戸が2連勝中",
+    "g78": "2021年秋準決勝で拓大紅陵に1点差で敗れた市原中央が雪辱に燃える。当時投げた松平快聖は神奈川大でドラフト候補エースに成長。拓大紅陵は24年ぶり聖地奪回を狙う"
   },
   "picks": {
     "g3": 1,
@@ -1210,6 +1329,8 @@
     "g60": 1,
     "g65": 1,
     "g64": 1,
-    "g67": 1
+    "g67": 1,
+    "g73": 1,
+    "g78": 1
   }
 }
