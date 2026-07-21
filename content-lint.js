@@ -276,7 +276,7 @@ function lintTournament(slug) {
   // 揺れるケース(例: 「熊谷商業」正式名 vs 「熊谷商」略称・大会ブラケット表記)は誤帰属
   // ではないため、既知の同一校エイリアスを正規化してから比較する(2026-07-19発覚、
   // g26=熊谷商業表記 vs g76=熊谷商表記で同一選手3名が偽陽性衝突)
-  const PLAYER_SCHOOL_ALIASES = { 熊谷商業: '熊谷商' };
+  const PLAYER_SCHOOL_ALIASES = { 熊谷商業: '熊谷商', 創価高等学校: '創価', 日本大学第三高等学校: '日大三' };
   const canonicalPlayerSchool = (s) => PLAYER_SCHOOL_ALIASES[s] || s;
   const playerSchool = new Map(); // name -> Map(school -> Set(gid))
   for (const day of data.days) {
